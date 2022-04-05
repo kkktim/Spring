@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<!-- 
+		livereload 크롬 확장 플러그인 설치
+ 		 - 웹스토어 > livereload 검색 > livereload 설치 > 아이콘 클릭 활성화
+		 - spring.devtools.livereload.enabled=true 추가
+		 - 실시간 데이터 변경 확인
+		
+		lombok 설치/설정
+		 - 기술노트 참고
+	 -->
+	 <style>
+	 	tr.on {
+	 		background: orange;
+	 	}
+	 </style>
+</head>
+<body>
+	<h3 th:text="${title}">Thymeleaf 실습</h3>
+	
+	<h4>기본출력</h4>
+	<p >[[${hello}]]</p>
+	<p th:text="${hello}">기본 출력속성</p>
+	
+	
+	<h4>타임리프 조건문</h4>
+	<p>
+		<a href="#" th:if="${user1.name == '홍길동'}">user1은 홍길동 입니다.</a>
+		<a href="#" th:if="${user1.name == '김유신'}">user1은 김유신 입니다.</a>
+	</p>
+	<p>
+		<a href="#" th:if="${user1.age > 20}">user1은 성인 입니다.</a>
+		<a href="#" th:unless="${user1.age > 20}">user1은 미성년자 입니다.</a>
+	</p>
+	<p>
+		<a href="#" th:if="${user1}">user1은 참 입니다.</a>
+		<a href="#" th:unless="${user1}">user1은 거짓 입니다.</a>
+	</p>
+	<p>
+		<a href="#" th:if="${user2}">user2는 참 입니다.</a>
+		<a href="#" th:unless="${user2}">user2는 거짓 입니다.</a>
+	</p>
+	<p th:switch="${user1.age > 20}">
+		<span th:case="true">성인 입니다.</span>
+		<span th:case="false">미성년자 입니다.</span>
+	</p>
+	
+	<h4>타임리프 반복문</h4>
+	<table border="1">
+		<tr th:each="user:${users}">
+			<td th:text="${user.uid}">아이디</td>
+			<td th:text="${user.name}">이름</td>
+			<td th:text="${user.hp}">휴대폰</td>
+			<td th:text="${user.age}">나이</td>
+		</tr>
+	</table>
+	
+	<h4>타임리프 변수지정</h4>
+	<table border="1" th:with="value='b102'">
+		<tr th:each="user:${users}" th:class="${user.uid==value?'on':'off'}">
+			<td th:text="${user.uid}">아이디</td>
+			<td th:text="${user.name}">이름</td>
+			<td th:text="${user.hp}">휴대폰</td>
+			<td th:text="${user.age}">나이</td>
+		</tr>
+	</table>
+	
+	<h4>타임리프 자바스크립트 선언 속성</h4>
+	<script th:inline="javascript">
+		let result = [[${title}]]
+		alert(result)
+	</script>
+		
+	<h4>타임리프 링크</h4>
+	<a th:href="@{/include}">Thymeleaf include 실습</a>
+	
+</body>
+</html>
