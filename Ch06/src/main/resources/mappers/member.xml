@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ch06.persistence.MemberDao">
+	<insert id="insertMember">
+		INSERT INTO `Member` VALUES (#{uid}, #{name}, #{hp}, #{pos}, #{dep}, NOW());
+	</insert>
+	<select id="selectMember" resultType="kr.co.ch06.vo.MemberVo">
+		SELECT * FROM `Member` WHERE `uid`=#{uid};
+	</select>
+	<select id="selectMembers" resultType="kr.co.ch06.vo.MemberVo">
+		SELECT * FROM `Member`;
+	</select>
+	<update id="updateMember">
+		UPDATE `Member` SET 
+			`name`=#{name},
+			`hp`=#{hp},
+			`pos`=#{pos},
+			`dep`=#{dep}
+		WHERE `uid`=#{uid};
+	</update>
+	<delete id="deleteMember">
+		DELETE FROM `Member` WHERE `uid`=#{uid};
+	</delete>
+</mapper>

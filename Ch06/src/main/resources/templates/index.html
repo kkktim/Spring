@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<!-- 
+		날짜 : 2022/04/06
+		이름 : 강태호
+		내용 : Spring MyBatis 실습
+		
+		작업1 : mybatis, mysql 라이브러리 pom.xml 추가
+		작업2 : STS4 Mybatis 플러그인 설치
+		작업3 : src/main/resources/mappers 디렉터리 생성
+		작업4 : src/main/resources/mappers/user.xml mapper 파일 생성
+	 -->
+</head>
+<body>
+	<h3>Spring MyBatis 실습</h3>
+	
+	<a th:href="@{/user/register}">user 등록하기</a></br>
+	<a th:href="@{/member/register}">member 등록하기</a>
+	
+</body>
+</html>
