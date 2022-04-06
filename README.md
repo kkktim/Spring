@@ -15,3 +15,8 @@
 - thymeleaf 변수지정
 - thymeleaf 자바스크립트 선언 속성
 - thymeleaf 링크
+#### ch06
+- 회원 등록
+- 회원 리스트
+- 회원 수정
+- 회원 삭제
