@@ -16,6 +16,7 @@
 - thymeleaf 자바스크립트 선언 속성
 - thymeleaf 링크
 #### ch06
+- MyBatis
 - 회원 등록
 - 회원 리스트
 - 회원 수정
