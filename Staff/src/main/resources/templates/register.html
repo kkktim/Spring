@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>register</title>
+</head>
+<body>
+	<h3>register</h3>
+	<form th:action="@{/register}" method="post">
+		<table border="1">
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="stf_name" /></td>
+			</tr>
+			<tr>
+				<td>생일</td>
+				<td><input type="text" name="stf_birth" /></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td>
+					<label><input type="radio" name="gender" th:value="1"/>남</label>
+					<label><input type="radio" name="gender" th:value="2"/>여</label>
+				</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" name="stf_hp" /></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input type="text" name="stf_addr" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right"><input type="submit" value="전송"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

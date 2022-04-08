@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>modify</title>
+</head>
+<body>
+	<h3></h3>
+	<form th:action="@{/modify}" method="post">
+		<table border="1">
+		<input type="hidden" name="stf_gender" th:value="${staff.stf_gender}"/>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="stf_name" th:value="${staff.stf_name}"/></td>
+			</tr>
+			<tr>
+				<td>생일</td>
+				<td><input type="text" name="stf_birth" th:value="${staff.stf_birth}"/></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td th:if="${staff.stf_gender == 1}" readonly>남</td>
+				<td th:unless="${staff.stf_gender == 1}" readonly>여</td>
+			</tr>
+			<tr>
+				<td>휴대폰</td>
+				<td><input type="text" name="stf_hp" th:value="${staff.stf_hp}"/></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input type="text" name="stf_addr" th:value="${staff.stf_addr}"/></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right"><input type="submit" value="수정하기"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

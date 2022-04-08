@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>list</title>
+</head>
+<body>
+	<h3>list</h3>
+	<a th:href="@{/register}">등록하기</a>
+	<table border="1">
+		<tr>
+			<td>넘버</td>
+			<td>이름</td>
+			<td>생일</td>
+			<td>성별</td>
+			<td>전화번호</td>
+			<td>주소</td>
+			<td>입사일</td>
+			<td>관리</td>
+		</tr>
+		<tr th:each="staff:${staffs}">
+			<td th:text="${staff.stf_no}">넘버</td>
+			<td th:text="${staff.stf_name}">홍길동</td>
+			<td th:text="${staff.stf_birth}">생일</td>
+			<td th:text="${staff.stf_gender}">남</td>
+			<td th:text="${staff.stf_hp}">010-1212-1212</td>
+			<td th:text="${staff.stf_addr}">주소</td>
+			<td th:text="${staff.stf_date}">입사일</td>
+			<td>
+				<a th:href="@{/modify?(stf_no=${staff.stf_no})}">수정</a>
+				<a th:href="@{/delete?(stf_no=${staff.stf_no})}">삭제</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
