@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>student/modify</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<h3>student/modify</h3>
+	
+	<a th:href="@{/student/list}">학생목록</a>
+	<form th:action="@{/student/modify}" method="post">
+		<input type="hidden" name="gender" readonly th:value="${student.gender}"/>
+		<table border="1">
+			<tr>
+				<td>학번</td>
+				<td><input type="text" name="sid" th:value=${student.sid} /></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name" th:value=${student.name} /></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td th:if="${student.gender == 1}">남</td>
+				<td th:unless="${student.gender == 1}">여</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" name="hp" th:value=${student.hp} /></td>
+			</tr>
+			<tr>
+				<td>학년</td>
+				<td><input type="text" name="grade" th:value=${student.grade} /></td>
+			</tr>
+			<tr>
+				<td>입학일</td>
+				<td><input type="text" name="regdate" readonly th:value=${student.regdate} /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right"><input type="submit" value="수정" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>student/list</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<script th:inline="javascript">
+		$(function () {
+			/*<![CDATA[*/
+			let result = "[[${result}]]"
+			/*]]>*/
+			console.log(result)
+			if(result > 0){
+				alert('수정이 완료 되었습니다.')
+			}
+		})
+	</script>
+	<h3>student/list</h3>
+	<a th:href="@{/student/register}">등록하기</a>
+	<table border="1">
+		<tr>
+			<td>학번</td>
+			<td>이름</td>
+			<td>성별</td>
+			<td>휴대폰</td>
+			<td>학년</td>
+			<td>등록일</td>
+			<td>관리</td>
+		</tr>
+		<tr th:each="student:${students}">
+			<td th:text="${student.sid}"></td>
+			<td th:text="${student.name}"></td>
+			<td th:if="${student.gender == 1}">남</td>
+			<td th:unless="${student.gender == 1}">여</td>
+			<td th:text="${student.hp}"></td>
+			<td th:text="${student.grade}"></td>
+			<td th:text="${student.regdate}"></td>
+			<td>
+				<a th:href="@{/student/modify?(sid=${student.sid})}">수정</a>
+				<a th:href="@{/student/delete?(sid=${student.sid})}">삭제</a>
+			</td>
+		</tr>		
+	</table>
+</body>
+</html>

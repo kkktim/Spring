@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>customer/list</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script th:inline="javascript">
+		$(function () {
+			/*<![CDATA[*/
+			let result = "[[${result}]]"
+			/*]]>*/
+			console.log(result)
+			if(result == 1){
+				alert('수정이 완료 되었습니다.')
+			}
+		})
+	</script>
+</head>
+<body>
+	<h3>customer/list</h3>
+	
+	<a th:href="@{/customer/register}">등록하기</a>
+	<table border="1">
+		<tr>
+			<td>아이디</td>
+			<td>이름</td>
+			<td>주소</td>
+			<td>휴대폰</td>
+			<td>관리</td>
+		</tr>
+		<tr th:each="customer:${customers}">
+			<td th:text="${customer.custid}" align="right"></td>
+			<td th:text="${customer.name}" align="center"></td>
+			<td th:text="${customer.address}" align="center"></td>
+			<td th:text="${customer.phone}" align="center"></td>
+			<td>
+				<a th:href="@{/customer/modify?(custid=${customer.custid})}">수정</a>
+				<a th:href="@{/customer/delete?(custid=${customer.custid})}">삭제</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
