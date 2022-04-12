@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+	<meta charset="UTF-8">
+	<title>user/loginSuccess</title>
+</head>
+<body>
+	<h3>user/loginSuccess</h3>
+	<p>
+		Logged user: <span sec:authentication="username">Bob</span>
+		Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+		<div sec:authentication="principal.user.username"></div>
+		[[${#authentication="principal"}]] 님 반갑습니다.<br>
+		<a th:href="@{/user/logout}">로그아웃</a>
+		<span sec:authentication="name"></span>
+	</p>
+	
+
+</body>
+</html>
