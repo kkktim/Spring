@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ch09.dao.EmployeeDao">
+	<insert id="insertEmployee">
+		INSERT INTO `Employee` VALUES (#{uid}, #{name}, #{gender}, #{hp}, #{email}, #{pos}, #{dep}, NOW())
+	</insert>
+	<select id="selectEmployee"></select>
+	<select id="selectEmployees" resultType="kr.co.ch09.vo.EmployeeVo">
+		SELECT * FROM `Employee`;
+	</select>
+	<update id="updateEmployee">
+		UPDATE `Employee` SET 
+			`name`=#{name},
+			`hp`=#{hp},
+			`email`=#{email},
+			`pos`=#{pos},
+			`dep`=#{dep}
+		WHERE 
+			`uid`=#{uid};
+	</update>
+	<delete id="deleteEmployee">
+		DELETE FROM `Employee` WHERE `uid`=#{uid};
+	</delete>
+</mapper>

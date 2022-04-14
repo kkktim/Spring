@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ch09.dao.UserDao">
+	<insert id="insertUser">
+		INSERT INTO `User2` VALUES (#{uid}, PASSWORD(#{pass}), #{name}, #{hp}, #{age});
+	</insert>
+	<select id="selectUser"></select>
+	<select id="selectUsers" resultType="kr.co.ch09.vo.UserVo">
+		SELECT * FROM `User2`;
+	</select>
+	<update id="updateUser">
+		UPDATE `User2` SET 
+			`name`=#{name},
+			`hp`=#{hp},
+			`age`=#{age}
+		WHERE 
+			`uid`=#{uid};
+	</update>
+	<delete id="deleteUser">
+		DELETE FROM `User2` WHERE `uid`=#{uid};
+	</delete>
+</mapper>
