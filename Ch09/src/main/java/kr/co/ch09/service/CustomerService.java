@@ -20,7 +20,11 @@ public class CustomerService {
 	public List<CustomerVo> selectCustomers() {
 		return repo.findAll();
 	}
-	public void updateCustomer() {}
-	public void deleteCustomer() {}
+	public void updateCustomer(CustomerVo cv) {
+		repo.save(cv);
+	}
+	public void deleteCustomer(int custid) {
+		repo.deleteById(custid);
+	}
 	
 }

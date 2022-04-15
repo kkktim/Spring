@@ -12,6 +12,7 @@ import lombok.Data;
 public class CustomerVo {
 	@Id
 	private int custid;
+	
 	private String name;
 	private String address;
 	private String phone;
