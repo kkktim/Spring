@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sboard1.dao.ArticleDao">
+	<insert id="insertArticle" useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO `Board_article` SET 
+			`title`=#{title},
+			`content`=#{content},
+			`uid`=#{uid},
+			`regip`=#{regip},
+			`rdate`=NOW();
+	</insert>
+	<insert id="insertFile">
+		INSERT INTO `Board_file` SET 
+			`parent`=#{parent},
+			`oName`=#{oName},
+			`nName`=#{nName},
+			`rdate`=NOW();
+	</insert>
+	<select id="selectArticle" resultType="kr.co.sboard1.vo.ArticleVo">
+		SELECT * FROM `Board_article` AS a 
+		LEFT JOIN `Board_file` AS b ON a.`no`=b.parent 
+		WHERE `no`=#{no};
+	</select>
+	<select id="selectArticles" resultType="kr.co.sboard1.vo.ArticleVo">
+		SELECT a.*, b.nick FROM `Board_article` AS a 
+		JOIN `Board_user` AS b 
+		ON a.uid=b.uid 
+		WHERE a.`type` IS NULL
+		LIMIT 0, 10;
+	</select>
+	<update id="updateArticle"></update>
+	<delete id="deleteArticle"></delete>
+</mapper>

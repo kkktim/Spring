@@ -1,0 +1,5 @@
+#유용한 팁
+# github 프로젝트 삭제 명령어
+$ git rm -r Study/
+$ git commit -m 'Study 삭제'
+$ git push
