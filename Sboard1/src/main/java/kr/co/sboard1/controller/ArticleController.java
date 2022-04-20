@@ -33,13 +33,25 @@ public class ArticleController {
 	
 	//list
 	@GetMapping("/article/list")
-	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model) {
+	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model, String pg) {
 
 		if(sessUser == null) {
 			return "redirect:/user/login?success=102";
 		}else {
-			List<ArticleVo> articles = service.selectArticles();
+			int currentPage = service.getCurrentPage(pg);
+			int total = service.selectCountTotal();
+			int lastPageNum = service.getLastPageNum(total);
+			int start = service.getLimitStart(currentPage);
+			int pageStartNum = service.getPageStartNum(total, start);
+			int groups[] = service.getPageGroup(currentPage, lastPageNum);
+			
+			List<ArticleVo> articles = service.selectArticles(start);
 			model.addAttribute("articles", articles);
+			model.addAttribute("lastPageNum", lastPageNum);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("pageStartNum", pageStartNum);
+			model.addAttribute("groups", groups);
 			return "/article/list";
 		}
 		
@@ -62,6 +74,8 @@ public class ArticleController {
 		}else {
 			System.out.println("no : "+no);
 			ArticleVo article = service.selectArticle(no);
+			String oName = article.getFv().getOName();
+			System.out.println("파일 이름 : "+oName);
 			model.addAttribute("article", article);
 			return "/article/view";
 		}

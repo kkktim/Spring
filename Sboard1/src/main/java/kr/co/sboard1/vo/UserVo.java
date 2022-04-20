@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,6 +17,7 @@ import lombok.Data;
 @Table(name = "Board_user")
 public class UserVo {
 	@Id
+	@Column(name = "USER_UID")
 	private String uid;
 	private String pass;
 	private String name;

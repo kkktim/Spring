@@ -16,7 +16,8 @@ public interface ArticleDao {
 	public int insertArticle(ArticleVo av);
 	public void insertFile(FileVo fv);
 	public ArticleVo selectArticle(int no);
-	public List<ArticleVo> selectArticles();
+	public List<ArticleVo> selectArticles(int start);
+	public int selectCountTotal();
 	public void updateArticle();
 	public void deleteArticle();
 	

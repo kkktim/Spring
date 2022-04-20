@@ -1,5 +1,7 @@
 package kr.co.sboard1;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,13 +52,21 @@ class Sboard1ApplicationTests {
 		
 		System.out.println("글번호 : "+no);
 	}
-	@Test
+	
 	public void testArticleSelect() {
 		ArticleVo av = new ArticleVo();
 		
 		ArticleVo article = articleDao.selectArticle(3);
 		String oName = article.getFv().getOName();
 		System.out.println("파일 이름 : "+oName);
+	}
+	
+	@Test
+	public void testJoinArticles() {
+		List<ArticleVo> articles = articleRepo.findAll();
+		for(ArticleVo article : articles) {
+			System.out.println(article.getNick());
+		}
 	}
 	
 }
