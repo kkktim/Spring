@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.farmstory.dao.BoardDao">
+	<insert id="insertArticle"></insert>
+	<select id="selectArticle"></select>
+	<select id="selectArticles" resultType="kr.co.farmstory.vo.ArticleVo">
+		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_user` AS b ON a.uid = b.uid WHERE `type` IS NOT NULL;
+	</select>
+	<update id="updateArticle"></update>
+	<delete id="deleteArticle"></delete>
+	
+	<resultMap type="kr.co.farmstory.vo.ArticleVo" id="selectArticleResultMap">
+		<id column="no" property="no"/>
+		<result column="parent" property="parent"/>
+		<result column="comment" property="comment"/>
+		<result column="type" property="type"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="file" property="file"/>
+		<result column="hit" property="hit"/>
+		<result column="uid" property="uid"/>
+		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+		<collection property="uv" resultMap="kr.co.farmstory.vo.UserVo"/>
+	</resultMap>
+	<resultMap type="kr.co.farmstory.vo.UserVo" id="selectUserResultMap">
+		<id column="uid" property="uid"/>
+		<result column="pass" property="pass"/>
+		<result column="name" property="name"/>
+		<result column="nick" property="nick"/>
+		<result column="email" property="email"/>
+		<result column="hp" property="hp"/>
+		<result column="grade" property="grade"/>
+		<result column="zip" property="zip"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+	</resultMap>
+</mapper>
