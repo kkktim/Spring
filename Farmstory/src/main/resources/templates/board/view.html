@@ -8,31 +8,31 @@
 <body>
     <div id="wrapper">
     	<th:block th:include="/_header.html"/>
-    
+    	<th:block th:include="/board/inc/__${cate}__.html"/>
         <section id="board" class="view">
             <h3>글보기</h3>
             <table>
                 <tr>
                     <td>제목</td>
-                    <td><input type="text" name="title" readonly/></td>
+                    <td><input type="text" name="title" readonly th:value="${article.title}"/></td>
                 </tr>
                 <tr>
                     <td>첨부파일</td>
                     <td>
-                        <a href="">파일명.txt</a>
-                        <span>6회 다운로드</span>
+                        <a href="@{/board/filedownload(fid=${article.fv.fid})}">[[${article.fv.oName}]]</a>
+                        <span>[[${article.fv.download}]]</span>
                     </td>
                 </tr>
                 <tr>
                     <td>내용</td>
                     <td>
-                        <textarea name="content" readonly>내용입니다.</textarea>
+                        <textarea name="content" readonly>[[${article.content}]]</textarea>
                     </td>
                 </tr>
             </table>
             <div>
-                <a th:href="@{#}" class="btnDelete">삭제</a>
-                <a th:href="@{#}" class="btnModify">수정</a>
+                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/delete}" class="btnDelete">삭제</a>
+                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/modify}" class="btnModify">수정</a>
                 <a th:href="@{/article/list}" class="btnList">목록</a>
             </div>  
             

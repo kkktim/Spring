@@ -1,5 +1,7 @@
 package kr.co.farmstory.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +20,9 @@ public class ArticleVo {
 	private String rdate;
 	private String user_id;
 	
+	//추가필드
 	private UserVo user;
+	private FileVo fv;
+	private MultipartFile fname;
 	
 }

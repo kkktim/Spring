@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.farmstory.dao.BoardDao">
-	<insert id="insertArticle"></insert>
-	<select id="selectArticle"></select>
-	<select id="selectArticles" resultType="kr.co.farmstory.vo.ArticleVo">
-		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_user` AS b ON a.uid = b.uid WHERE `type` IS NOT NULL;
+	<insert id="insertFile">
+		INSERT INTO `Board_file` SET 
+			`parent`=#{parent},
+			`oName`=#{oName},
+			`nName`=#{nName},
+			`download`=#{download},
+			`rdate`=NOW();
+	</insert>
+	<!-- no를 리턴 ArticleVo 객체에 자동 바인딩 됨 -->
+	<insert id="insertArticle" useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO `Board_article` SET 
+			`type`=#{type},
+			`title`=#{title},
+			`content`=#{content},
+			`file`=#{file},
+			`uid`=#{uid},
+			`regip`=#{regip},
+			`rdate`=NOW(),
+			`user_id`=#{uid};
+	</insert>
+	
+	<select id="selectFile" resultMap="selectFileResultMap">
+		SELECT * FROM `Board_file` WHERE `fid`=#{fid};
 	</select>
+	<select id="selectArticle" resultMap="selectArticleResultMap">
+		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_file` AS b 
+		ON a.`no`=b.parent 
+		WHERE `no`=#{no};
+	</select>
+	<select id="selectArticles" resultMap="selectArticleResultMap">
+		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_user` AS b ON a.uid = b.uid WHERE `type`=#{type};
+	</select>
+	
+	<update id="downCountPlus">
+		UPDATE `Board_file` AS a SET `download`=a.download + 1 WHERE `fid`=#{fid};
+	</update>
 	<update id="updateArticle"></update>
 	<delete id="deleteArticle"></delete>
 	
@@ -21,8 +52,10 @@
 		<result column="uid" property="uid"/>
 		<result column="regip" property="regip"/>
 		<result column="rdate" property="rdate"/>
-		<collection property="uv" resultMap="kr.co.farmstory.vo.UserVo"/>
+		<collection property="user" resultMap="selectUserResultMap"/>
+		<collection property="fv" resultMap="selectFileResultMap"/>
 	</resultMap>
+	
 	<resultMap type="kr.co.farmstory.vo.UserVo" id="selectUserResultMap">
 		<id column="uid" property="uid"/>
 		<result column="pass" property="pass"/>
@@ -35,6 +68,15 @@
 		<result column="addr1" property="addr1"/>
 		<result column="addr2" property="addr2"/>
 		<result column="regip" property="regip"/>
+		<result column="rdate" property="rdate"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.farmstory.vo.FileVo" id="selectFileResultMap">
+		<id column="fid" property="fid"/>
+		<result column="parent" property="parent"/>
+		<result column="oName" property="oName"/>
+		<result column="nName" property="nName"/>
+		<result column="download" property="download"/>
 		<result column="rdate" property="rdate"/>
 	</resultMap>
 </mapper>

@@ -8,11 +8,14 @@
 <body>
     <div id="wrapper">
     	<th:block th:include="/_header.html"/>
-    
+    	<th:block th:include="/board/inc/__${cate}__.html"/>
         <section id="board" class="write">
             <h3>글쓰기</h3>
             <article>
-                <form th:action="@{/article/write}" method="post">
+                <form th:action="@{/board/write}" method="post" enctype="Multipart/form-data">
+                    <input type="hidden" name="uid" th:value="${sessUser.uid}"/>
+                    <input type="hidden" name="cate" th:value="${cate}"/>
+                    <input type="hidden" name="type" th:value="${type}"/>
                     <table>
                         <tr>
                             <td>제목</td>
@@ -30,7 +33,7 @@
                         </tr>
                     </table>
                     <div>
-                        <a th:href="@{/article/list}" class="btnCancel">취소</a>
+                        <a th:href="@{/board/list(cate=${cate}, type=${type})}" class="btnCancel">취소</a>
                         <input type="submit"  class="btnWrite" value="작성완료">
                     </div>
                 </form>

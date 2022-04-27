@@ -13,7 +13,7 @@
             <h3>글목록</h3>
             <article>
                 <p>
-                    님 반갑습니다.
+                    [[${sessUser.nick}]]님 반갑습니다.
                     <a th:href="@{/user/logout}" class="logout">[로그아웃]</a>
                 </p>
                 <table border="0">
@@ -26,8 +26,8 @@
                     </tr>
                     <tr th:each="article,i:${articles}">
                         <td th:text="${article.no}">1</td>
-                        <td th:text="${article.title}"><a th:href="@{/board/view(no=${article.no})}">제목입니다.</a>&nbsp;［[[${article.comment}]]］</td>
-                        <td th:text="${article.uv.nick}">길동이</td>
+                        <td><a th:text="${article.title}" th:href="@{/board/view(no=${article.no}, cate=${cate}, type=${type})}">제목입니다.</a>&nbsp;［[[${article.comment}]]］</td>
+                        <td th:text="${article.user.nick}">길동이</td>
                         <td th:text="${#strings.substring(article.rdate, 2, 10)}">22-04-25</td>
                         <td th:text="${article.hit}">12</td>
                     </tr>
@@ -52,7 +52,7 @@
             </div>
 
             <!-- 글쓰기 버튼 -->
-            <a th:href="@{#}" class="btnWrite">글쓰기</a>
+            <a th:href="@{/board/write(cate=${cate}, type=${type})}" class="btnWrite">글쓰기</a>
 
         </section>
     	<!-- 내용 끝 -->
