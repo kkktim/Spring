@@ -31,15 +31,31 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/board/list")
-	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type) {
+	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type, String pg) {
 		if(sessUser == null) {
 			return "redirect:/user/login?success=102";
 		}
-		List<ArticleVo> articles = service.selectArticles(type);
+		
+		//페이지 처리
+		int currentPage = service.getCurrentPage(pg);
+		int total = service.selectCountTotal(type);
+		int lastPageNum = service.getLastPageNum(total);
+		int start = service.getLimitStart(currentPage);
+		int pageStartNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		
+		model.addAttribute("lastPageNum", lastPageNum);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pageStartNum", pageStartNum);
+		model.addAttribute("groups", groups);
+		
+		List<ArticleVo> articles = service.selectArticles(type, start);
+		
 		model.addAttribute("articles", articles);
 		model.addAttribute("cate", cate);
 		model.addAttribute("type", type);
 		model.addAttribute("sessUser", sessUser);
+		
 		return "/board/list";
 	}
 	//Write
@@ -73,7 +89,7 @@ public class BoardController {
 			//파일 첨부 O
 			av.setFile(1);
 			int no = service.insertArticle(av);
-			System.out.println("no : "+no);
+//			System.out.println("no : "+no);
 			//파일 글 등록
 			FileVo fv = service.fileUpload(av.getFname());
 			fv.setParent(no);

@@ -33,7 +33,7 @@
             <div>
                 <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/delete}" class="btnDelete">삭제</a>
                 <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/modify}" class="btnModify">수정</a>
-                <a th:href="@{/article/list}" class="btnList">목록</a>
+                <a th:href="@{/board/list(cate=${cate}, type=${article.type})}" class="btnList">목록</a>
             </div>  
             
             <!-- 댓글리스트 -->

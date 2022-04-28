@@ -53,4 +53,11 @@ class FarmstoryApplicationTests {
 		System.out.println("파일 이름 : "+fv.getOName());
 		System.out.println("fid : "+fv.getFid());
 	}
+	
+//	public void fileUploadTest() {
+//		ArticleVo av = new ArticleVo();
+//		av.getFname();
+//		
+//		service.fileUpload(null);
+//	}
 }

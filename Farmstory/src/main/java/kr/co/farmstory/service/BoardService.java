@@ -30,14 +30,19 @@ public class BoardService {
 		return av.getNo();
 	}
 	
+	
+	//SELECT
+	public int selectCountTotal(String type) {
+		return dao.selectCountTotal(type);
+	}
 	public FileVo selectFile(int fid) {
 		return dao.selectFile(fid);
 	}
 	public ArticleVo selectArticle(int no) {
 		return dao.selectArticle(no);
 	}
-	public List<ArticleVo> selectArticles(String type) {
-		return dao.selectArticles(type);
+	public List<ArticleVo> selectArticles(String type, int start) {
+		return dao.selectArticles(type, start);
 	}
 	public void updateArticle(ArticleVo av) {}
 	public void deleteArticle(int no) {}
@@ -97,4 +102,41 @@ public class BoardService {
 		dao.downCountPlus(fid);
 	}
 	
+	//페이지처리
+	public int getLastPageNum(int total){
+		int lastPageNum = 0;
+		
+		if(total % 10 == 0) {
+			lastPageNum = total / 10;
+		}else {
+			lastPageNum = (total / 10) + 1;
+		}
+		
+		return lastPageNum;
+	}
+	public int getCurrentPage(String pg) {
+		//로그인해서 바로 들어오면 pg는 null
+		int currentPage = 1;
+		if(pg != null) {
+			currentPage = Integer.parseInt(pg);
+		}
+		return currentPage;
+	}
+	public int getLimitStart(int currentPage) {
+		//xml start 구하기
+		return (currentPage - 1) * 10;
+	}
+	public int getPageStartNum(int total, int start) {
+		return total - start;
+	}
+	public int[] getPageGroup(int currentPage, int lastPageNum) {
+		int groupCurrent = (int) Math.ceil(currentPage/10.0);
+		int groupStart = (groupCurrent - 1) * 10 + 1;
+		int groupEnd = groupCurrent * 10;
+		if(groupEnd > lastPageNum) {
+			groupEnd = lastPageNum;
+		}
+		int[] groups = {groupStart, groupEnd};
+		return groups;
+	}
 }

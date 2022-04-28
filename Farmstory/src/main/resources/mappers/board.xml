@@ -22,6 +22,11 @@
 			`user_id`=#{uid};
 	</insert>
 	
+	<select id="selectCountTotal" resultType="int">
+		SELECT COUNT(`no`) FROM `Board_article` AS a JOIN `Board_user` AS b 
+		ON a.uid = b.uid 
+		WHERE `parent`=0 AND `type`=#{type};
+	</select>
 	<select id="selectFile" resultMap="selectFileResultMap">
 		SELECT * FROM `Board_file` WHERE `fid`=#{fid};
 	</select>
@@ -31,7 +36,12 @@
 		WHERE `no`=#{no};
 	</select>
 	<select id="selectArticles" resultMap="selectArticleResultMap">
-		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_user` AS b ON a.uid = b.uid WHERE `type`=#{type};
+		SELECT * FROM `Board_article` AS a 
+		LEFT JOIN `Board_user` AS b 
+		ON a.uid = b.uid 
+		WHERE `type`=#{type} AND `parent`=0 
+		ORDER BY `no` DESC 
+		LIMIT #{start}, 10;
 	</select>
 	
 	<update id="downCountPlus">

@@ -40,30 +40,10 @@
                     <a href="#"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
                     <img src="./img/main_latest1_img.jpg" alt="이미지"/>
                     <table border="0">
-                        <tr>
+                        <tr th:each="latest:${latests1}">
                             <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
+                            <td><a th:href="@{/board/view(cate=croptalk, type=${latest.type}, no=${latest.no})}">[[${latest.title}]]</a></td>
+                            <td th:text="${#strings.substring(latest.rdate, 2, 10)}">20-12-22</td>
                         </tr>
                     </table>
                 </div>
@@ -71,30 +51,10 @@
                     <a href="#"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
                     <img src="./img/main_latest2_img.jpg" alt="이미지"/>
                     <table border="0">
-                        <tr>
+                        <tr th:each="latest:${latests2}">
                             <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
+                            <td><a th:href="@{/board/view(cate=croptalk, type=${latest.type}, no=${latest.no})}">[[${latest.title}]]</a></td>
+                            <td th:text="${#strings.substring(latest.rdate, 2, 10)}">20-12-22</td>
                         </tr>
                     </table>
                 </div>
@@ -102,30 +62,10 @@
                     <a href="#"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
                     <img src="./img/main_latest3_img.jpg" alt="이미지"/>
                     <table border="0">
-                        <tr>
+                        <tr th:each="latest:${latests3}">
                             <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
-                        </tr>
-                        <tr>
-                            <td>></td>
-                            <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                            <td>20-12-22</td>
+                            <td><a th:href="@{/board/view(cate=croptalk, type=${latest.type}, no=${latest.no})}">[[${latest.title}]]</a></td>
+                            <td th:text="${#strings.substring(latest.rdate, 2, 10)}">20-12-22</td>
                         </tr>
                     </table>
                 </div>

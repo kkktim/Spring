@@ -25,7 +25,7 @@
                         <th>조회</th>
                     </tr>
                     <tr th:each="article,i:${articles}">
-                        <td th:text="${article.no}">1</td>
+                        <td th:text="${pageStartNum - i.index}">1</td>
                         <td><a th:text="${article.title}" th:href="@{/board/view(no=${article.no}, cate=${cate}, type=${type})}">제목입니다.</a>&nbsp;［[[${article.comment}]]］</td>
                         <td th:text="${article.user.nick}">길동이</td>
                         <td th:text="${#strings.substring(article.rdate, 2, 10)}">22-04-25</td>
@@ -36,19 +36,17 @@
 
             <!-- 페이지 네비게이션 -->
             <div class="paging">
-            	<!-- 
             	<th:block th:if="${groups[0] > 1}">
-                	<a th:href="@{/article/list(pg=${groups[0] - 1})}" class="prev">이전</a>
+                	<a th:href="@{/board/list(cate=${cate}, type=${type}, pg=${groups[0] - 1})}" class="prev">이전</a>
                 </th:block>
                 
                 <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
-                	<a th:href="@{/article/list(pg=${num})}" th:class="${num==currentPage?'num current':'num'}">[[${num}]]</a>       
+                	<a th:href="@{/board/list(cate=${cate}, type=${type}, pg=${num})}" th:class="${num==currentPage?'num current':'num'}">[[${num}]]</a>       
                 </th:block>
                 
                 <th:block th:if="${groups[1] < lastPageNum}">
-                	<a th:href="@{/article/list(pg=${groups[1] + 1})}" class="next">다음</a>
+                	<a th:href="@{/board/list(cate=${cate}, type=${type}, pg=${groups[1] + 1})}" class="next">다음</a>
                 </th:block>
-                 -->
             </div>
 
             <!-- 글쓰기 버튼 -->
