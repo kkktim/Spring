@@ -8,29 +8,34 @@
 <body>
     <div id="wrapper">
     	<th:block th:include="/_header.html"/>
-    
+    	<th:block th:include="/board/inc/__${cate}__.html"/>
         <section id="board" class="modify">
             <h3>글수정</h3>
             <article>
-                <form action="#">
+                <form th:action="@{/board/modify}" method="post" enctype="Multipart/form-data">
+                <input type="hidden" name="cate" th:value="${cate}"/>
+                <input type="hidden" name="type" th:value="${type}"/>
+                <input type="hidden" name="no" th:value="${article.no}"/>
+                <input type="hidden" name="fid" th:value="${article.fv.fid}"/>
                     <table>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                            <td><input type="text" name="title" th:value="${article.title}"/></td>
                         </tr>
                         <tr>
                             <td>내용</td>
                             <td>
-                                <textarea name="content"></textarea>                                
+                                <textarea name="content">[[${article.content}]]</textarea>                                
                             </td>
                         </tr>
                         <tr>
                             <td>첨부</td>
-                            <td><input type="file" name="file"/></td>
+                            <td><input type="file" name="fname"/>
+                            <span th:text="${article.fv.oName}"></span></td>
                         </tr>
                     </table>
                     <div>
-                        <a href="./list.html" class="btnCancel">취소</a>
+                        <a th:href="@{/board/view(no=${article.no})}" class="btnCancel">취소</a>
                         <input type="submit"  class="btnWrite" value="수정완료">
                     </div>
                 </form>

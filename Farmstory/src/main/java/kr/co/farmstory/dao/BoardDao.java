@@ -21,6 +21,8 @@ public interface BoardDao {
 	public List<ArticleVo> selectArticles(String type, int start);
 	
 	public void updateArticle(ArticleVo av);
+	
+	public void deleteFile(int fid);
 	public void deleteArticle(int no);
 	
 	//파일 다운로드 +1

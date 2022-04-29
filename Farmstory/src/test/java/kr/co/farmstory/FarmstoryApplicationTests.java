@@ -26,7 +26,8 @@ class FarmstoryApplicationTests {
 	
 	public void selectArticles() {
 		String type = "story";
-		List<ArticleVo> articles = service.selectArticles(type);
+		int start = 0;
+		List<ArticleVo> articles = service.selectArticles(type, start);
 		ArticleVo article = articles.get(0);
 		System.out.println("nick : "+article.getUser().getNick());
 	}

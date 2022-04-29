@@ -101,6 +101,24 @@ public class BoardController {
 		
 		return "redirect:/board/list?cate="+cate+"&type="+type;
 	}
+	//file download
+	@GetMapping("/board/filedownload")
+	public void fileDownload(int fid, HttpServletResponse resp) {
+			
+		//파일 정보 조회
+		FileVo fv = service.selectFile(fid);
+		//다운로드
+			
+		//다운로드
+		service.fileDownload(resp, fv);
+			
+		//다운로드 횟수 +1
+//		if(result > 0) {
+//			service.downCountPlus(fid);
+//		}
+		service.downCountPlus(fid);
+	}
+		
 	//View
 	@GetMapping("/board/view")
 	public String view(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no, Model model) {
@@ -114,34 +132,71 @@ public class BoardController {
 		model.addAttribute("sessUser", sessUser);
 		model.addAttribute("article", article);
 		
-		int fid = article.getFv().getFid();
-		System.out.println("fid : "+fid);
 		return "/board/view";
-	}
-	//file download
-	@GetMapping("/board/filedownload")
-	public void fileDownload(int fid, HttpServletResponse resp) {
-		
-		//파일 정보 조회
-		FileVo fv = service.selectFile(fid);
-		System.out.println("oName : "+fv.getOName());
-		//다운로드
-//		int result = service.fileDownload(resp, fv);
-//		System.out.println("result : "+result);
-		
-		//다운로드
-		service.fileDownload(resp, fv);
-		
-		//다운로드 횟수 +1
-//		if(result > 0) {
-//			service.downCountPlus(fid);
-//		}
-		service.downCountPlus(fid);
 	}
 	
 	@GetMapping("/board/modify")
-	public String modify() {
+	public String modify(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no, Model model) {
+		if(sessUser == null) {
+			return "redirect:/user/login?success=102";
+		}
+		ArticleVo article = service.selectArticle(no);
+//		System.out.println("get 방식 fid : "+article.getFv().getFid());
+		model.addAttribute("article", article);
+		model.addAttribute("cate", cate);
+		model.addAttribute("type", type);
 		return "/board/modify";
 	}
+	@PostMapping("/board/modify")
+	public String modify(@ModelAttribute("sessUser") UserVo sessUser, ArticleVo av, String cate, String type, int fid) {
+		if(sessUser == null) {
+			return "redirect:/user/login?success=102";
+		}
+		System.out.println("no : "+av.getNo());
+		System.out.println("no : "+fid);
+		if(av.getFname().isEmpty()) {
+			//첨부파일 수정 x
+			service.updateArticle(av);
+		}else {
+			//첨부파일 수정 o
+			//파일 업로드
+			FileVo fv = service.fileUpload(av.getFname());
+			
+			//파일 테이블 INSERT
+			fv.setParent(av.getNo());
+			service.insertFile(fv);
+			
+			//전 파일 테이블 삭제
+			FileVo attfile = service.selectFile(fid);
+			service.deleteFile(attfile.getFid());
+			
+			//전 파일 삭제
+			service.deleteAttachedFile(attfile);
+		}
+		
+		
+		return "redirect:/board/view?cate="+cate+"&type="+type+"&no="+av.getNo();
+	}
 	
+	//DELETE
+	@GetMapping("/board/delete")
+	public String delete(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no) {
+		if(sessUser == null) {
+			return "redirect:/user/login?success=102";
+		}
+		//글 상태 조회
+		ArticleVo article = service.selectArticle(no);
+		//글 삭제
+		service.deleteArticle(no);
+		
+		if(article.getFile() > 0) {
+			//파일 테이블 글 삭제
+			service.deleteFile(article.getFv().getFid());
+			//첨부파일 삭제
+			service.deleteAttachedFile(article.getFv());
+		}
+		
+		
+		return "redirect:/board/list?cate="+cate+"&type="+type;
+	}
 }

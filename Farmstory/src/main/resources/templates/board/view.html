@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>글보기</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="@{/js/commentRegister.js}"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -19,7 +21,7 @@
                 <tr>
                     <td>첨부파일</td>
                     <td>
-                        <a href="@{/board/filedownload(fid=${article.fv.fid})}">[[${article.fv.oName}]]</a>
+                        <a th:href="@{/board/filedownload(fid=${article.fv.fid})}">[[${article.fv.oName}]]</a>
                         <span>[[${article.fv.download}]]</span>
                     </td>
                 </tr>
@@ -31,8 +33,8 @@
                 </tr>
             </table>
             <div>
-                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/delete}" class="btnDelete">삭제</a>
-                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/modify}" class="btnModify">수정</a>
+                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/delete(cate=${cate}, type=${type}, no=${article.no})}" class="btnDelete">삭제</a>
+                <a th:if="${sessUser.uid == article.uid}" th:href="@{/board/modify(cate=${cate}, type=${type}, no=${article.no})}" class="btnModify">수정</a>
                 <a th:href="@{/board/list(cate=${cate}, type=${article.type})}" class="btnList">목록</a>
             </div>  
             
@@ -58,10 +60,12 @@
             <!-- 댓글입력폼 -->
             <section class="commentForm">
                 <h3>댓글쓰기</h3>
-                <form th:action="@{/article/comment}" method="post">
+                <form th:action="@{#}" method="post">
+                	<input type="text" name="uid" th:value="${sessUser.uid}"/>
+                	<input type="text" name="no" th:value="${article.no}"/>
                     <textarea name="content"></textarea>
                     <div>
-                        <a href="#" class="btnCancel">취소</a>
+                        <a th:href="@{/board/view(cate=${cate}, type=${type}, no=${article.no})}" class="btnCancel">취소</a>
                         <input type="submit" class="btnWrite" value="작성완료"/>
                     </div>
                 </form>

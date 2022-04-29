@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.farmstory.dao.CommentDao">
+	<insert id="insertComment">
+		INSERT INTO `Board_article` SET 
+			`parent`=#{parent},
+			`content`=#{content},
+			`uid`=#{uid},
+			`regip`=#{regip},
+			`rdate`=NOW();
+	</insert>
+	<select id="selelctComment" resultType="kr.co.farmstory.vo.CommentVo">
+		SELECT a.(*), b.nick FROM `Board_article` AS a 
+		LEFT JOIN `Board_user` AS b 
+		ON a.uid=b.uid 
+		WHERE `no`=#{no};
+	</select>
+	<select id="selelctComments"></select>
+	
+	<update id="updateComment"></update>
+	<delete id="deleteComment"></delete>
+	
+	<update id="commentPlus">
+		UPDATE `Board_article` AS a SET `comment`=a.comment + 1 WHERE `no`=#{no};
+	</update>
+	
+</mapper>

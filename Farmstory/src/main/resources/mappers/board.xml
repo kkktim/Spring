@@ -47,8 +47,19 @@
 	<update id="downCountPlus">
 		UPDATE `Board_file` AS a SET `download`=a.download + 1 WHERE `fid`=#{fid};
 	</update>
-	<update id="updateArticle"></update>
-	<delete id="deleteArticle"></delete>
+	<update id="updateArticle">
+		UPDATE `Board_article` SET 
+			`title`=#{title},
+			`content`=#{content} 
+			WHERE `no`=#{no};
+	</update>
+	
+	<delete id="deleteFile">
+		DELETE FROM `Board_file` WHERE `fid`=#{fid};
+	</delete>
+	<delete id="deleteArticle">
+		DELETE FROM `Board_article` WHERE `no`=#{no};
+	</delete>
 	
 	<resultMap type="kr.co.farmstory.vo.ArticleVo" id="selectArticleResultMap">
 		<id column="no" property="no"/>

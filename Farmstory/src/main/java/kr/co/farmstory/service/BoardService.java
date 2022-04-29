@@ -44,8 +44,17 @@ public class BoardService {
 	public List<ArticleVo> selectArticles(String type, int start) {
 		return dao.selectArticles(type, start);
 	}
-	public void updateArticle(ArticleVo av) {}
-	public void deleteArticle(int no) {}
+	//UPDATE
+	public void updateArticle(ArticleVo av) {
+		dao.updateArticle(av);
+	}
+	//DELETE
+	public void deleteFile(int fid) {
+		dao.deleteFile(fid);
+	}
+	public void deleteArticle(int no) {
+		dao.deleteArticle(no);
+	}
 	
 	//파일 업로드
 	@Value("${spring.servlet.multipart.location}")
@@ -53,7 +62,6 @@ public class BoardService {
 	
 	public FileVo fileUpload(MultipartFile fname) {
 		String path = new File(uploadDir).getAbsolutePath();
-		
 		String oName = fname.getOriginalFilename();
 		String ext = oName.substring(oName.lastIndexOf("."));
 		//UUID - Universal Unique ID (범용 공용 식별자) 자바 내장 객체
@@ -81,7 +89,7 @@ public class BoardService {
 			resp.setHeader("Content-Transfer-Encoding", "binary");
 			resp.setHeader("Pragma", "no-cache");
 			resp.setHeader("Cache-Control", "private");
-						
+			
 			// 파일 스트림 작업
 			String path = new File(uploadDir).getAbsolutePath()+"/"+fv.getNName();
 			byte[] fileByte = FileUtils.readFileToByteArray(new File(path));		
@@ -100,6 +108,12 @@ public class BoardService {
 	//다운로드 카운터 +1
 	public void downCountPlus(int fid) {
 		dao.downCountPlus(fid);
+	}
+	//파일 삭제
+	public void deleteAttachedFile(FileVo fv) {
+		String path = new File(uploadDir).getAbsolutePath()+"/"+fv.getNName();
+		File attfile = new File(path);
+		attfile.delete();
 	}
 	
 	//페이지처리
