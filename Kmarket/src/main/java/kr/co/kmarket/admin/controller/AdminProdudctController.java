@@ -1,5 +1,6 @@
 package kr.co.kmarket.admin.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +43,6 @@ public class AdminProdudctController {
 		service.insertProduct(pvo);
 		return "redirect:/admin/product/register";
 	}
-	
-	//Cate 동적 태그
 	@ResponseBody
 	@GetMapping("/admin/product/cate1")
 	public List<Cate1Vo> cate1() {
@@ -54,4 +53,5 @@ public class AdminProdudctController {
 	public List<Cate2Vo> cate2(@PathVariable("cate1") int cate1) {
 		return service.selectCate2(cate1);
 	}
+	
 }
