@@ -22,7 +22,7 @@
 		FROM `km_product_cate1` AS c1
 		JOIN `km_product_cate2` AS c2
 		ON c1.cate1 = c2.cate1
-		ORDER BY c2.cate1, c2.cate2;	
+		ORDER BY c2.cate1, c2.cate2;
 	</select>
 	
 	<!-- 히트상품 -->

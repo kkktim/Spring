@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.MainDao">
+
+	<resultMap id="selectCategoriesResultMap" type="kr.co.kmarket.vo.CategoriesVo">
+		<result property="cate1" column="cate1"/>
+		<result property="tit1"  column="tit1"/>
+		
+		<collection property="cate2List" ofType="kr.co.kmarket.vo.Cate2Vo">
+			<result property="cate1" column="cate1"/>
+			<result property="cate2" column="cate2"/>
+			<result property="title" column="tit2"/>
+		</collection>
+	</resultMap>
+
+	<select id="selectCategories" resultMap="selectCategoriesResultMap">
+		SELECT 
+			c2.cate1, 
+			c2.cate2, 
+			c1.title AS tit1,
+			c2.title AS tit2  
+		FROM `km_product_cate1` AS c1
+		JOIN `km_product_cate2` AS c2
+		ON c1.cate1 = c2.cate1
+		ORDER BY c2.cate1, c2.cate2;	
+	</select>
+	
+	<!-- 히트상품 -->
+	<select id="selectHit" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT * FROM `km_product` ORDER BY `hit` DESC LIMIT 8;
+	</select>
+</mapper>
