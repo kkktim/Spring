@@ -1,15 +1,21 @@
-package kr.co.sboard1.vo;
+package kr.co.sboard1.entity;
 
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
 @Data
-public class FileVo {
+@Entity
+@Table(name = "Board_file")
+public class FileEntity {
+	@Id
 	private int fid;
 	
 	private int parent;

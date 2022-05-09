@@ -1,17 +1,26 @@
-package kr.co.sboard1.vo;
+package kr.co.sboard1.entity;
 
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
 @Data
-public class UserVo {
-//	@Column(name = "USER_UID")
+@Entity
+@Table(name = "Board_user")
+public class UserEntity {
+	@Id
 	private String uid;
+	
 	private String pass;
 	private String name;
 	private String nick;

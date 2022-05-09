@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,9 @@ import com.google.gson.JsonObject;
 import kr.co.sboard1.service.UserService;
 import kr.co.sboard1.vo.TermsVo;
 import kr.co.sboard1.vo.UserVo;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @SessionAttributes("sessUser")
 @Controller
 public class UserController {
@@ -38,11 +38,15 @@ public class UserController {
 		
 		UserVo user = service.selectUser(uv);
 		
+		log.info("login - 1");
+		
 		if(user == null) {
 			//로그인 실패
+			log.info("login - 2");
 			return "redirect:/user/login?success=100";
 		}else {
 			//로그인 성공
+			log.info("login - 3");
 			model.addAttribute("sessUser", user);
 			return "redirect:/article/list";
 		}

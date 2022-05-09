@@ -2,9 +2,9 @@ package kr.co.sboard1.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.co.sboard1.vo.UserVo;
+import kr.co.sboard1.entity.UserEntity;
 
-public interface UserRepo extends JpaRepository<UserVo, String> {
+public interface UserRepo extends JpaRepository<UserEntity, String> {
 
 	//JPA 쿼리 메서드 작성법
 	//https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation

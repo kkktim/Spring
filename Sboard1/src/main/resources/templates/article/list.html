@@ -22,7 +22,7 @@
                         <th>날짜</th>
                         <th>조회</th>
                     </tr>
-                    <!-- i 는 리스트에 인덱스 번호 - 더 자세히 알아봐야함 -->
+                    <!-- i 는 리스트에 인덱스 번호 0부터 시작 -->
                     <tr th:each="article, i:${articles}">
                         <td th:text="${pageStartNum-i.index}">1</td><!--HTML 특수문자 코드표 &nbsp; = 스페이스 , &#91; = [ , &#93; = ] -->
                         <td><a th:text="${article.title}" th:href="@{/article/view?(no=${article.no})}">테스트 제목입니다.</a>&nbsp;&#91;[[${article.comment}]]&#93;</td>
@@ -41,7 +41,7 @@
                 </th:block>
                 <th:block th:each="num:${#numbers.sequence(groups[0], groups[1])}">
                 	<!-- ${num == current ? '':''} -->
-                	<a th:href="@{/article/list(pg=${num})}" th:class="${num==currentPage?'num current':'num'}">[[${num}]]</a>
+                	<a th:href="@{/article/list(pg=${num}, searchKeyword=${param.searchKeyword})}" th:class="${num==currentPage?'num current':'num'}">[[${num}]]</a>
                 </th:block>                
                 <th:block th:if="${groups[1] < lastPageNum}">
                 	<a th:href="@{/article/list(pg=${groups[1]+1})}" class="next">다음</a>
@@ -50,7 +50,19 @@
 
             <!-- 글쓰기 버튼 -->
             <a th:href="@{/article/write}" class="btnWrite">글쓰기</a>
-
+			
+			<form th:action="@{/article/list}" method="get">
+				<!-- 
+				<span>옵션</span>
+				<select name="ops">
+					<option th:value="1">제목</option>
+					<option th:value="2">내용</option>
+				</select>
+				 -->
+				<span>검색어 :</span>
+				<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요." style="width:300px"/>
+				<button type="submit" style="width:50px">검색</button>
+			</form>
         </section>
     </div>    
 </body>

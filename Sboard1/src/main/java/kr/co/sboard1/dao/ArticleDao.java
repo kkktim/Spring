@@ -15,9 +15,12 @@ public interface ArticleDao {
 	//useGeneratedKeys="true" keyProperty="no" - xml 에 선언해줘야 리턴값 생김
 	public int insertArticle(ArticleVo av);
 	public void insertFile(FileVo fv);
+	public int insertComment(ArticleVo av);
+	public List<ArticleVo> selectComments(int no);
 	public ArticleVo selectArticle(int no);
 	public List<ArticleVo> selectArticles(int start);
 	public int selectCountTotal();
+	public FileVo selectFile(int fid);
 	public void updateArticle();
 	public void deleteArticle();
 	
