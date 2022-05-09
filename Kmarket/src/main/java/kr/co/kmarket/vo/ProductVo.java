@@ -51,6 +51,10 @@ public class ProductVo {
 	private MultipartFile img3;
 	private MultipartFile imgDetail;
 	
+	private int salePrice;
+	private int start;
+	private int order;
+	
 	public List<MultipartFile> getThumbnails(){
 		//사용자 정의 함수 - 추가필드 get 함수 정의(리스트로 만들어 줌)
 		return Arrays.asList(img1, img2, img3, imgDetail);

@@ -25,8 +25,15 @@
 		ORDER BY c2.cate1, c2.cate2;
 	</select>
 	
-	<!-- 히트상품 -->
-	<select id="selectHit" resultType="kr.co.kmarket.vo.ProductVo">
-		SELECT * FROM `km_product` ORDER BY `hit` DESC LIMIT 8;
+	<!-- 메인 상품 리스트 8개 -->
+	<select id="selectMainProducts" resultType="kr.co.kmarket.vo.ProductVo">
+		SELECT *, FLOOR(`price` * (1 - `discount` / 100)) AS `salePrice` FROM `km_product` 
+		<if test="order == 'hit'">ORDER BY `hit` DESC LIMIT 8;</if>
+		<if test="order == 'score'">ORDER BY `score` DESC LIMIT 8;</if>
+		<if test="order == 'rdate'">ORDER BY `rdate` DESC LIMIT 8;</if>
+		<if test="order == 'discount'">ORDER BY `discount` DESC LIMIT 8;</if>
+		<if test="order == 'sold'">ORDER BY `sold` DESC LIMIT 5;</if>
 	</select>
+	
+	
 </mapper>

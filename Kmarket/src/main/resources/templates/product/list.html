@@ -20,85 +20,10 @@
 </head>
 <body>
     <div id="wrapper">
-        <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                    <a href="#">마이페이지</a>
-                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니</a>
-                </div>
-            </div>
-            <div class="logo">
-                <div>
-                    <a href="#"><img src="../img/header_logo.png" alt="로고"/></a>
-                    <form action="#">
-                        <input type="text" name="keyword"/>
-                        <button><i class="fa fa-search"></i></button>
-                    </form>                
-                </div>
-                
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li><a href="#">히트상품</a></li>
-                        <li><a href="#">추천상품</a></li>
-                        <li><a href="#">최신상품</a></li>
-                        <li><a href="#">인기상품</a></li>
-                        <li><a href="#">할인상품</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">쿠폰존</a></li>
-                        <li><a href="#">사용후기</a></li>
-                        <li><a href="#">개인결제</a></li>
-                        <li><a href="#">고객센터</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+        <th:block th:include="@{_header.html}"/>
         <main>            
             <aside>
-                <ul class="category">     
-                    <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
-                    <li>
-                        <a href="#"><i class="fas fa-tshirt"></i>패션·의류·뷰티</a>
-                        <ol>
-                            <li><a href="#">남성의류</a></li>
-                            <li><a href="#">여성의류</a></li>
-                            <li><a href="#">잡화</a></li>
-                            <li><a href="#">뷰티</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-laptop"></i>가전·디지털</a>
-                        <ol>
-                            <li><a href="#">노트북/PC</a></li>
-                            <li><a href="#">가전</a></li>
-                            <li><a href="#">휴대폰</a></li>
-                            <li><a href="#">기타</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-utensils"></i>식품·생필품</a>
-                        <ol>
-                            <li><a href="#">신선식품</a></li>
-                            <li><a href="#">가공식품</a></li>
-                            <li><a href="#">건강식품</a></li>
-                            <li><a href="#">생필품</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-home"></i>홈·문구·취미</a>
-                        <ol>
-                            <li><a href="#">가구/DIY</a></li>
-                            <li><a href="#">침구·커튼</a></li>
-                            <li><a href="#">생활용품</a></li>
-                            <li><a href="#">사무용품</a></li>
-                        </ol>
-                    </li>
-                </ul>
+				<th:block th:include="@{_category.html}"/>
             </aside>
 
             
@@ -120,51 +45,38 @@
               </ul>
 
               <!-- 상품목록 -->              
-              <table border="0">                  
-                <tr>
-                  <td><a th:href="@{#}" class="thumb"><img th:src="@{/img/thumb-sample-t1.jpg}" alt="상품이미지"/></a></td>
+              <table border="0">
+                            
+                <tr th:each="product:${products}">
+                  <td><a th:href="@{/product//view(pid=${product.pid})}" class="thumb">
+                  <img th:src="@{/thumb/{cate1}/{cate2}/{img}(cate1=${product.cate1}, cate2=${product.cate2}, img=${product.thumb1})}" alt="상품이미지"></a>
+                  </td>
                   <td>
-                    <h3 class="name">FreeMovement BLUEFORCE</h3>
-                    <a href="#" class="desc">[블루포스] 여름신상 남방/솔리드긴팔남자옷/데님청/체크스판셔츠</a>
+                    <h3 class="name">[[${product.name}]]</h3>
+                    <a href="#" class="desc">[[${product.desc}]]</a>
                   </td>
                   <td>
                     <ul>
-                      <li><ins class="dis-price">27,000</ins></li>
+                      <li><ins class="dis-price">[[${product.salePrice}]]</ins></li>
                       <li>
-                        <del class="org-price">30,000</del>
-                        <span class="discount">10%</span>
+                        <del class="org-price">[[${product.price}]]</del>
+                        <span class="discount">[[${product.discount}]]%</span>
                       </li>
-                      <li><span class="free-delivery">무료배송</span></li>
+                      <li><span th:if="${product.delivery == 0}" class="free-delivery">무료배송</span>
+                      <span th:if="${product.delivery != 0}">[[${product.delivery}]]원</span></li>
                     </ul>
                   </td>
                   <td>
-                    <h4 class="seller"><i class="fas fa-home"></i>&nbsp;블루포스</h4>
+                    <h4 class="seller"><i class="fas fa-home"></i>&nbsp;[[${product.company}]]</h4>
                     <h5 class="badge power">판매자등급</h5>
-                    <h6 class="rating star1">상품평</h6>
+                    <h6 th:if="${product.score == 1}" class="rating star1">상품평</h6>
+                    <h6 th:if="${product.score == 2}" class="rating star2">상품평</h6>
+                    <h6 th:if="${product.score == 3}" class="rating star3">상품평</h6>
+                    <h6 th:if="${product.score == 4}" class="rating star4">상품평</h6>
+                    <h6 th:if="${product.score == 5}" class="rating star5">상품평</h6>
                   </td>
                 </tr>
-                <tr>
-                  <td><a href="#" class="thumb"><img th:src="@{/img/thumb-sample-t2.jpg}" alt="상품이미지"/></a></td>
-                  <td>
-                    <h3 class="name">상품명</h3>
-                    <a href="#" class="desc">상품 설명</a>
-                  </td>
-                  <td>
-                    <ul>
-                      <li><ins class="dis-price">27,000</ins></li>
-                      <li>
-                        <del class="org-price">30,000</del>
-                        <span class="discount">10%</span>
-                      </li>
-                      <li><span class="free-delivery">무료배송</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <h4 class="seller"><i class="fas fa-home"></i>&nbsp;판매자</h4>
-                    <h5 class="badge power great">판매자등급</h5>
-                    <h6 class="rating star3">상품평</h6>
-                  </td>
-                </tr>
+                
               </table>            
 
               <!-- 상품목록 페이지번호 -->

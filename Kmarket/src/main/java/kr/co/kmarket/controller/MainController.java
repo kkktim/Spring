@@ -19,8 +19,18 @@ public class MainController {
 	
 	@GetMapping(value = {"/", "/index"})
 	public String index(Model model) {
-		List<ProductVo> hitProducts = service.selectHit();
-		model.addAttribute("hitProducts", hitProducts);
+		List<ProductVo> productHit = service.selectMainProducts("hit");
+		List<ProductVo> productRecommend= service.selectMainProducts("score");
+		List<ProductVo> productNew = service.selectMainProducts("rdate");
+		List<ProductVo> productDiscount = service.selectMainProducts("discount");
+		List<ProductVo> productBest = service.selectMainProducts("sold");
+		
+		model.addAttribute("productHit", productHit);
+		model.addAttribute("productRecommend", productRecommend);
+		model.addAttribute("productNew", productNew);
+		model.addAttribute("productDiscount", productDiscount);
+		model.addAttribute("productBest", productBest);
+		
 		return "/index";
 	}
 	
