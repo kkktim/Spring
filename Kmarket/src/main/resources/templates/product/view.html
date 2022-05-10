@@ -15,124 +15,58 @@
 </head>
 <body>
     <div id="wrapper">
-        <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                    <a href="#">마이페이지</a>
-                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니</a>
-                </div>
-            </div>
-            <div class="logo">
-                <div>
-                    <a href="#"><img src="../img/header_logo.png" alt="로고"/></a>
-                    <form action="#">
-                        <input type="text" name="search"/>
-                        <button><i class="fa fa-search"></i></button>
-                    </form>                
-                </div>
-                
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li><a href="#">히트상품</a></li>
-                        <li><a href="#">추천상품</a></li>
-                        <li><a href="#">최신상품</a></li>
-                        <li><a href="#">인기상품</a></li>
-                        <li><a href="#">할인상품</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">쿠폰존</a></li>
-                        <li><a href="#">사용후기</a></li>
-                        <li><a href="#">개인결제</a></li>
-                        <li><a href="#">고객센터</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+        <!-- 헤더 -->
+        <th:block th:include="@{_header.html}"/>
         <main>            
             <aside>
-                <ul class="category">     
-                    <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
-                    <li>
-                        <a href="#"><i class="fas fa-tshirt"></i>패션·의류·뷰티</a>
-                        <ol>
-                            <li><a href="#">남성의류</a></li>
-                            <li><a href="#">여성의류</a></li>
-                            <li><a href="#">잡화</a></li>
-                            <li><a href="#">뷰티</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-laptop"></i>가전·디지털</a>
-                        <ol>
-                            <li><a href="#">노트북/PC</a></li>
-                            <li><a href="#">가전</a></li>
-                            <li><a href="#">휴대폰</a></li>
-                            <li><a href="#">기타</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-utensils"></i>식품·생필품</a>
-                        <ol>
-                            <li><a href="#">신선식품</a></li>
-                            <li><a href="#">가공식품</a></li>
-                            <li><a href="#">건강식품</a></li>
-                            <li><a href="#">생필품</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-home"></i>홈·문구·취미</a>
-                        <ol>
-                            <li><a href="#">가구/DIY</a></li>
-                            <li><a href="#">침구·커튼</a></li>
-                            <li><a href="#">생활용품</a></li>
-                            <li><a href="#">사무용품</a></li>
-                        </ol>
-                    </li>
-                </ul>
+            	<!-- 카테고리 -->
+				<th:block th:include="@{_category.html}"/>
             </aside>
 
             <!-- 상품 상세페이지 시작 -->
             <section id="product" class="view">
+            	<input type="hidden" name="salePrice" th:value=${product.salePrice}/>
 
                 <!-- 제목, 페이지 네비게이션 -->
                 <nav>
-                    <h1>[블루포스] FreeMovement BLUEFORCE</h1>
+                    <h1>[[${product.name}]]</h1>
                     <p>
-                        HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
+                        HOME > <span>[[${cates.tit1}]]</span> > <strong>[[${cates.tit2}]]</strong>
                     </p>
                 </nav>
 
                 <!-- 상품 전체 정보 내용 -->                
                 <article class="info">
                     <div class="image">
-                        <img src="../img/thumb-sample-t1.jpg" alt="상품이미지"/>
+                        <img th:src="@{/thumb/{cate1}/{cate2}/{img}(cate1=${product.cate1}, cate2=${product.cate2}, img=${product.thumb2})}" alt="상품이미지"></a>
                     </div>
                     <div class="summary">
                         <nav>
-                            <h1>(주)블루포스</h1>
-                            <h2>상품번호&nbsp;:&nbsp;<span>10010118412</span></h2>
+                            <h1>[[${product.company}]]</h1>
+                            <h2>상품번호&nbsp;:&nbsp;<span>[[${product.pid}]]</span></h2>
                         </nav>
-                        <p>남자 셔츠 남방 남성 와이셔츠 체크남방 스트라이프</p>
+                        <p>[[${product.desc}]]</p>
                         <nav>
-                            <h5 class="rating star4"><a href="#">상품평보기</a></h5>
+                        	<!-- #review 같은 페이지 내 review로 이동(id 값 사용) -->
+                            <h5 th:if="${product.score == 1}" class="rating star1"><a href="#review">상품평보기</a></h5>
+                            <h5 th:if="${product.score == 2}" class="rating star2"><a href="#review">상품평보기</a></h5>
+                            <h5 th:if="${product.score == 3}" class="rating star3"><a href="#review">상품평보기</a></h5>
+                            <h5 th:if="${product.score == 4}" class="rating star4"><a href="#review">상품평보기</a></h5>
+                            <h5 th:if="${product.score == 5}" class="rating star5"><a href="#review">상품평보기</a></h5>
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del>30,000</del>
-                                <span>10%</span>
+                                <del>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+                                <span>[[${product.discount}]]%</span>
                             </div>
                             <div class="dis_price">
-                                <ins>27,000</ins>
+                                <ins>[[${#numbers.formatInteger(product.salePrice, 3, 'COMMA')}]]</ins>
                             </div>
                         </nav>
                         <nav>
-                            <span class="delivery">무료배송</span>
-                            <span class="arrival">모레(금) 7/8 도착예정</span>
+                            <span th:if="${product.delivery == 0}" class="delivery">무료배송</span>
+                            <span th:if="${product.delivery != 0}" class="delivery">배송비 [[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]원</span>
+                            <span class="arrival">주문 완료 후 1 ~ 2일 후 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
                         <nav>
@@ -143,7 +77,34 @@
                             <span class="origin">원산지-상세설명 참조</span>
                         </nav>
                         <img src="../img/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
-                        
+                        <script th:inline="javascript">
+                        	$(function(){
+                        		
+                        		let inputCount = $('input[name=num]')
+                        		let totalSpan = $('.total > span')
+                        		let count = inputCount.val()
+                        		let salePrice = $('input[name=salePrice]').val()
+                        		
+								$('button[class=increase]').click(function(){
+									count++
+									inputCount.val(count)
+									//전체 합계 계산
+									let total = salePrice * count
+									totalSpan.text(total.toLocaleString())
+								})
+								$('button[class=decrease]').click(function(){
+									count--
+									if(count <= 0){
+										alert('1개 이상의 상품을 주문해주세요.')
+										return
+									}
+									inputCount.val(count)
+									//전체 합계 계산
+									let total = salePrice * count
+									totalSpan.text(total.toLocaleString())
+								})
+                        	})
+                        </script>
                         <div class="count">
                             <button class="decrease">-</button>
                             <input type="text" name="num" value="1" readonly/>
@@ -151,7 +112,7 @@
                         </div>
                         
                         <div class="total">
-                            <span>35,000</span>
+                            <span>[[${#numbers.formatInteger(product.salePrice, 3, 'COMMA')}]]</span>
                             <em>총 상품금액</em>
                         </div>
 
@@ -169,8 +130,7 @@
                         <h1>상품정보</h1>
                     </nav>
                     <!-- 상품상세페이지 이미지 -->
-                    <img src="../img/sample_detail1.jpg" alt="">
-                    <img src="../img/sample_detail2.jpg" alt="">
+					<img th:src="@{/thumb/{cate1}/{cate2}/{img}(cate1=${product.cate1}, cate2=${product.cate2}, img=${product.detail})}" alt="상품 상세 이미지"></a>
                 </article>
 
                 <!-- 상품 정보 제공 고시 내용 -->
@@ -182,76 +142,31 @@
                     <table border="0">
                         <tr>
                             <td>상품번호</td>
-                            <td>10110125435</td>
+                            <td>[[${product.pid}]]</td>
                         </tr>
                         <tr>
                             <td>상품상태</td>
-                            <td>새상품</td>
+                            <td>[[${product.status}]]</td>
                         </tr>
                         <tr>
                             <td>부가세 면세여부</td>
-                            <td>과세상품</td>
+                            <td>[[${product.dutyfree}]]</td>
                         </tr>
                         <tr>
                             <td>영수증발행</td>
-                            <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
+                            <td>[[${product.receipt}]]</td>
                         </tr>
                         <tr>
                             <td>사업자구분</td>
-                            <td>사업자 판매자</td>
+                            <td>[[${product.bizClass}]]</td>
                         </tr>
                         <tr>
                             <td>브랜드</td>
-                            <td>블루포스</td>
+                            <td>[[${product.company}]]</td>
                         </tr>
                         <tr>
                             <td>원산지</td>
-                            <td>국내생산</td>
-                        </tr>
-                    </table>
-                    <table border="0">
-                        <tr>
-                            <td>제품소재</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>색상</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>치수</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조자/수입국</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조국</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>취급시 주의사항</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조연월</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>품질보증기준</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>A/S 책임자와 전화번호</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>주문후 예상 배송기간</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                        <td colspan="2">구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우</td>
+                            <td>[[${product.origin}]]</td>
                         </tr>
                     </table>
                     <p class="notice">
@@ -265,7 +180,7 @@
                 </article>
                 
                 <!-- 상품 리뷰 내용 -->
-                <article class="review">
+                <article id="review" class="review">
                     <nav>
                         <h1>상품리뷰</h1>
                     </nav>
@@ -354,31 +269,8 @@
             </section>
             <!-- 상품 상세페이지 끝 -->
         </main>
-        <footer>
-            <ul>
-                <li><a href="#">회사소개</a></li>
-                <li><a href="#">서비스이용약관</a></li>
-                <li><a href="#">개인정보처리방침</a></li>
-                <li><a href="#">전자금융거래약관</a></li>
-            </ul>
-            <div>
-                <p><img src="../img/footer_logo.png" alt="로고"></p>
-                <p>
-                  <strong>(주)KMARKET</strong><br />
-                  부산시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br />
-                  대표이사 : 홍길동<br />
-                  사업자등록번호 : 220-81-83676 사업자정보확인<br />
-                  통신판매업신고 : 강남 10630호 Fax : 02-589-8842
-                </p>
-                <p>
-                  <strong>고객센터</strong><br />
-                  Tel : 1234-5678 (평일 09:00~18:00)<br />
-                  스마일클럽/SVIP 전용 : 1522-5700 (365일 09:00~18:00)<br />
-                  경기도 부천시 원미구 부일로 223(상동) 투나빌딩 6층<br />
-                  Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr<br />
-                </p>
-              </div>              
-        </footer>
+        <!-- 푸터 -->
+        <th:block th:include="@{_footer.html}"/>
         <button type="button" id="top">상단이동</button>
     </div>    
 </body>

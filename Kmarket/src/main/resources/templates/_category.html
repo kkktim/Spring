@@ -33,7 +33,7 @@
 				
 				// 2차 카테고리 출력
 				$.each(catesVo.cate2List, function(j, cate2Vo){					
-					let url = "/product/list?cate1="+cate2Vo.cate1+"&cate2="+cate2Vo.cate2;					
+					let url = "/product/list?cate1="+cate2Vo.cate1+"&cate2="+cate2Vo.cate2+"&order=1";					
 					$('.cate2s').eq(i).append("<li><a href='"+url+"'>"+cate2Vo.title+"</a></li>");				
 				});
 				

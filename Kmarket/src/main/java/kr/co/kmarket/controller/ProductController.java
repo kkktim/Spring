@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.kmarket.service.ProductService;
+import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.ProductVo;
 
 @Controller
@@ -30,22 +31,34 @@ public class ProductController {
 	@GetMapping("/product/list")
 	public String list(ProductVo pv, Model model) {
 		int start = 0;
-		int order = 1;
+		int order = pv.getOrder();
 		pv.setStart(start);
 		pv.setOrder(order);
 		
 		List<ProductVo> products = service.selectProducts(pv);
+		CategoriesVo cates = service.selectCateTitles(pv);
 		
 		model.addAttribute("products", products);
+		model.addAttribute("cates", cates);
+		model.addAttribute("order", order);
 		
 		return "/product/list";
 	}
+	@GetMapping("/product/view")
+	public String view(Model model, int pid) {
+		
+		ProductVo product = service.selectProduct(pid);
+		CategoriesVo cates = service.selectCateTitles(product);
+		
+		model.addAttribute("product", product);
+		model.addAttribute("cates", cates);
+		
+		return "/product/view";
+	}
+	
 	@GetMapping("/product/order")
 	public String order() {
 		return "/product/order";
 	}
-	@GetMapping("/product/view")
-	public String view() {
-		return "/product/view";
-	}
+	
 }
