@@ -14,8 +14,8 @@ public class CommentService {
 	public void insertComment(CommentVo cv) {
 		dao.insertComment(cv);
 	}
-	public CommentVo selelctComment(int no) {
-		return dao.selelctComment(no);
+	public CommentVo selectComments(int no) {
+		return dao.selectComments(no);
 	}
 	public void selelctComments() {
 		

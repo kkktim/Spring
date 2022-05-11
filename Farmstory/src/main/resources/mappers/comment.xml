@@ -9,11 +9,11 @@
 			`regip`=#{regip},
 			`rdate`=NOW();
 	</insert>
-	<select id="selelctComment" resultType="kr.co.farmstory.vo.CommentVo">
-		SELECT a.(*), b.nick FROM `Board_article` AS a 
+	<select id="selectComments" resultType="kr.co.farmstory.vo.CommentVo">
+		SELECT a.*, b.nick FROM `Board_article` AS a 
 		LEFT JOIN `Board_user` AS b 
 		ON a.uid=b.uid 
-		WHERE `no`=#{no};
+		WHERE `parent`=#{no};
 	</select>
 	<select id="selelctComments"></select>
 	

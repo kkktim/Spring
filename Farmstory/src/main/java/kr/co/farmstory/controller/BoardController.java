@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.farmstory.service.BoardService;
@@ -135,6 +136,7 @@ public class BoardController {
 		return "/board/view";
 	}
 	
+	//Modify
 	@GetMapping("/board/modify")
 	public String modify(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no, Model model) {
 		if(sessUser == null) {

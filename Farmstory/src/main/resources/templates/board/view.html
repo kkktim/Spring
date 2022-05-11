@@ -5,7 +5,7 @@
     <title>글보기</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="@{/js/commentRegister.js}"></script>
+    <script th:src="@{/js/commentRegister.js}"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -18,7 +18,7 @@
                     <td>제목</td>
                     <td><input type="text" name="title" readonly th:value="${article.title}"/></td>
                 </tr>
-                <tr>
+                <tr th:if="${article.fv.oName} != null">
                     <td>첨부파일</td>
                     <td>
                         <a th:href="@{/board/filedownload(fid=${article.fv.fid})}">[[${article.fv.oName}]]</a>

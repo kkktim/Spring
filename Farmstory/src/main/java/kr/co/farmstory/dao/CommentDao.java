@@ -10,7 +10,7 @@ import kr.co.farmstory.vo.CommentVo;
 public interface CommentDao {
 
 	public void insertComment(CommentVo cv);
-	public CommentVo selelctComment(int no);
+	public CommentVo selectComments(int no);
 	public void selelctComments();
 	
 	public void updateComment();

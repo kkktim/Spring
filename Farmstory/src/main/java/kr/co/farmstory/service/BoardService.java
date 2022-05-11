@@ -22,6 +22,7 @@ public class BoardService {
 	@Autowired
 	private BoardDao dao;
 	
+	//INSERT
 	public void insertFile(FileVo fv) {
 		dao.insertFile(fv);
 	}
@@ -29,7 +30,6 @@ public class BoardService {
 		dao.insertArticle(av);
 		return av.getNo();
 	}
-	
 	
 	//SELECT
 	public int selectCountTotal(String type) {

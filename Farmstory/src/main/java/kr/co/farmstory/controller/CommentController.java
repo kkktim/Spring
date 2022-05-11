@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,13 +34,17 @@ public class CommentController {
 		//원글에 댓글 +1
 		service.commentPlus(no);
 		//댓글 조회
-		CommentVo comment = service.selelctComment(no);
+		CommentVo comment = service.selectComments(no);
+		String com = comment.getContent();
+		System.out.println("com : "+com);
 		//json 데이터 생성
 //		Map<String, String> map = new HashMap<>();
 //		map.put("comment", comment);
 	
+		// jsonData 안만들어진거같음
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(comment);
+		
 		return jsonData;
 	}
 }
