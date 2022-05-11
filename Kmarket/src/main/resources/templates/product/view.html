@@ -12,6 +12,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/product/product.css}"/>
+    <script>
+    	$(function(){
+			//장바구니 클릭
+			$('.view .button > .cart').click(function(){
+				alert('장바구니 클릭!')
+				let uid = $('input[name=uid]').val()
+				let pid = $('input[name=pid]').val()
+				let count = $('input[name=num]').val()
+				let price = $('input[name=price]').val()
+				let discount = $('input[name=discount]').val()
+				let point = $('input[name=point]').val()
+				let delivery = $('input[name=delivery]').val()
+				let total = $('input[name=salePrice]').val() * count
+				let jsonData = {
+						"uid":uid,
+						"pid":pid,
+						"count":count,
+						"price":price,
+						"discount":discount,
+						"point":point,
+						"delivery":delivery
+				}
+				$.ajax({
+					url:'/product/cart',
+					type:'POST',
+					data:jsonData,
+					dataType:'json',
+					success: function(data){
+
+						if(data.result >= 1){
+							let isGo = confirm('장바구니에 상품을 추가했습니다. 장바구니로 이동하시겠습니까?')
+							
+							if(isGo){
+								location.href = '/product/cart'
+							}
+						}
+					}
+				})
+			})
+			//구매하기 클릭
+			
+    	})
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -25,7 +68,13 @@
 
             <!-- 상품 상세페이지 시작 -->
             <section id="product" class="view">
-            	<input type="hidden" name="salePrice" th:value=${product.salePrice}/>
+            	<input type="hidden" name="uid" th:value="${sessMember.uid}"/>
+            	<input type="hidden" name="pid" th:value="${product.pid}"/>
+            	<input type="hidden" name="price" th:value="${product.price}"/>
+            	<input type="hidden" name="discount" th:value="${product.discount}"/>
+            	<input type="hidden" name="point" th:value="${product.point}"/>
+            	<input type="hidden" name="delivery" th:value="${product.delivery}"/>
+            	<input type="hidden" name="salePrice" th:value="${product.salePrice}"/>
 
                 <!-- 제목, 페이지 네비게이션 -->
                 <nav>
@@ -81,16 +130,18 @@
                         	$(function(){
                         		
                         		let inputCount = $('input[name=num]')
-                        		let totalSpan = $('.total > span')
+                        		let totalSpan  = $('.total > span');
                         		let count = inputCount.val()
                         		let salePrice = $('input[name=salePrice]').val()
+                        		
                         		
 								$('button[class=increase]').click(function(){
 									count++
 									inputCount.val(count)
 									//전체 합계 계산
 									let total = salePrice * count
-									totalSpan.text(total.toLocaleString())
+									totalSpan.text(total.toLocaleString());
+									
 								})
 								$('button[class=decrease]').click(function(){
 									count--
@@ -101,7 +152,8 @@
 									inputCount.val(count)
 									//전체 합계 계산
 									let total = salePrice * count
-									totalSpan.text(total.toLocaleString())
+									totalSpan.text(total.toLocaleString());
+									
 								})
                         	})
                         </script>

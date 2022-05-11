@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.ProductVo;
 
@@ -18,4 +19,8 @@ public interface ProductDao {
 	
 	//카테고리 셀렉트
 	public CategoriesVo selectCateTitles(ProductVo pv);
+	
+	//장바구니
+	public int insertCart(CartVo cv);
+	public List<CartVo> selectCarts(String uid);
 }

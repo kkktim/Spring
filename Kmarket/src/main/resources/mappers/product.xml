@@ -26,5 +26,24 @@
 		WHERE c2.cate1=#{cate1} AND c2.cate2=#{cate2};
 	</select>
 	
+	<insert id="insertCart">
+		INSERT INTO `km_product_cart` SET 
+			`uid`=#{uid},
+			`pid`=#{pid},
+			`count`=#{count},
+			`price`=#{price},
+			`discount`=#{discount},
+			`point`=#{point},
+			`delivery`=#{delivery},
+			`total`=#{total},
+			`rdate`=NOW();
+	</insert>
 	
+	<select id="selectCarts" resultType="kr.co.kmarket.vo.CartVo">
+		SELECT a.*, b.cate1, b.cate2, b.name, b.desc, b.thumb1 
+		FROM km_product_cart AS a 
+		JOIN km_product AS b 
+		ON a.pid = b.pid 
+		WHERE uid = #{uid}
+	</select>
 </mapper>

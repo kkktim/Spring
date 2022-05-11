@@ -8,12 +8,12 @@
 <body>
     <div id="member-wrapper">
         <header>
-            <a href="#"><img th:src="@{/img/header_logo.png}" alt=""></a>
+            <a th:href="@{/}"><img th:src="@{/img/header_logo.png}" alt=""></a>
         </header>
         <main>
             <div id="member-login">
                 <img th:src="@{/img/member/member_txt_login.gif}" alt="로그인" />
-				<form action="#">
+				<form th:action="@{/member/login}" method="post">
 					<div>
 						<label>
 							<span><img th:src="@{/img/member/member_txt_id.gif}" alt="아이디"></span> 
