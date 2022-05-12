@@ -63,22 +63,22 @@ public class ProductController {
 	@GetMapping("/product/list")
 	public String list(ProductVo pv, Model model, 
 			@PageableDefault(page = 0, size = 7, sort = "pid", direction = Sort.Direction.DESC) Pageable pageable) {
-//		int start = 0;
-//		int order = pv.getOrder();
-//		pv.setStart(start);
-//		pv.setOrder(order);
-		String order = "sold";
+		int start = 0;
+		int order = pv.getOrder();
+		pv.setStart(start);
+		pv.setOrder(order);
+//		String order = "sold";
 		
-//		List<ProductVo> products = service.selectProducts(pv);
+		List<ProductVo> products = service.selectProducts(pv);
 		CategoriesVo cates = service.selectCateTitles(pv);
 		
-//		model.addAttribute("products", products);
+		model.addAttribute("products", products);
 		model.addAttribute("cates", cates);
 		model.addAttribute("order", order);
 		
-		service.selectProducts(pageable, cates, order);
+//		service.selectProducts(pageable, cates, order);
 		
-		model.addAttribute("products");
+//		model.addAttribute("products");
 		
 		return "/product/list";
 	}

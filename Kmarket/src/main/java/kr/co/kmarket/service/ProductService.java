@@ -27,17 +27,17 @@ public class ProductService {
 		return dao.selectProduct(pid);
 	}
 	//리스트 - MyBatis
-//	public List<ProductVo> selectProducts(ProductVo pv){
-//		return dao.selectProducts(pv);
-//	}
-	//리스트 - JPA
-	public Page<ProductEntity> selectProducts(Pageable pagable, CategoriesVo cates, String order) {
-		
-		return repo.selectArticlesAddsalePrice(cates.getCate1(),
-											   cates.getCate2(),
-											   pagable, 
-											   PageRequest.of(0, 10, Sort.by("sold").descending()));
+	public List<ProductVo> selectProducts(ProductVo pv){
+		return dao.selectProducts(pv);
 	}
+	//리스트 - JPA
+//	public Page<ProductEntity> selectProducts(Pageable pagable, CategoriesVo cates, String order) {
+//		
+//		return repo.selectArticlesAddsalePrice(cates.getCate1(),
+//											   cates.getCate2(),
+//											   pagable, 
+//											   PageRequest.of(0, 10, Sort.by("sold").descending()));
+//	}
 	
 	public CategoriesVo selectCateTitles(ProductVo pv) {
 		return dao.selectCateTitles(pv);

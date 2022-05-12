@@ -12,6 +12,131 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/product/product.css}"/>
+    <script>
+    $(function(){
+    	
+    	function aggregation(){
+			////////////////////////////////////
+			// 장바구니 전체합계
+			////////////////////////////////////
+			let total = $('.cart > form > .total'); 
+			let trs = $('input[name=productChk]:checked').parent().parent();
+			    		
+			// 상품 수 합계
+			let counts = trs.find('.count');
+			let totCount = 0;
+			
+			$.each(counts, function(){
+				let count = parseInt($(this).text());
+				totCount += count;    			
+			});
+			
+			//console.log('totCount : '+totCount);
+			total.find('.count').text(totCount+'개');
+			
+			// 상품금액 합계
+			let prices = trs.find('.price');
+			let totPrice = 0;
+			
+			$.each(prices, function(){
+				let count = parseInt($(this).prev().text().replace(/,/g, ''));
+				let price = parseInt($(this).text().replace(/,/g, ''));
+				totPrice += (price * count);    			
+			});
+			
+			//console.log('totPrice : '+totPrice);
+			total.find('.price').text(totPrice.toLocaleString()+'원');
+			
+			// 할인금액 합계
+			let discounts = trs.find('.discount');
+			let totDiscount = 0;
+			
+			$.each(discounts, function(){
+				let price = parseInt($(this).prev().text().replace(/,/g, ''));
+				let discount = parseInt($(this).text().replace(/%/g, ''));
+				
+				totDiscount += (price * discount / 100);				
+			});
+			
+			console.log('totDiscount : '+totDiscount);
+			total.find('.discount').text(totDiscount.toLocaleString()+'원');
+			
+			// 배송비 합계
+			let deliveries = trs.find('.delivery');
+			let totDelivery = 0;
+			
+			$.each(deliveries, function(){
+				let delivery = $(this).text().replace(/,/g, '');
+				
+				if(delivery != '무료배송'){
+					totDelivery += parseInt(delivery);	
+				}			
+			});
+			
+			//console.log('totPrice : '+totPrice);
+			total.find('.delivery').text(totDelivery.toLocaleString()+'원');
+			
+			// 포인트 합계
+			let points = trs.find('.point');
+			let totPoint = 0;
+			
+			$.each(points, function(){
+				let point = parseInt($(this).text().replace(/,/g, ''));
+				totPoint += point;	
+			});
+			
+			//console.log('totPrice : '+totPrice);
+			total.find('.point').text(totPoint.toLocaleString()+'점');
+			
+			
+			// 전체주문금액 합계
+			let totals = trs.find('.total');
+			let totTotal = 0;
+			
+			$.each(totals, function(){
+				let total = parseInt($(this).text().replace(/,/g, ''));
+				totTotal += total;	
+			});
+			
+			//console.log('totPrice : '+totPrice);
+			total.find('.total').text(totTotal.toLocaleString()+'원');
+    	} // aggregation end
+    	
+    	// 집계 실행
+    	aggregation();
+    	
+		////////////////////////////////////
+		// 장바구니 체크박스 전체 선택/해제
+		////////////////////////////////////
+		let checkAll = $('input[name=all]');
+		
+		checkAll.change(function(){
+			let isChecked = $(this).is(':checked');	
+			
+			if(isChecked){
+				// 체크됨 --> 전체상품 선택
+				$('input[name=productChk]').prop('checked', true);					
+			}else{
+				// 체크안됨 --> 전체상품 해제
+				$('input[name=productChk]').prop('checked', false);					
+			}
+			
+			// 집계 실행
+			aggregation();				
+		});
+		
+		////////////////////////////////////
+		// 장바구니 체크박스 개별 선택/해제
+		////////////////////////////////////
+		let checkProducts = $('input[name=productChk]');
+		
+		checkProducts.change(function(){
+			// 집계 실행
+			aggregation();				
+		});
+		
+	});
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -39,7 +164,7 @@
                 <table>
                   <thead>
                     <tr>
-                      <th><input type="checkbox" name="all"></th>
+                      <th><input type="checkbox" name="all" checked></th>
                       <th>상품명</th>
                       <th>총수량</th>
                       <th>판매가</th>
@@ -57,7 +182,7 @@
                     
                     <!-- 장바구니에 상품이 있을 경우 -->
                     <tr th:each="product:${carts}">
-                      <td><input type="checkbox" name=""></td>
+                      <td><input type="checkbox" name="productChk" th:value="${product.pid}" checked></td>
                       <td>
                         <article>
                           <a href="#"><img th:src="@{/thumb/{cate1}/{cate2}/{img}(cate1=${product.cate1}, cate2=${product.cate2}, img=${product.thumb1})}" alt="상품이미지"></a>
@@ -66,13 +191,13 @@
                           </div>
                         </article>
                       </td>
-                      <td>[[${product.count}]]</td>
-                      <td>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</td>
-                      <td>[[${product.discount}]]%</td>
-                      <td>[[${product.point}]]</td>
-                      <td th:if="${product.delivery} == 0">무료배송</td>
-                      <td th:if="${product.delivery != 0}">[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</td>
-                      <td>27,000</td>
+                      <td class="count">[[${product.count}]]</td>
+                      <td class="price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</td>
+                      <td class="discount">[[${product.discount}]]%</td>
+                      <td class="point">[[${product.point}]]</td>
+                      <td class="delivery" th:if="${product.delivery} == 0">무료배송</td>
+                      <td class="delivery" th:if="${product.delivery != 0}">[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</td>
+                      <td class="total">[[${#numbers.formatInteger(product.total, 3, 'COMMA')}]]</td>
                     </tr>
                   </tbody>
                 </table>
@@ -84,27 +209,27 @@
                   <table border="0">
                     <tr>
                       <td>상품수</td>
-                      <td>1</td>
+                      <td class="count">0</td>
                     </tr>
                     <tr>
                       <td>상품금액</td>
-                      <td>27,000</td>
+                      <td class="price">0</td>
                     </tr>
                     <tr>
                       <td>할인금액</td>
-                      <td>-1,000</td>
+                      <td class="discount">0</td>
                     </tr>
                     <tr>
                       <td>배송비</td>
-                      <td>0</td>
+                      <td class="delivery">0</td>
                     </tr>              
                     <tr>
                       <td>포인트</td>
-                      <td>260</td>
+                      <td class="point">0</td>
                     </tr>
                     <tr>
                       <td>전체주문금액</td>
-                      <td>26,000</td>
+                      <td class="total">0</td>
                     </tr>
                   </table>
                   <input type="submit" name="" value="주문하기">    
