@@ -3,10 +3,10 @@ package kr.co.ch08.persistence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import kr.co.ch08.vo.UserVo;
+import kr.co.ch08.vo.User1Vo;
 
 @Repository
-public interface UserRepo extends JpaRepository<UserVo, String> {
+public interface User1Repo extends JpaRepository<User1Vo, String> {
 
 	
 }

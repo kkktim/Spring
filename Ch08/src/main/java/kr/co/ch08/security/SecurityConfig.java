@@ -8,12 +8,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import kr.co.ch08.service.UserService;
+import kr.co.ch08.service.User1Service;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private UserService userService;
+	private User1Service userService;
 	
 	//인증 설정
 	@Override
