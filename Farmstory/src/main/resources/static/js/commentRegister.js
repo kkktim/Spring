@@ -20,8 +20,8 @@ $(function(){
 		let ctxRoot = '/Farmstory'
 		
 		$.ajax({
-			url:'/board/comment',
-			type:'POST',
+			url: '/board/comment',
+			type:'post',
 			data: jsonData,
 			dataType: 'json',
 			success: function(data){

@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+
 import kr.co.farmstory.service.BoardService;
 import kr.co.farmstory.vo.ArticleVo;
+import kr.co.farmstory.vo.CommentVo;
 import kr.co.farmstory.vo.FileVo;
 import kr.co.farmstory.vo.UserVo;
 
@@ -201,4 +205,29 @@ public class BoardController {
 		
 		return "redirect:/board/list?cate="+cate+"&type="+type;
 	}
+	
+//	@ResponseBody
+//	@PostMapping("/board/comment")
+//	public String register(HttpServletRequest req, CommentVo cv, int no) throws JsonProcessingException {
+//		
+//		String regip = req.getRemoteAddr();
+//		cv.setRegip(regip);
+//		cv.setParent(no);
+//		
+//		//댓글 등록
+//		service.insertComment(cv);
+//		
+//		//원글에 댓글 +1
+//		service.commentPlus(no);
+//		
+//		//댓글 조회
+//		CommentVo comments = service.selectComments(no);
+//	
+//		//json 데이터 생성
+//		Gson gson = new Gson();
+//		String jsonData = gson.toJson(comments);
+//		
+//		System.out.println("jsonData : "+jsonData);
+//		return jsonData;
+//	}
 }

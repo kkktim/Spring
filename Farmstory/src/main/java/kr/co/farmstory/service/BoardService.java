@@ -153,4 +153,12 @@ public class BoardService {
 		int[] groups = {groupStart, groupEnd};
 		return groups;
 	}
+	
+	//COMMENTS
+	public void insertComment() {
+		
+	}
+	public void commentPlus() {
+		
+	}
 }
