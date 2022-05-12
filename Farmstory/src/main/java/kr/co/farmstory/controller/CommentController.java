@@ -41,7 +41,7 @@ public class CommentController {
 //		Map<String, String> map = new HashMap<>();
 //		map.put("comment", comment);
 	
-		// jsonData 안만들어진거같음
+		// jsonData 안만들어진거같음 - 확인해보자
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonData = mapper.writeValueAsString(comment);
 		
