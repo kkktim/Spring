@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.farmstory.dao.BoardDao;
 import kr.co.farmstory.vo.ArticleVo;
+import kr.co.farmstory.vo.CommentVo;
 import kr.co.farmstory.vo.FileVo;
 
 @Service
@@ -43,6 +44,9 @@ public class BoardService {
 	}
 	public List<ArticleVo> selectArticles(String type, int start) {
 		return dao.selectArticles(type, start);
+	}
+	public List<CommentVo> selectComments(int no) {
+		return dao.selectComments(no);
 	}
 	//UPDATE
 	public void updateArticle(ArticleVo av) {

@@ -43,6 +43,9 @@
 		ORDER BY `no` DESC 
 		LIMIT #{start}, 10;
 	</select>
+	<select id="selectComments" resultType="kr.co.farmstory.vo.CommentVo">
+		SELECT * FROM `Board_article` WHERE `parent`=#{no};
+	</select>
 	
 	<update id="downCountPlus">
 		UPDATE `Board_file` AS a SET `download`=a.download + 1 WHERE `fid`=#{fid};

@@ -14,44 +14,41 @@ $(function(){
 			"no":no,
 			"content":content
 		}
-		
 		console.log(jsonData)
 		
-		let ctxRoot = '/Farmstory'
+		let commentList = $('.commentList')
 		
 		$.ajax({
-			url: '/board/comment',
-			type:'post',
+			url: '/comment/register',
+			type:'get',
 			data: jsonData,
 			dataType: 'json',
 			success: function(data){
 				console.log(data)
-				//화면 랜더링
-				let html = `<article>
-								<span>
-									<span class="nick">닉네임</span>
-									<span class="rdate">22-05-20</span>
-								</span>
-								<textarea name="comment" readonly>댓글 샘플입니다.</textarea>
-                    			<div>
-			                        <a href="#" class="del">삭제</a>
-			                        <a href="#" class="modify">수정</a>
-                    			</div>
-							</article>`
-				let dom = $(html)
+				
+				let html = `<article class='comment'>
+			   				<span>
+		    					<span class="nick">닉네임</span>
+		        				<span class="rdate">22-03-16</span>
+		        			</span>
+		        			<textarea name='comment' readonly>댓글내용</textarea>
+		        			<div>
+		        				<a href='#' class="del">삭제</a>
+		        				<a href='#' class="modify" data-mode="r">수정</a>
+		        			</div>
+		        		</article>`;
+		                			
+				let dom = $(html);
 				
 				dom.find('.nick').text(data.nick)
 				dom.find('.rdate').text(data.rdate)
-				dom.find('.textarea').text(data.content)
-				dom.find('.del').attr('data-no', data.no)
-				dom.find('.modify').attr('data-no', data.no)
+				dom.find('textarea').text(data.content)
+				dom.find('.del').attr('th:data-no', data.no)
+				dom.find('.del').attr('th:data-ano', data.parent)
+				dom.find('.modify').attr('th:data-no', data.no)
 				
-				$('.commentList').append(dom)
-				
-				textarea.val("")
-				$('.empty').remove()
+				commentList.append(dom)
 			}
-			
 		})
 		return false;
 	})

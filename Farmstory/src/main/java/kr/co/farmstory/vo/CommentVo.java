@@ -1,16 +1,18 @@
 package kr.co.farmstory.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CommentVo {
 
+	private int no;
 	private int parent;
 	private String content;
-	private String regip;
 	private String uid;
+	private String regip;
 	private String rdate;
-
-	//추가필드
 	private String nick;
+	
 }

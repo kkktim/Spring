@@ -130,12 +130,19 @@ public class BoardController {
 		if(sessUser == null) {
 			return "redirect:/user/login?success=102";
 		}
+		//글 가져오기
 		ArticleVo article = service.selectArticle(no);
+		List<CommentVo> comments = null;
+		if(article.getComment() > 0) {
+			comments = service.selectComments(no);
+		}
+		//댓글 가져오기
 		
 		model.addAttribute("cate", cate);
 		model.addAttribute("type", type);
 		model.addAttribute("sessUser", sessUser);
 		model.addAttribute("article", article);
+		model.addAttribute("comments", comments);
 		
 		return "/board/view";
 	}
@@ -206,28 +213,4 @@ public class BoardController {
 		return "redirect:/board/list?cate="+cate+"&type="+type;
 	}
 	
-//	@ResponseBody
-//	@PostMapping("/board/comment")
-//	public String register(HttpServletRequest req, CommentVo cv, int no) throws JsonProcessingException {
-//		
-//		String regip = req.getRemoteAddr();
-//		cv.setRegip(regip);
-//		cv.setParent(no);
-//		
-//		//댓글 등록
-//		service.insertComment(cv);
-//		
-//		//원글에 댓글 +1
-//		service.commentPlus(no);
-//		
-//		//댓글 조회
-//		CommentVo comments = service.selectComments(no);
-//	
-//		//json 데이터 생성
-//		Gson gson = new Gson();
-//		String jsonData = gson.toJson(comments);
-//		
-//		System.out.println("jsonData : "+jsonData);
-//		return jsonData;
-//	}
 }
