@@ -4,10 +4,13 @@
 
 $(function(){
 	$('.commentForm > form').submit(function(){
+		let inputUid = $(this).children('input[name=uid]')
+		let inputNo =$(this).children('input[name=no]') 
+		let textarea = $(this).children('textarea[name=content]')
 		
-		let uid = $(this).children('input[name=uid]').val()
-		let no = $(this).children('input[name=no]').val()
-		let content = $(this).children('textarea[name=content]').val()
+		let uid = inputUid.val()
+		let no = inputNo.val()
+		let content = textarea.val()
 		
 		let jsonData = {
 			"uid":uid,
@@ -17,9 +20,9 @@ $(function(){
 		console.log(jsonData)
 		
 		let commentList = $('.commentList')
-		
+		let ctxRoot = "/Farmstory"
 		$.ajax({
-			url: '/comment/register',
+			url: ctxRoot+'/comment/register',
 			type:'get',
 			data: jsonData,
 			dataType: 'json',
@@ -33,8 +36,9 @@ $(function(){
 		        			</span>
 		        			<textarea name='comment' readonly>댓글내용</textarea>
 		        			<div>
-		        				<a href='#' class="del">삭제</a>
-		        				<a href='#' class="modify" data-mode="r">수정</a>
+		        				<a href="#" class="del">삭제</a>
+                        		<a href="#" class="modify">수정</a>
+                        		<a href="#" class="cancel">취소</a>
 		        			</div>
 		        		</article>`;
 		                			
@@ -48,6 +52,11 @@ $(function(){
 				dom.find('.modify').attr('th:data-no', data.no)
 				
 				commentList.append(dom)
+				
+				//업로드 후 남아 있는 텍스트 지우기
+				textarea.val("")
+				//댓글 없다는 내용 지우기
+				$('.empty').remove()
 			}
 		})
 		return false;

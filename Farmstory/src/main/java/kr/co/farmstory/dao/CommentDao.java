@@ -13,7 +13,8 @@ public interface CommentDao {
 	
 	public CommentVo selectComment(int no);
 	
-	public void updateComment();
+	public int updateComment(CommentVo cv);
+	
 	public int deleteComment(int no);
 	
 	public void commentPlus(int no);

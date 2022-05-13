@@ -11,11 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
 
 import kr.co.farmstory.service.BoardService;
 import kr.co.farmstory.vo.ArticleVo;
@@ -26,7 +22,7 @@ import kr.co.farmstory.vo.UserVo;
 @SessionAttributes("sessUser")
 @Controller
 public class BoardController {
-	
+	//세션 초기화 코드
 	@ModelAttribute("sessUser")
 	public UserVo setUserVo() {
 		return null;
@@ -35,6 +31,7 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
+	// ########### LIST ###########
 	@GetMapping("/board/list")
 	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type, String pg) {
 		if(sessUser == null) {
@@ -63,7 +60,8 @@ public class BoardController {
 		
 		return "/board/list";
 	}
-	//Write
+	
+	// ########### WRITE ###########
 	@GetMapping("/board/write")
 	public String write(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type) {
 		if(sessUser == null) {
@@ -124,7 +122,7 @@ public class BoardController {
 		service.downCountPlus(fid);
 	}
 		
-	//View
+	// ########### VIEW ###########
 	@GetMapping("/board/view")
 	public String view(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no, Model model) {
 		if(sessUser == null) {
@@ -132,11 +130,13 @@ public class BoardController {
 		}
 		//글 가져오기
 		ArticleVo article = service.selectArticle(no);
+		//댓글 가져오기
 		List<CommentVo> comments = null;
 		if(article.getComment() > 0) {
 			comments = service.selectComments(no);
 		}
-		//댓글 가져오기
+		//글 조회수 + 1
+		service.updateArticleHit(no);
 		
 		model.addAttribute("cate", cate);
 		model.addAttribute("type", type);
@@ -147,7 +147,7 @@ public class BoardController {
 		return "/board/view";
 	}
 	
-	//Modify
+	// ########### UPDATE ###########
 	@GetMapping("/board/modify")
 	public String modify(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no, Model model) {
 		if(sessUser == null) {
@@ -191,7 +191,8 @@ public class BoardController {
 		return "redirect:/board/view?cate="+cate+"&type="+type+"&no="+av.getNo();
 	}
 	
-	//DELETE
+	
+	// ########### DELETE ###########
 	@GetMapping("/board/delete")
 	public String delete(@ModelAttribute("sessUser") UserVo sessUser, String cate, String type, int no) {
 		if(sessUser == null) {

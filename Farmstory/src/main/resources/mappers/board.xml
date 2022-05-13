@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.farmstory.dao.BoardDao">
+	<!-- ########### INSERT ########### -->
 	<insert id="insertFile">
 		INSERT INTO `Board_file` SET 
 			`parent`=#{parent},
@@ -22,6 +23,7 @@
 			`user_id`=#{uid};
 	</insert>
 	
+	<!-- ######################################## SELECT ######################################## -->
 	<select id="selectCountTotal" resultType="int">
 		SELECT COUNT(`no`) FROM `Board_article` AS a JOIN `Board_user` AS b 
 		ON a.uid = b.uid 
@@ -31,8 +33,11 @@
 		SELECT * FROM `Board_file` WHERE `fid`=#{fid};
 	</select>
 	<select id="selectArticle" resultMap="selectArticleResultMap">
-		SELECT * FROM `Board_article` AS a LEFT JOIN `Board_file` AS b 
+		SELECT a.*, b.*, c.nick FROM `Board_article` AS a 
+		LEFT JOIN `Board_file` AS b 
 		ON a.`no`=b.parent 
+		LEFT JOIN `Board_user` AS c
+		ON a.uid=c.uid
 		WHERE `no`=#{no};
 	</select>
 	<select id="selectArticles" resultMap="selectArticleResultMap">
@@ -47,6 +52,7 @@
 		SELECT * FROM `Board_article` WHERE `parent`=#{no};
 	</select>
 	
+	<!-- ########### UPDATE ########### -->
 	<update id="downCountPlus">
 		UPDATE `Board_file` AS a SET `download`=a.download + 1 WHERE `fid`=#{fid};
 	</update>
@@ -56,7 +62,11 @@
 			`content`=#{content} 
 			WHERE `no`=#{no};
 	</update>
+	<update id="updateArticleHit">
+		UPDATE `Board_article` AS a SET `hit`=a.hit + 1 WHERE `no`=#{no}
+	</update>
 	
+	<!-- ########### DELETE ########### -->
 	<delete id="deleteFile">
 		DELETE FROM `Board_file` WHERE `fid`=#{fid};
 	</delete>
@@ -64,6 +74,7 @@
 		DELETE FROM `Board_article` WHERE `no`=#{no};
 	</delete>
 	
+	<!-- resultMap -->
 	<resultMap type="kr.co.farmstory.vo.ArticleVo" id="selectArticleResultMap">
 		<id column="no" property="no"/>
 		<result column="parent" property="parent"/>

@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <title>팜스토리::찾아오시는길</title>
     <link rel="stylesheet" href="../css/style.css"/>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75f3260554e60660733f28bdfad8898d"></script>
+    <script>
+	    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	    var options = { //지도를 생성할 때 필요한 기본 옵션
+	    	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	    	level: 3 //지도의 레벨(확대, 축소 정도)
+	    };
+	
+	    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    </script>
 </head>
 <body>
     <div id="wrapper">
     
-        <th:block th:include="/_header.html"/>
+        <!-- header -->
+        <th:block th:include="@{_header.html}"/>
 
         <div id="sub">
             <div><img src="../img/sub_top_tit1.png" alt="INTRODUCTION"></div>
@@ -31,7 +42,7 @@
                     </nav>
 
                     <!-- 내용 시작 -->
-
+					<div id="map" style="width:500px;height:400px;"></div>
 
                     <!-- 내용 끝 -->
 
@@ -41,7 +52,8 @@
         </div>
         
         
-        <th:block th:include="/_header.html"/>
-    </div>    
+        <!-- footer -->
+        <th:block th:include="@{_footer.html}"/>
+    </div>
 </body>
 </html>

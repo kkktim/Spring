@@ -22,16 +22,17 @@ public class CommentController {
 	@ResponseBody
 	@GetMapping("/comment/register")
 	public String register(HttpServletRequest req, CommentVo cv) {
-		
+		//ano = 본문 글 번호
+		int ano = cv.getNo(); 
 		String regip = req.getRemoteAddr();
 		cv.setRegip(regip);
-		cv.setParent(cv.getNo());
+		cv.setParent(ano);
 		
-		//댓글 등록
+		//댓글 등록 no = 댓글 번호
 		int no = service.insertComment(cv);
-		
+
 		//원글에 댓글 수 +1
-		service.commentPlus(cv.getNo());
+		service.commentPlus(ano);
 		
 		//댓글 조회
 		CommentVo comment = service.selectComment(no);
@@ -40,19 +41,36 @@ public class CommentController {
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(comment);
 		
-		System.out.println("jsonData : "+jsonData);
+		return jsonData;
+	}
+	
+	@ResponseBody
+	@GetMapping("/comment/modify")
+	public String commentModify(int no, String content) {
+		CommentVo cv = new CommentVo();
+		cv.setNo(no);
+		cv.setContent(content);
+		
+		int result = service.updateComment(cv);
+		
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(result);
+		
 		return jsonData;
 	}
 	
 	@ResponseBody
 	@GetMapping("/comment/delete")
-	public int commentDelete(int no, int parent) {
+	public String commentDelete(int no, int parent) {
 		//댓글 삭제
 		int result = service.deleteComment(no);
-		System.out.println("result : "+result);
+
 		//원글에 댓글 수 -1
 		service.commentMinus(parent);
 		
-		return result;
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(result);
+		
+		return jsonData;
 	}
 }

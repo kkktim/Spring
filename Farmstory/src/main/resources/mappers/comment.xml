@@ -13,10 +13,14 @@
 		SELECT a.*, b.nick FROM `Board_article` AS a 
 		LEFT JOIN `Board_user` AS b 
 		ON a.uid=b.uid 
-		WHERE `parent`=#{no};
+		WHERE `no`=#{no};
 	</select>
 	
-	<update id="updateComment"></update>
+	<update id="updateComment">
+		UPDATE `Board_article` SET 
+			`content`=#{content}
+		WHERE `no`=#{no};
+	</update>
 	
 	<delete id="deleteComment">
 		DELETE FROM `Board_article` WHERE `no`=#{no};

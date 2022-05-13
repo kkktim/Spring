@@ -4,9 +4,9 @@
     <p>
         <a th:href="@{/index}">HOME |</a>
         <a th:if="${sessUser} == null" th:href="@{/user/login}">로그인 |</a>
-        <a th:unless="${sessUser} == null" th:href="@{/user/logout}">로그아웃 |</a>
-        <a th:href="@{#}">회원가입 |</a>
-        <a th:href="@{#}">고객센터</a>
+        <a th:if="${sessUser} != null" th:href="@{/user/logout}">로그아웃 |</a>
+        <a th:if="${sessUser} == null" th:href="@{/user/terms}">회원가입 |</a>
+        <a th:href="@{board/list?cate=community&type=qna}">고객센터</a>
     </p>
     <img th:src="@{/img/head_txt_img.png}" alt="3만원 이상 무료배송"/>
     

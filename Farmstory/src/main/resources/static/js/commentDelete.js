@@ -15,11 +15,12 @@ $(function(){
 			"parent":parent
 		}
 		
-		let url = "/comment/delete"
+		let ctxRoot = "/Farmstory"
+		let url = ctxRoot+"/comment/delete"
 		
 		$.get(url, jsonData, function(data){
-				console.log(data.result)
-				if(data.result > 0){
+				console.log(data)
+				if(data > 0){
 					alert('댓글이 삭제 되었습니다.')
 				}
 				prevArticle.remove()

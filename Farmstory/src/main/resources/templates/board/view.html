@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script th:src="@{/js/commentRegister.js}"></script>
     <script th:src="@{/js/commentDelete.js}"></script>
+    <script th:src="@{/js/commentModify.js}"></script>
     <script>
 	    $(function () {
 	    	$('.btnDelete').click(function (e) {
@@ -36,17 +37,18 @@
                 <tr>
                     <td>제목</td>
                     <td><input type="text" name="title" readonly th:value="${article.title}"/></td>
+                    <td align="right">작성자 : [[${article.user.nick}]]</td>
                 </tr>
                 <tr th:if="${article.fv.oName} != null">
                     <td>첨부파일</td>
-                    <td>
+                    <td colspan="2">
                         <a th:href="@{/board/filedownload(fid=${article.fv.fid})}">[[${article.fv.oName}]]</a>
                         <span>[[${article.fv.download}]]</span>
                     </td>
                 </tr>
                 <tr>
                     <td>내용</td>
-                    <td>
+                    <td colspan="2">
                         <textarea name="content" readonly>[[${article.content}]]</textarea>
                     </td>
                 </tr>
@@ -69,7 +71,8 @@
                     <textarea name="comment" readonly>[[${comment.content}]]</textarea>
                     <div>
                         <a href="#" class="del" th:data-no="${comment.no}" th:data-ano="${comment.parent}">삭제</a>
-                        <a href="#" class="modify" th:data-no="${comment.no}">수정</a>
+                        <a href="#" class="modify" th:data-no="${comment.no}" th:data-mode="r">수정</a>
+                        <a href="#" class="cancel">취소</a>
                     </div>
                 </article>
                 <p th:unless="${comments} != null" class="empty">
@@ -81,8 +84,8 @@
             <section class="commentForm">
                 <h3>댓글쓰기</h3>
                 <form action="#">
-                	<input type="text" name="uid" th:value="${sessUser.uid}"/>
-                	<input type="text" name="no" th:value="${article.no}"/>
+                	<input type="hidden" name="uid" th:value="${sessUser.uid}"/>
+                	<input type="hidden" name="no" th:value="${article.no}"/>
                     <textarea name="content"></textarea>
                     <div>
                         <a th:href="@{/board/view(cate=${cate}, type=${type}, no=${article.no})}" class="btnCancel">취소</a>

@@ -15,14 +15,18 @@ public interface BoardDao {
 	//INSERT
 	public void insertFile(FileVo fv);
 	public int insertArticle(ArticleVo av);
+	
 	//SELECT
 	public int selectCountTotal(String type);
 	public FileVo selectFile(int fid);
 	public ArticleVo selectArticle(int no);
 	public List<ArticleVo> selectArticles(String type, int start);
 	public List<CommentVo> selectComments(int no);
+	
 	//UPDATE
 	public void updateArticle(ArticleVo av);
+	public void updateArticleHit(int no);
+	
 	//DELETE
 	public void deleteFile(int fid);
 	public void deleteArticle(int no);

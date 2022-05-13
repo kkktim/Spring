@@ -8,7 +8,8 @@
 <body>
     <div id="wrapper">
         
-        <th:block th:include="/_header.html"/>
+        <!-- header -->
+        <th:block th:include="@{_header.html}"/>
 
         <div id="sub">
             <div><img src="../img/sub_top_tit1.png" alt="INTRODUCTION"></div>
@@ -41,7 +42,8 @@
         </div>
         
         
-        <th:block th:include="/_footer.html"/>
+        <!-- footer -->
+        <th:block th:include="@{_footer.html}"/>
     </div>    
 </body>
 </html>

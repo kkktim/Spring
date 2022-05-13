@@ -21,7 +21,9 @@ public class CommentService {
 		return dao.selectComment(no);
 	}
 	
-	public void updateComment() {}
+	public int updateComment(CommentVo cv) {
+		return dao.updateComment(cv);
+	}
 	
 	public int deleteComment(int no) {
 		return dao.deleteComment(no);

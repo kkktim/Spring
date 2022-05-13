@@ -729,6 +729,9 @@ main > .info > div > .account {
     padding: 20px 0;
     text-align: center;
 }
+#board.view > .commentList > article > div > .cancel {
+	display: none;
+}
 
 #board.view > .commentForm > form > textarea {
     width: 100%;
@@ -740,7 +743,6 @@ main > .info > div > .account {
 #board.view > .commentForm > form > div {
     text-align: right;
 }
-
 /* 게시판-글쓰기 */
 #board.write {}
 #board.write form > div {
