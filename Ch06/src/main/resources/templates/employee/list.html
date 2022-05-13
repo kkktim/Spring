@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>employee/list</title>
+</head>
+<body>
+	<h3>employee/list</h3>
+	<a th:href="@{/employee/register}">등록하기</a>
+	<table border="1">
+		<tr>
+			<td>아이디</td>
+			<td>이름</td>
+			<td>성별</td>
+			<td>휴대폰</td>
+			<td>이메일</td>
+			<td>직급</td>
+			<td>부서</td>
+			<td>입사일</td>
+			<td>관리</td>
+		</tr>
+		<tr th:each="worker:${workers}">
+			<td>[[${worker.uid}]]</td>
+			<td th:text="${worker.name}">홍길동</td>
+			<td th:text="${worker.gender}">남</td>
+			<td th:text="${worker.hp}">010-1212-1212</td>
+			<td th:text="${worker.email}">이메일</td>
+			<td th:text="${worker.pos}">직급</td>
+			<td th:text="${worker.dep}">부서</td>
+			<td th:text="${#strings.substring(worker.rdate, 0, 11)}">입사일</td>
+			<td>
+				<a th:href="@{/employee/modify?(uid=${worker.uid})}">수정</a>
+				<a th:href="@{/employee/delete?(uid=${worker.uid})}">삭제</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

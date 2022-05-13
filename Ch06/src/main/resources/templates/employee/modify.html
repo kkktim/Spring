@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>employee/modify</title>
+</head>
+<body>
+	<h3>employee/modify</h3>
+	<a th:href="@{/employee/list}">목록보기</a>
+	<form th:action="@{/employee/modify}" method="post">
+		<table border="1">
+		<input type="hidden" name="gender" th:value="${employee.gender}"/>
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" name="uid" th:value="${employee.uid}" readonly/></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name" th:value="${employee.name}"/></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td th:if="${employee.gender == 1}" readonly>남</td>
+				<td th:unless="${employee.gender == 1}" readonly>여</td>
+			</tr>
+			<tr>
+				<td>휴대폰</td>
+				<td><input type="text" name="hp" th:value="${employee.hp}"/></td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td><input type="text" name="email" th:value="${employee.email}"/></td>
+			</tr>
+			<tr>
+				<td>직급</td>
+				<td><select name="pos">
+					<option th:value="사원">사원</option>
+					<option th:value="대리">대리</option>
+					<option th:value="과장">과장</option>
+					<option th:value="차장">차장</option>
+					<option th:value="부장">부장</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td>부서</td>
+				<td><select name="dep">
+						<option th:value="101">영업1부</option>
+						<option th:value="102">영업2부</option>
+						<option th:value="103">영업3부</option>
+						<option th:value="104">영업4부</option>
+						<option th:value="105">인사부</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right"><input type="submit" value="수정하기"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ch06.persistence.StudentDao">
+	<insert id="insertStudent">
+		INSERT INTO `Students` VALUES (#{sid}, #{name}, #{gender}, #{hp}, #{grade}, #{regdate});
+	</insert>
+	<select id="selectStudent" resultType="kr.co.ch06.vo.StudentVo">
+		SELECT * FROM `Students` WHERE `sid`=#{sid};
+	</select>
+	<select id="selectStudents" resultType="kr.co.ch06.vo.StudentVo">
+		SELECT * FROM `Students`;
+	</select>
+	<update id="updateStudent">
+		UPDATE `Students` SET 
+			`name`=#{name},
+			`hp`=#{hp},
+			`grade`=#{grade}
+		WHERE `sid`=#{sid};
+			
+	</update>
+	<delete id="deleteStudent">
+		DELETE FROM `Students` WHERE `sid`=#{sid};
+	</delete>
+</mapper>
