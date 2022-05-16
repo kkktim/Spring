@@ -132,9 +132,99 @@
 		
 		checkProducts.change(function(){
 			// 집계 실행
-			aggregation();				
+			aggregation();
+			
 		});
 		
+		////////////////////////////////////
+		// 장바구니 삭제
+		////////////////////////////////////
+		$('input[name=del]').click(function(){
+			let productChk = $('input[name=productChk]:checked')
+			let cids = []
+			
+			if(productChk.length == 0){
+				alert('삭제하려는 상품을 선택하세요.')
+				return;
+			}
+			
+			$.each(productChk, function(){
+				cids.push($(this).val())
+			})
+			
+			console.log(cids)
+			let jsonData = {"cids":cids}
+			$.ajax({
+				url:'/product/cartDelete',
+				type:'get',
+				traditional:true,   /* 배열 전송을 위한 옵션 */
+				data:jsonData,
+				dataType:'json',
+				success:function(){
+					alert(data.result)
+					location.href="/product/cart"
+				}
+			})
+		})
+		
+		////////////////////////////////////
+		// 주문하기
+		////////////////////////////////////
+		$('input[name=order]').click(function(e){
+			e.preventDefault()
+			
+			let productChk = $('input[name=productChk]:checked')
+			let cids = []
+			let pids = []
+			let counts = []
+			
+			if(productChk.length == 0){
+				alert('주문하려는 상품을 선택하세요.')
+				return;
+			}
+			
+			$.each(productChk, function(){
+				cids.push($(this).val())
+				pids.push($(this).data('pid'))
+				counts.push($(this).data('count'))
+			})
+			console.log(cids)
+			
+			let uid = $('.total input[name=uid]').val()
+			let count = $('.total .count').text().replace(/(,|개)/g, '')
+			let price = $('.total .price').text().replace(/(,|원)/g, '')
+			let discount = $('.total .discount').text().replace(/(,|원)/g, '')
+			let delivery = $('.total .delivery').text().replace(/(,|원)/g, '')
+			let point = $('.total .point').text().replace(/(,|원)/g, '')
+			let total = $('.total .total').text().replace(/(,|원)/g, '')
+			
+			let jsonData = {
+				"uid":uid,
+				"count":count,
+				"price":price,
+				"discount":discount,
+				"delivery":delivery,
+				"point":point,
+				"total":total,
+				"cids":cids,
+				"pids":pids,
+				"counts":counts
+				}
+			
+			$.ajax({
+				url:'/product/order',
+				type:'POST',
+				traditional:true,   /* 배열 전송을 위한 옵션 */
+				data:jsonData,
+				dataType:'json',
+				success:function(data){
+					//주문페이지 이동
+					location.href='/product/order'
+					
+				}
+			})
+			
+		})
 	});
     </script>
 </head>
@@ -182,7 +272,10 @@
                     
                     <!-- 장바구니에 상품이 있을 경우 -->
                     <tr th:each="product:${carts}">
-                      <td><input type="checkbox" name="productChk" th:value="${product.pid}" checked></td>
+                      <td><input type="checkbox" name="productChk" th:value="${product.cid}" 
+                      th:data-pid="${product.pid}"
+                      th:data-count="${product.count}"
+                       checked></td>
                       <td>
                         <article>
                           <a href="#"><img th:src="@{/thumb/{cate1}/{cate2}/{img}(cate1=${product.cate1}, cate2=${product.cate2}, img=${product.thumb1})}" alt="상품이미지"></a>
@@ -205,6 +298,7 @@
 
                 <!-- 장바구니 전체합계 -->
                 <div class="total">
+                	<input type="hidden" name="uid" th:value="${sessMember.uid}" />
                   <h2>전체합계</h2>
                   <table border="0">
                     <tr>
@@ -232,7 +326,7 @@
                       <td class="total">0</td>
                     </tr>
                   </table>
-                  <input type="submit" name="" value="주문하기">    
+                  <input type="submit" name="order" value="주문하기">    
                 </div>
 
               </form>

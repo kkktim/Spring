@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.CategoriesVo;
+import kr.co.kmarket.vo.OrderVo;
 import kr.co.kmarket.vo.ProductVo;
 
 @Mapper
@@ -23,4 +24,9 @@ public interface ProductDao {
 	//장바구니
 	public int insertCart(CartVo cv);
 	public List<CartVo> selectCarts(String uid);
+	public int deleteCart(int[] cids);
+	
+	//주문
+	public int insertOrder(OrderVo ov);
+	public void insertOrderDetail(int oid, int pid, int count);
 }

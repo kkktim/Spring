@@ -14,6 +14,7 @@ import kr.co.kmarket.entity.ProductEntity;
 import kr.co.kmarket.persistence.ProductRepo;
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.CategoriesVo;
+import kr.co.kmarket.vo.OrderVo;
 import kr.co.kmarket.vo.ProductVo;
 
 @Service
@@ -49,5 +50,18 @@ public class ProductService {
 	
 	public List<CartVo> selectCarts(String uid){
 		return dao.selectCarts(uid);
+	}
+	
+	public int deleteCart(int[] cids) {
+		return dao.deleteCart(cids);
+	}
+	
+	public int insertOrder(OrderVo ov) {
+		dao.insertOrder(ov);
+		return ov.getOid();
+	}
+	
+	public void insertOrderDetail(int oid, int pid, int count) {
+		dao.insertOrderDetail(oid, pid, count);
 	}
 }

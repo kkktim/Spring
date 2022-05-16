@@ -20,6 +20,7 @@ import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.CartVo;
 import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.MemberVo;
+import kr.co.kmarket.vo.OrderVo;
 import kr.co.kmarket.vo.ProductVo;
 
 @SessionAttributes("sessMember")
@@ -56,6 +57,15 @@ public class ProductController {
 		jsonData.put("result", result);
 		return jsonData;
 	}
+	@ResponseBody
+	@GetMapping("/product/cartDelete")
+	public Map<String, Integer> cartDelete(int[] cids) {
+		int result = service.deleteCart(cids);
+		Map<String , Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	
 	@GetMapping("/product/complete")
 	public String complete() {
 		return "/product/complete";
@@ -97,6 +107,23 @@ public class ProductController {
 	@GetMapping("/product/order")
 	public String order() {
 		return "/product/order";
+	}
+	@ResponseBody
+	@PostMapping("/product/order")
+	public Map<String, Integer> order(OrderVo ov) {
+		//주문장 등록
+		int oid = service.insertOrder(ov);
+		//개별상품등록
+		int[] counts = ov.getCounts();
+		int i = 0;
+		for(int pid : ov.getPids()) {
+			service.insertOrderDetail(oid, pid, counts[i]);
+			i++;
+		}
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", oid);
+		return map;
 	}
 	
 }
