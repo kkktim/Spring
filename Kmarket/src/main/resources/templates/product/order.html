@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/product/product.css}"/>
-    <script th:src="@{/js/poduct/js/zipcode.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/product/zipcode.js}"></script>
     <script th:inline="javascript">
     	$(function(){
     		//최종주문하기
@@ -58,10 +59,10 @@
     			}else{
     				/*<![CDATA[*/ 
     				let total = /*[[${order.total + order.delivery}]]*/ 
+    				/*]]*/
     				let totTotal = total - usePoint
         			$('.point > td:eq(1)').text(usePoint+"점")
         			$('.total > td:eq(1)').text(totTotal.toLocaleString()+"원")
-        			/*]]*/
     			}
     			point.val("")
     		})
@@ -172,7 +173,7 @@
                       <td>우편번호</td>
                       <td>
                         <input type="text" name="zip" id="zip" th:value="${order.uZip}"/>
-                        <input type="button" value="검색"/>
+                        <input type="button" class="btnZip" value="검색" onclick="zipcode()"/>
                       </td>
                     </tr>
                     <tr>
