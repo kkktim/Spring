@@ -66,10 +66,6 @@ public class ProductController {
 		return map;
 	}
 	
-	@GetMapping("/product/complete")
-	public String complete() {
-		return "/product/complete";
-	}
 	@GetMapping("/product/list")
 	public String list(ProductVo pv, Model model, 
 			@PageableDefault(page = 0, size = 7, sort = "pid", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -104,8 +100,12 @@ public class ProductController {
 		return "/product/view";
 	}
 	
+	//주문하기 - ORDER
 	@GetMapping("/product/order")
-	public String order() {
+	public String order(int oid, Model model) {
+		List<OrderVo> orders =  service.selectOrders(oid);
+		model.addAttribute("orders", orders);
+		model.addAttribute("order", orders.get(0));
 		return "/product/order";
 	}
 	@ResponseBody
@@ -121,6 +121,25 @@ public class ProductController {
 			i++;
 		}
 		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", oid);
+		return map;
+	}
+	
+	//결제 완료 - COMPLETE
+	@GetMapping("/product/complete")
+	public String complete(int oid, Model model) {
+		List<OrderVo> orders = service.selectOrderComplete();
+		
+		model.addAttribute("orders", orders);
+		model.addAttribute("order", orders.get(0));
+		
+		return "/product/complete";
+	}
+	@PostMapping("/product/complete")
+	public Map<String, Integer> complete(OrderVo ov) {
+		int result = service.updateOrder(ov);
+		int oid = ov.getOid();
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", oid);
 		return map;

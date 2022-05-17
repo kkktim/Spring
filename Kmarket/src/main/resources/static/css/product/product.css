@@ -1113,7 +1113,7 @@
 }
 
 #product.complete > .info > table tr > th {
-  padding: 12px 0;    
+  padding: 12px 10px;    
   background: #fff;
   color: #383838;
   font-size: 0.95em;
@@ -1122,6 +1122,7 @@
 }
 #product.complete > .info > table tr > th:last-child {
   width: 200px;
+  text-align: right;
 }      
 
 #product.complete > .info table tr > td {

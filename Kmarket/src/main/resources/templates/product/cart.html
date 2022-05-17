@@ -54,11 +54,11 @@
 			$.each(discounts, function(){
 				let price = parseInt($(this).prev().text().replace(/,/g, ''));
 				let discount = parseInt($(this).text().replace(/%/g, ''));
+				let count = parseInt($(this).prev().prev().text());
 				
-				totDiscount += (price * discount / 100);				
+				totDiscount += (price * (discount / 100)) * count;			
 			});
 			
-			console.log('totDiscount : '+totDiscount);
 			total.find('.discount').text(totDiscount.toLocaleString()+'원');
 			
 			// 배송비 합계
@@ -195,7 +195,7 @@
 			let price = $('.total .price').text().replace(/(,|원)/g, '')
 			let discount = $('.total .discount').text().replace(/(,|원)/g, '')
 			let delivery = $('.total .delivery').text().replace(/(,|원)/g, '')
-			let point = $('.total .point').text().replace(/(,|원)/g, '')
+			let point = $('.total .point').text().replace(/(,|점)/g, '')
 			let total = $('.total .total').text().replace(/(,|원)/g, '')
 			
 			let jsonData = {
@@ -209,17 +209,19 @@
 				"cids":cids,
 				"pids":pids,
 				"counts":counts
-				}
+			}
+			console.log(JSON.stringify(jsonData))
 			
 			$.ajax({
-				url:'/product/order',
-				type:'POST',
-				traditional:true,   /* 배열 전송을 위한 옵션 */
-				data:jsonData,
-				dataType:'json',
+				url: '/product/order',
+				type: 'post',
+				traditional: true,   /* 배열 전송을 위한 옵션 */
+				data: jsonData,
+				dataType: 'json',
 				success:function(data){
+					console.log(data.result)
 					//주문페이지 이동
-					location.href='/product/order'
+					location.href='/product/order?oid='+data.result
 					
 				}
 			})

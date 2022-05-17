@@ -74,4 +74,62 @@
 			pid=#{pid},
 			cnt=#{count}
 	</insert>
+	
+	<select id="selectOrders" resultType="kr.co.kmarket.vo.OrderVo">
+		SELECT a.*, b.pid, b.cnt, c.cate1 AS pCate1, c.cate2 AS pCate2, 
+		c.name AS pName, c.desc AS pDesc, c.thumb1 AS pThumb1, c.price AS pPrice, c.discount AS pDiscount, 
+		c.point AS pPoint, c.delivery AS pDelvery, 
+		FLOOR(c.price * (1 - c.discount/100)) AS pSalePrice, 
+		d.name AS uName, 
+		d.hp AS uHp, 
+		d.zip AS uZip, 
+		d.addr1 AS uAddr1, 
+		d.addr2 AS uAddr2, 
+		d.point AS uPoint
+		FROM km_product_order AS a
+		JOIN km_product_order_detail AS b 
+		ON a.oid=b.oid 
+		JOIN km_product AS c 
+		ON b.pid=c.pid 
+		JOIN km_member AS d 
+		ON a.uid=d.uid 
+		WHERE a.oid=#{oid}
+	</select>
+	
+	<update id="updateOrder">
+		UPDATE km_product_order SET 
+			orderer=#{orderer},
+			hp=#{hp},
+			zip=#{zip},
+			addr1=#{addr1},
+			addr2=#{addr2},
+			payment=#{payment},
+			complete=#{complete},
+			completeDate=NOW()
+		WHERE
+			oid=#{oid}
+	</update>
+	
+	<!-- ORDER COMPLETE -->
+	<select id="selectOrderComplete" resultType="kr.co.kmarket.vo.OrderVo">
+		SELECT a.*, b.pid, b.cnt, c.cate1 AS pCate1, c.cate2 AS pCate2, 
+		c.name AS pName, c.desc AS pDesc, c.thumb1 AS pThumb1, c.price AS pPrice, c.discount AS pDiscount, 
+		c.point AS pPoint, c.delivery AS pDelivery, 
+		FLOOR(c.price * (1 - c.discount/100)) AS pSalePrice, 
+		FLOOR(c.price * (c.discount / 100) * cnt) AS dPrice,
+		d.name AS uName, 
+		d.hp AS uHp, 
+		d.zip AS uZip, 
+		d.addr1 AS uAddr1, 
+		d.addr2 AS uAddr2, 
+		d.point AS uPoint
+		FROM km_product_order AS a
+		JOIN km_product_order_detail AS b 
+		ON a.oid=b.oid 
+		JOIN km_product AS c 
+		ON b.pid=c.pid 
+		JOIN km_member AS d 
+		ON a.uid=d.uid 
+		WHERE a.oid=2
+	</select>
 </mapper>

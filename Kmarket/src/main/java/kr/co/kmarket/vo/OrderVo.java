@@ -30,4 +30,27 @@ public class OrderVo {
 	private int[] cids;
 	private int[] pids;
 	private int[] counts;
+	
+	private int pid;
+	private int cnt;
+	
+	private int pCate1;
+	private int pCate2;
+	private String pName;
+	private String pDesc;
+	private String pThumb1;
+	private int pPrice;
+	private int pDiscount;
+	private int pPoint;
+	private int pDelivery;
+	private int pSalePrice;
+	private int dPrice;
+	
+	private String uName;
+	private String uHp;
+	private String uZip;
+	private String uAddr1;
+	private String uAddr2;
+	private int uPoint;
+	
 }

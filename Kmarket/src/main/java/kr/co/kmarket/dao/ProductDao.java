@@ -29,4 +29,10 @@ public interface ProductDao {
 	//주문
 	public int insertOrder(OrderVo ov);
 	public void insertOrderDetail(int oid, int pid, int count);
+	public List<OrderVo> selectOrders(int oid);
+	
+	//주문완료
+	public int updateOrder(OrderVo ov);
+	public List<OrderVo> selectOrderComplete();
+	
 }
