@@ -148,23 +148,29 @@
 				return;
 			}
 			
-			$.each(productChk, function(){
-				cids.push($(this).val())
-			})
-			
-			console.log(cids)
-			let jsonData = {"cids":cids}
-			$.ajax({
-				url:'/product/cartDelete',
-				type:'get',
-				traditional:true,   /* 배열 전송을 위한 옵션 */
-				data:jsonData,
-				dataType:'json',
-				success:function(){
-					alert(data.result)
-					location.href="/product/cart"
-				}
-			})
+			let result = confirm('장바구니에서 제품을 삭제 하시겠습니까?')
+			if(result){
+				
+				$.each(productChk, function(){
+					cids.push($(this).val())
+				})
+				
+				console.log(cids)
+				let jsonData = {"cids":cids}
+				$.ajax({
+					url:'/product/cartDelete',
+					type:'get',
+					traditional:true,   /* 배열 전송을 위한 옵션 */
+					data:jsonData,
+					dataType:'json',
+					success:function(data){
+						location.href="/product/cart"	
+					}
+				})
+				
+			}else{
+				return false;
+			}
 		})
 		
 		////////////////////////////////////
@@ -289,7 +295,7 @@
                       <td class="count">[[${product.count}]]</td>
                       <td class="price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</td>
                       <td class="discount">[[${product.discount}]]%</td>
-                      <td class="point">[[${product.point}]]</td>
+                      <td class="point">[[${#numbers.formatInteger(product.point, 0, 'COMMA')}]]</td>
                       <td class="delivery" th:if="${product.delivery} == 0">무료배송</td>
                       <td class="delivery" th:if="${product.delivery != 0}">[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]</td>
                       <td class="total">[[${#numbers.formatInteger(product.total, 3, 'COMMA')}]]</td>

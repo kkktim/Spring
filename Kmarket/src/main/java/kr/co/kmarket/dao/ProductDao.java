@@ -33,6 +33,11 @@ public interface ProductDao {
 	
 	//주문완료
 	public int updateOrder(OrderVo ov);
-	public List<OrderVo> selectOrderComplete();
+	public List<OrderVo> selectOrderComplete(int oid);
+	
+	//포인트 사용
+	public void updateMemberPointMinus(int usePoint, String orderer);
+	//포인트 적립
+	public void updateMemberPointPlus(int savePoint, String orderer);
 	
 }

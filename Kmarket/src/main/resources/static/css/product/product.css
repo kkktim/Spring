@@ -734,6 +734,7 @@
 }
 #product.cart > form > table td {
   text-align: center;
+  padding-left: 13px;
 }
 #product.cart > form > table th:first-child {
   width: 60px;
@@ -760,6 +761,12 @@
 #product.cart > form > table td > article > div a {
   font-size: 15px;
   font-family: 'Malgun Gothic', dotum, sans-serif;
+  display: block;
+  width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 30px;
 }
 #product.cart > form > table td > article > div > p {
   text-align: left;
@@ -1119,9 +1126,10 @@
   font-size: 0.95em;
   text-align: center;
   letter-spacing: -0.1em;
+  padding-left: 5px;
 }
 #product.complete > .info > table tr > th:last-child {
-  width: 200px;
+  width: 190px;
   text-align: right;
 }      
 

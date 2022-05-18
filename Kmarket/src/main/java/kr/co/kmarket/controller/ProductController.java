@@ -129,19 +129,36 @@ public class ProductController {
 	//결제 완료 - COMPLETE
 	@GetMapping("/product/complete")
 	public String complete(int oid, Model model) {
-		List<OrderVo> orders = service.selectOrderComplete();
+		List<OrderVo> orders = service.selectOrderComplete(oid);
 		
 		model.addAttribute("orders", orders);
 		model.addAttribute("order", orders.get(0));
 		
 		return "/product/complete";
 	}
+	
+	@ResponseBody
 	@PostMapping("/product/complete")
 	public Map<String, Integer> complete(OrderVo ov) {
+		
 		int result = service.updateOrder(ov);
+		//포인트 차감
+		if(ov.getUsePoint() > 0) {
+			int usePoint = ov.getUsePoint();
+			String orderer = ov.getOrderer();
+			service.updateMemberPointMinus(usePoint, orderer);
+		}
+		//포인트 적립
+		if(ov.getSavePoint() > 0) {
+			int savePoint = ov.getSavePoint();
+			String orderer = ov.getOrderer();
+			service.updateMemberPointPlus(savePoint, orderer);
+		}
+		
 		int oid = ov.getOid();
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result", oid);
+		map.put("oid", oid);
+		map.put("result", result);
 		return map;
 	}
 	

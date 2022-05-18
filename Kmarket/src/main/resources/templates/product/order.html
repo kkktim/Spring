@@ -16,20 +16,26 @@
     <script th:src="@{/js/product/zipcode.js}"></script>
     <script th:inline="javascript">
     	$(function(){
+    		//결제 방법 체크
     		//최종주문하기
     		$('input[name=order]').click(function(){
     			
     			let oid = $('input[name=oid]').val()
+    			let savePoint = $('.save > td:eq(1)').text().replace(/(,|점)/g, '')
+    			let usePoint = $('.point > td:eq(1)').text().replace(/(,|점)/g, '')
     			let orderer = $('input[name=orderer]').val()
     			let hp = $('input[name=hp]').val()
     			let zip = $('input[name=zip]').val()
     			let addr1 = $('input[name=addr1]').val()
     			let addr2 = $('input[name=addr2]').val()
-    			let payment = $('input[name=payment]').val()
+    			let payment = $('input[name=payment]:checked').val()
+    			console.log(payment)
     			let complete = 1
     			
     			let jsonData = {
     					'oid':oid,
+    					'savePoint':savePoint,
+    					'usePoint':usePoint,
     					'orderer':orderer,
     					'hp':hp,
     					'zip':zip,
@@ -38,34 +44,66 @@
     					'payment':payment,
     					'complete':complete
     			}
-    			console.log(jsonData)
+    			
     			$.ajax({
     				url: '/product/complete',
     				type: 'post',
     				data: jsonData,
     				dataType: 'json',
     				success:function(data){
-    					alert(data.result)
-    					location.href='/product/complete?oid='+data.result
+    					if(data.result > 0){
+    						alert('결제가 완료 되었습니다.')
+    						location.href='/product/complete?oid='+data.oid
+    					}else{
+    						location.href='/product/order?oid='+data.oid
+    					}
+    					
     				}
     			})
     		})//최종 주문 끝 ...
     		
-    		$('input[name=btnPoint]').click(function(){
-    			let point = $(this).prev()
-    			let usePoint = point.val()
-    			if(usePoint < 500){
-    				alert("포인트는 500점 이상 사용 가능합니다.")
+    		$('input[name=point]').keyup(function(){
+    			//현재 포인트
+    			/*<![CDATA[*/ 
+    			let currentPoint = /*[[${order.uPoint}]]*/ 
+    			/*]]*/
+    			//전체 주문 금액
+    			/*<![CDATA[*/ 
+    			let total = /*[[${order.total + order.delivery}]]*/ 
+    			/*]]*/
+    			
+    			//사용 포인트 입력
+    			let value = $(this).val();
+    			
+    			//포인트 할인 필드에 적립금 생성
+    			if(value != ""){
+    				$('.point > td:eq(1)').text(value+"점")	
     			}else{
-    				/*<![CDATA[*/ 
-    				let total = /*[[${order.total + order.delivery}]]*/ 
-    				/*]]*/
-    				let totTotal = total - usePoint
-        			$('.point > td:eq(1)').text(usePoint+"점")
-        			$('.total > td:eq(1)').text(totTotal.toLocaleString()+"원")
+    				$('.point > td:eq(1)').text("0점")
     			}
-    			point.val("")
-    		})
+				
+				
+				//현재 포인트에 차감
+				let remain = $(this).parent().prev().find('span');
+    			
+				if(currentPoint >= value){
+					
+					//현재 포인트에 차감
+    				remain.text(currentPoint - value)
+    				//전체주문금액에 차감
+    				let totTotal = total - value;
+    				$('.total > td:eq(1)').text(totTotal.toLocaleString()+"원");
+    				
+    				
+    			}else{
+    				alert('적립금을 초과하였습니다.')
+    				$(this).val("")
+    				$('.point > td:eq(1)').text("0점")
+    				return;
+    			}
+    			
+    		})//포인트 처리 끝
+    		
     	})
     </script>
 </head>
@@ -141,6 +179,11 @@
                       <td>배송비</td>
                       <td>[[${#numbers.formatInteger(order.delivery, 3, 'COMMA')}]]원</td>
                     </tr>
+                    <tr class="save">
+                    	<td>포인트 적립</td>
+                    	<td th:if="${#strings.length(order.point) > 3}">[[${#numbers.formatInteger(order.point, 3, 'COMMA')}]]점</td>
+                    	<td th:unless="${#strings.length(order.point) > 3}">[[${order.point}]]점</td>
+                    </tr>
                     <tr class="point">
                       <td>포인트 할인</td>
                       <td>0점</td>
@@ -199,7 +242,6 @@
                     <p>현재 포인트 : <span>[[${order.uPoint}]]</span>점</p>
                     <label>
                         <input type="text" name="point" />점
-                        <input type="button" name="btnPoint" value="적용"/>
                     </label>
                     <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
                   </div>

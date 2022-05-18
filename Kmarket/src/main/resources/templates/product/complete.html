@@ -82,6 +82,11 @@
                           <td><span>-[[${#numbers.formatInteger(order.discount, 3, 'COMMA')}]]</span>원</td>
                         </tr>
                         <tr>
+                          <td>적립금 사용</td>
+                          <td th:if="${order.usePoint > 0}"><span>-[[${#numbers.formatInteger(order.usePoint, 0, 'COMMA')}]]</span>원</td>
+                          <td th:unless="${order.usePoint > 0}"><span>[[${order.usePoint}]]</span>원</td>
+                        </tr>
+                        <tr>
                           <td>배송비</td>
                           <td><span>[[${#numbers.formatInteger(order.delivery, 3, 'COMMA')}]]</span>원</td>
                         </tr>

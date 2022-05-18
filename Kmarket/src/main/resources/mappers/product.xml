@@ -99,6 +99,7 @@
 	<update id="updateOrder">
 		UPDATE km_product_order SET 
 			orderer=#{orderer},
+			usePoint=#{usePoint},
 			hp=#{hp},
 			zip=#{zip},
 			addr1=#{addr1},
@@ -130,6 +131,19 @@
 		ON b.pid=c.pid 
 		JOIN km_member AS d 
 		ON a.uid=d.uid 
-		WHERE a.oid=2
+		WHERE a.oid=#{oid}
 	</select>
+	
+	<!-- 포인트 사용 -->
+	<update id="updateMemberPointMinus">
+		UPDATE km_member AS a SET 
+			point = a.point - #{usePoint}
+		WHERE name=#{orderer}
+	</update>
+	<!-- 포인트 차감 -->
+	<update id="updateMemberPointPlus">
+		UPDATE km_member AS a SET 
+			point = a.point + #{savePoint}
+		WHERE name=#{orderer}
+	</update>
 </mapper>

@@ -73,7 +73,16 @@ public class ProductService {
 		return dao.updateOrder(ov);
 	}
 	
-	public List<OrderVo> selectOrderComplete(){
-		return dao.selectOrderComplete();
+	public List<OrderVo> selectOrderComplete(int oid){
+		return dao.selectOrderComplete(oid);
+	}
+	
+	//포인트 사용
+	public void updateMemberPointMinus(int usePoint, String orderer) {
+		dao.updateMemberPointMinus(usePoint, orderer);
+		
+	}
+	public void updateMemberPointPlus(int savePoint, String orderer) {
+		dao.updateMemberPointPlus(savePoint, orderer);
 	}
 }

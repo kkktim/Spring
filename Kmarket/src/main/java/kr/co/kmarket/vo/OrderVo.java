@@ -53,4 +53,6 @@ public class OrderVo {
 	private String uAddr2;
 	private int uPoint;
 	
+	private int savePoint;
+	
 }
