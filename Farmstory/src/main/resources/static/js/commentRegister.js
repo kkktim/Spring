@@ -17,7 +17,6 @@ $(function(){
 			"no":no,
 			"content":content
 		}
-		console.log(jsonData)
 		
 		let commentList = $('.commentList')
 		let ctxRoot = "/Farmstory"
@@ -27,8 +26,6 @@ $(function(){
 			data: jsonData,
 			dataType: 'json',
 			success: function(data){
-				console.log(data)
-				
 				let html = `<article class='comment'>
 			   				<span>
 		    					<span class="nick">닉네임</span>
@@ -45,11 +42,11 @@ $(function(){
 				let dom = $(html);
 				
 				dom.find('.nick').text(data.nick)
-				dom.find('.rdate').text(data.rdate)
+				dom.find('.rdate').text(data.rdate.substring(2, 10))
 				dom.find('textarea').text(data.content)
-				dom.find('.del').attr('th:data-no', data.no)
-				dom.find('.del').attr('th:data-ano', data.parent)
-				dom.find('.modify').attr('th:data-no', data.no)
+				dom.find('.del').attr('data-no', data.no)
+				dom.find('.del').attr('data-ano', data.parent)
+				dom.find('.modify').attr('data-no', data.no)
 				
 				commentList.append(dom)
 				

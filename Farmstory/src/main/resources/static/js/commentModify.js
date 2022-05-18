@@ -2,11 +2,10 @@
  * 
  */
 $(function(){
-	let mod = $('.commentList > .comment > div > .modify')
-	let cancel = $('.commentList > .comment > div > .cancel')
 	
-	mod.click(function(e){
-		e.preventDefault()
+	//동적 생성 태그도 같이 선택
+	$(document).on('click', '.commentList > .comment > div > .modify', function(e){
+		e.preventDefault();
 		
 		let mode = $(this).attr('data-mode')
 		//data-mode = r 로 들어올 때 수정모드전환
@@ -28,8 +27,8 @@ $(function(){
 				'outline':'1px solid gray'
 			})
 					
-			//취소버튼 클릭
-			cancel.click(function(e){
+			//취소버튼 클릭 - 동적 생성 태그도 이벤트 적용
+			$(document).on('click', '.commentList > .comment > div > .cancel', function(e){
 				e.preventDefault()
 				//data-mode = w 로 변경
 				
@@ -89,12 +88,10 @@ $(function(){
 							'background':'transparent',
 							'outline':'none'
 						})
-					}
-				}
+					}//if end...
+				}//success end...
 				
-			})
-		}
-		
-		
+			})//ajax end...
+		}//else end...
 	})
 })

@@ -49,7 +49,10 @@
 		LIMIT #{start}, 10;
 	</select>
 	<select id="selectComments" resultType="kr.co.farmstory.vo.CommentVo">
-		SELECT * FROM `Board_article` WHERE `parent`=#{no};
+		SELECT a.*, b.nick FROM `Board_article` AS a 
+		JOIN `Board_user` AS b 
+		ON a.uid=b.uid 
+		WHERE `parent`=#{no};
 	</select>
 	
 	<!-- ########### UPDATE ########### -->
