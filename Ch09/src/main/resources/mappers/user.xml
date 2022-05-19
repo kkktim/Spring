@@ -2,14 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.ch09.dao.UserDao">
 	<insert id="insertUser">
-		INSERT INTO `User2` VALUES (#{uid}, PASSWORD(#{pass}), #{name}, #{hp}, #{age});
+		<!-- 
+		INSERT INTO `User1` VALUES (#{uid}, PASSWORD(#{pass}), #{name}, #{hp}, #{age});
+		 -->
+		INSERT INTO `User1` VALUES (#{uid}, #{name}, #{hp}, #{age});
 	</insert>
 	<select id="selectUser"></select>
 	<select id="selectUsers" resultType="kr.co.ch09.vo.UserVo">
-		SELECT * FROM `User2`;
+		SELECT * FROM `User1`;
 	</select>
 	<update id="updateUser">
-		UPDATE `User2` SET 
+		UPDATE `User1` SET 
 			`name`=#{name},
 			`hp`=#{hp},
 			`age`=#{age}
@@ -17,6 +20,6 @@
 			`uid`=#{uid};
 	</update>
 	<delete id="deleteUser">
-		DELETE FROM `User2` WHERE `uid`=#{uid};
+		DELETE FROM `User1` WHERE `uid`=#{uid};
 	</delete>
 </mapper>
