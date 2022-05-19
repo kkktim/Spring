@@ -13,5 +13,7 @@ import kr.co.farmstory.vo.ArticleVo;
 public interface MainDao {
 
 	public List<ArticleVo> selectLatests(String type);
+
+	public List<ArticleVo> selectCumuLatests(String type);
 	
 }

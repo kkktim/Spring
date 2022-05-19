@@ -230,6 +230,26 @@ main > .info > div {
 }
 main > .info > div:nth-child(1) {
     width: 386px;
+    position: relative;
+}
+main > .info > div:nth-child(1) > div > img:nth-child(1) {
+	position: absolute;
+	top: 45px;
+	left: 15px;
+}
+main > .info > div:nth-child(1) > div > img:nth-child(2) {
+	position: absolute;
+	top: 45px;
+	left: 80px;
+}
+main > .info > div:nth-child(1) > div >  span {
+	position: absolute;
+	top : 45px;
+	right: 10px;
+}
+main > .info > div:nth-child(1) > div:nth-child(3) {
+	position: absolute;
+	bottom: 5px;
 }
 main > .info > div:nth-child(2) {
     width: 230px;
@@ -258,6 +278,28 @@ main > .info > div > .account {
     border-bottom: 1px solid #d1d1d1;
     line-height: 26px;
 }
+#tabs ol > li {
+   border-bottom: 1px solid #d1d1d1;
+    line-height: 32px;
+    padding-left: 10px;
+}
+#tabs-1 > ol > li > a {
+	color: #666
+}
+#tabs-2 > ol > li > a {
+	color: #666
+}
+#tabs-3 > ol > li > a {
+	color: #666
+}
+.ui-tabs .ui-tabs-panel {
+	padding: 0;	
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+	background: #fdfdfd;
+}
+
 
 /* 탭 커스텀 */
 .ui-widget.ui-widget-content {
@@ -755,3 +797,34 @@ main > .info > div > .account {
     margin-top: 10px;
     text-align: right;
 }
+
+/* 팜스토리 인사말 */
+#sub > section > article > .intro {
+	position: relative;
+	background-image: url("../img/sub_page1_article_bg.jpg");
+	width: 760px;
+	height: 164px;
+}
+#sub > section > article > .intro > img {
+	position: absolute;
+	top: 30px;
+}
+#sub > section > article > div:nth-child(3) {
+	position: relative;
+}
+#sub > section > article > div:nth-child(3) > p {
+	position: absolute;
+	top: 30px;
+	left: 10px;
+	color: #666;
+}
+#sub > section > article > div:nth-child(3) > img {
+	position: absolute;
+	right: 10px;
+	top: 100px;
+}
+
+
+
+
+

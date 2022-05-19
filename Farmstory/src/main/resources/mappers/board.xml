@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.farmstory.dao.BoardDao">
-	<!-- ########### INSERT ########### -->
+	<!-- ######################################## INSERT ######################################## -->
 	<insert id="insertFile">
 		INSERT INTO `Board_file` SET 
 			`parent`=#{parent},
@@ -55,7 +55,7 @@
 		WHERE `parent`=#{no};
 	</select>
 	
-	<!-- ########### UPDATE ########### -->
+	<!-- ######################################## UPDATE ######################################## -->
 	<update id="downCountPlus">
 		UPDATE `Board_file` AS a SET `download`=a.download + 1 WHERE `fid`=#{fid};
 	</update>
@@ -69,7 +69,7 @@
 		UPDATE `Board_article` AS a SET `hit`=a.hit + 1 WHERE `no`=#{no}
 	</update>
 	
-	<!-- ########### DELETE ########### -->
+	<!-- ######################################## DELETE ######################################## -->
 	<delete id="deleteFile">
 		DELETE FROM `Board_file` WHERE `fid`=#{fid};
 	</delete>

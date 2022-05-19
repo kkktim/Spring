@@ -8,7 +8,6 @@ $(function(){
 		
 		let prevArticle = $(this).parent().parent()
 		let no = $(this).attr('data-no')
-		console.log(no)
 		let parent = $(this).attr('data-ano')
 		
 		let jsonData = {

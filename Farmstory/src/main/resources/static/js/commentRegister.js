@@ -47,6 +47,7 @@ $(function(){
 				dom.find('.del').attr('data-no', data.no)
 				dom.find('.del').attr('data-ano', data.parent)
 				dom.find('.modify').attr('data-no', data.no)
+				dom.find('.modify').attr('data-mode', "r")
 				
 				commentList.append(dom)
 				

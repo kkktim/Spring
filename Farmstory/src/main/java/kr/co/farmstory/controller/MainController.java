@@ -33,11 +33,18 @@ public class MainController {
 		List<ArticleVo> latests2 = service.selectLatests("school");
 		List<ArticleVo> latests3 = service.selectLatests("story");
 		
+		List<ArticleVo> latests4 = service.selectCumuLatests("notice");
+		List<ArticleVo> latests5 = service.selectCumuLatests("qna");
+		List<ArticleVo> latests6 = service.selectCumuLatests("faq");
+		
 		model.addAttribute("latests1", latests1);
 		model.addAttribute("latests2", latests2);
 		model.addAttribute("latests3", latests3);
 
+		model.addAttribute("latests4", latests4);
+		model.addAttribute("latests5", latests5);
+		model.addAttribute("latests6", latests6);
+
 		return "/index";
 	}
-	
 }

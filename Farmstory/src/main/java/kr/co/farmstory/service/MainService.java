@@ -17,5 +17,8 @@ public class MainService {
 	public List<ArticleVo> selectLatests(String type) {
 		return dao.selectLatests(type);
 	}
-
+	
+	public List<ArticleVo> selectCumuLatests(String type){
+		return dao.selectCumuLatests(type);
+	}
 }

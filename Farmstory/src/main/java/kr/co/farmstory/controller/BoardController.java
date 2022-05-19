@@ -154,7 +154,6 @@ public class BoardController {
 			return "redirect:/user/login?success=102";
 		}
 		ArticleVo article = service.selectArticle(no);
-//		System.out.println("get 방식 fid : "+article.getFv().getFid());
 		model.addAttribute("article", article);
 		model.addAttribute("cate", cate);
 		model.addAttribute("type", type);
@@ -165,8 +164,6 @@ public class BoardController {
 		if(sessUser == null) {
 			return "redirect:/user/login?success=102";
 		}
-		System.out.println("no : "+av.getNo());
-		System.out.println("no : "+fid);
 		if(av.getFname().isEmpty()) {
 			//첨부파일 수정 x
 			service.updateArticle(av);
@@ -178,13 +175,14 @@ public class BoardController {
 			//파일 테이블 INSERT
 			fv.setParent(av.getNo());
 			service.insertFile(fv);
-			
-			//전 파일 테이블 삭제
-			FileVo attfile = service.selectFile(fid);
-			service.deleteFile(attfile.getFid());
-			
-			//전 파일 삭제
-			service.deleteAttachedFile(attfile);
+			if(fid > 0) {
+				//전 파일 테이블 삭제
+				FileVo attfile = service.selectFile(fid);
+				service.deleteFile(attfile.getFid());
+				
+				//전 파일 삭제
+				service.deleteAttachedFile(attfile);
+			}
 		}
 		
 		
