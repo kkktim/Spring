@@ -12,6 +12,13 @@ $(function(){
 		let no = inputNo.val()
 		let content = textarea.val()
 		
+		//공백 & null 체크
+		if(content == "" || content == null){
+			alert('내용을 입력해주세요')
+			textarea.focus()
+			return false;
+		}
+		
 		let jsonData = {
 			"uid":uid,
 			"no":no,

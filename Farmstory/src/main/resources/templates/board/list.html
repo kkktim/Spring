@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <title>글목록</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:inline="javascript">
+    	//공지사항 글쓰기 권한 확인
+    	$(function write() {
+    		/*<![CDATA[*/ 
+			let grade = /*[[${grade}]]*/ 
+			/*]]*/
+			
+			if(grade >= 2){
+				alert('공지사항 글쓰기 권한이 없습니다.')
+			}
+		})
+
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -12,9 +26,13 @@
         <section id="board" class="list">
             <h3>글목록</h3>
             <article>
-                <p>
+                <p th:if="${sessUser != null}">
                     [[${sessUser.nick}]]님 반갑습니다.
                     <a th:href="@{/user/logout}" class="logout">[로그아웃]</a>
+                </p>
+                <p th:unless="${sessUser != null}">
+                    로그인 후 이용해주세요.
+                    <a th:href="@{/user/logout}" class="logout">[로그인]</a>
                 </p>
                 <table border="0">
                     <tr>

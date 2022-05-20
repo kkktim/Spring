@@ -27,9 +27,17 @@ public class UserService {
 	public void updateUser(UserVo uv) {}
 	public void deleteUser(String uid) {}
 	
-	//Validation
+	//Validation - 중복체크
 	public int countUserUid(String uid) {
 		return dao.countUserUid(uid);
 	}
-	
+	public int countUserNick(String nick) {
+		return dao.countUserNick(nick);
+	}
+	public int countUserEmail(String email) {
+		return dao.countUserEmail(email);
+	}
+	public int countUserHp(String hp) {
+		return dao.countUserHp(hp);
+	}
 }

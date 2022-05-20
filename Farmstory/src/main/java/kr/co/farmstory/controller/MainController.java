@@ -24,7 +24,7 @@ public class MainController {
 	public UserVo setUserVo() {
 		return null;
 	}
-		
+	
 	@GetMapping(value = {"/", "/index"})
 	public String index(Model model, 
 						@ModelAttribute("sessUser") UserVo sessUser) {

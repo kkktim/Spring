@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.farmstory.service.BoardService;
@@ -33,10 +34,7 @@ public class BoardController {
 	
 	// ########### LIST ###########
 	@GetMapping("/board/list")
-	public String list(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type, String pg) {
-		if(sessUser == null) {
-			return "redirect:/user/login?success=102";
-		}
+	public String list(Model model, String cate, String type, String pg, Integer grade) {
 		
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
@@ -56,7 +54,7 @@ public class BoardController {
 		model.addAttribute("articles", articles);
 		model.addAttribute("cate", cate);
 		model.addAttribute("type", type);
-		model.addAttribute("sessUser", sessUser);
+		model.addAttribute("grade", grade);
 		
 		return "/board/list";
 	}
@@ -66,10 +64,13 @@ public class BoardController {
 	public String write(@ModelAttribute("sessUser") UserVo sessUser, Model model, String cate, String type) {
 		if(sessUser == null) {
 			return "redirect:/user/login?success=102";
+		}else if(type.equals("notice") && sessUser.getGrade() >= 2){
+			return "redirect:/board/list?cate="+cate+"&type="+type+"&grade="+sessUser.getGrade();
 		}
 		
 		model.addAttribute("type", type);
 		model.addAttribute("cate", cate);
+		model.addAttribute("sessUser", sessUser);
 		
 		return "/board/write";
 	}

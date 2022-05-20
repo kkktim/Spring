@@ -69,7 +69,7 @@
                         <span>[[${#strings.substring(comment.rdate, 2, 10)}]]</span>
                     </span>
                     <textarea name="comment" readonly>[[${comment.content}]]</textarea>
-                    <div>
+                    <div th:if="${comment.uid == sessUser.uid}">
                         <a href="#" class="del" th:data-no="${comment.no}" th:data-ano="${comment.parent}">삭제</a>
                         <a href="#" class="modify" th:data-no="${comment.no}" th:data-mode="r">수정</a>
                         <a href="#" class="cancel">취소</a>

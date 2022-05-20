@@ -15,7 +15,17 @@
 	<update id="updateUser"></update>
 	<delete id="deleteUser"></delete>
 	
+	<!-- ##### VALIDATION 중복체크 ##### -->
 	<select id="countUserUid" resultType="int">
 		SELECT COUNT(`uid`) FROM `Board_user` WHERE `uid`=#{uid};
+	</select>
+	<select id="countUserNick" resultType="int">
+		SELECT COUNT(`nick`) FROM `Board_user` WHERE `nick`=#{nick};
+	</select>
+	<select id="countUserEmail" resultType="int">
+		SELECT COUNT(`email`) FROM `Board_user` WHERE `email`=#{email};
+	</select>
+	<select id="countUserHp" resultType="int">
+		SELECT COUNT(`hp`) FROM `Board_user` WHERE `hp`=#{hp};
 	</select>
 </mapper>

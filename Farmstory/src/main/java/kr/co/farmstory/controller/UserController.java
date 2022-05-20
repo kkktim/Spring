@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import kr.co.farmstory.service.UserService;
 import kr.co.farmstory.vo.TermsVo;
 import kr.co.farmstory.vo.UserVo;
@@ -48,6 +51,7 @@ public class UserController {
 	}
 	
 	
+	//회원가입 - terms
 	@GetMapping("/user/terms")
 	public String terms(Model model) {
 		TermsVo terms = service.selectTerms();
@@ -55,6 +59,7 @@ public class UserController {
 		return "/user/terms";
 	}
 	
+	//회원가입 - register
 	@GetMapping("/user/register")
 	public String register() {
 		return "/user/register";
@@ -64,10 +69,10 @@ public class UserController {
 		String regip = req.getRemoteAddr();
 		uv.setRegip(regip);
 		service.insertUser(uv);
-		return "redirect:/index";
+		return "redirect:/user/login";
 	}
 	
-	//아이디 중복 체크
+	//VALIDATION - 중복체크
 	@ResponseBody
 	@GetMapping("/user/checkUid")
 	public Map<String, Integer> checkUid(String uid) {
@@ -76,4 +81,32 @@ public class UserController {
 		map.put("result", result);
 		return map;
 	}
+	
+	@ResponseBody
+	@GetMapping("/user/checkNick")
+	public Map<String, Integer> checkNick(String nick) {
+		int result = service.countUserNick(nick);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+
+	@ResponseBody
+	@GetMapping("/user/checkEmail")
+	public Map<String, Integer> checkEmail(String email) {
+		int result = service.countUserEmail(email);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/user/checkHp")
+	public Map<String, Integer> checkHp(String hp) {
+		int result = service.countUserHp(hp);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	
 }

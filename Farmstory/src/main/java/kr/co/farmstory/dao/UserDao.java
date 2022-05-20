@@ -22,5 +22,7 @@ public interface UserDao {
 	
 	//Validation
 	public int countUserUid(String uid);
-	
+	public int countUserNick(String nick);
+	public int countUserEmail(String email);
+	public int countUserHp(String hp);
 }
