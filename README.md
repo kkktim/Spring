@@ -49,6 +49,8 @@
 - 첨부 파일 등록, 삭제
 
 링크 : __*[Farmstory 게시판 사이트 이동](http://13.124.252.103:8080/Farmstory)*__
+test - id : test
+test - pw : 1234
 
 #### Kmarket - MyBatis
 
