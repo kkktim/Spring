@@ -186,7 +186,8 @@
                     </tr>
                     <tr class="point">
                       <td>포인트 할인</td>
-                      <td>0점</td>
+                      <td th:if="${order.usePoint > 0}">[[${#numbers.formatInteger(order.usePoint, 0, 'COMMA')}]]점</td>
+                      <td th:unless="${order.usePoint > 0}">0점</td>
                     </tr>
                     <tr class="total">
                       <td>전체주문금액</td>

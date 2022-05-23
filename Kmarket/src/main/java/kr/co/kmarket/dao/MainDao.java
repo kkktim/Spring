@@ -15,4 +15,7 @@ public interface MainDao {
 	public List<CategoriesVo> selectCategories();
 
 	public List<ProductVo> selectMainProducts(String order);
+	
+	//제품 search
+	public List<ProductVo> selectKeyword(String keyword, int order, int start);
 }

@@ -13,7 +13,6 @@ import kr.co.kmarket.vo.ProductVo;
 @Mapper
 @Repository
 public interface ProductDao {
-
 	
 	public ProductVo selectProduct(int pid);
 	public List<ProductVo> selectProducts(ProductVo pv);

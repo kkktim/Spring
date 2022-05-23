@@ -34,10 +34,6 @@ public class ProductController {
 		return null;
 	}
 	
-	@GetMapping("/product/search")
-	public String search() {
-		return "/product/search";
-	}
 	//장바구니
 	@GetMapping("/product/cart")
 	public String cart(@ModelAttribute("sessMember")MemberVo sessMember, Model model) {
@@ -113,7 +109,7 @@ public class ProductController {
 	public Map<String, Integer> order(OrderVo ov) {
 		//주문장 등록
 		int oid = service.insertOrder(ov);
-		//개별상품등록
+		//order-detail 개별상품등록
 		int[] counts = ov.getCounts();
 		int i = 0;
 		for(int pid : ov.getPids()) {

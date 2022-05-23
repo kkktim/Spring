@@ -54,6 +54,7 @@ public class ProductVo {
 	private int salePrice;
 	private int start;
 	private int order;
+	private int total;
 	
 	public List<MultipartFile> getThumbnails(){
 		//사용자 정의 함수 - 추가필드 get 함수 정의(리스트로 만들어 줌)

@@ -95,7 +95,7 @@
 			
 			$.each(totals, function(){
 				let total = parseInt($(this).text().replace(/,/g, ''));
-				totTotal += total;	
+				totTotal += total;
 			});
 			
 			//console.log('totPrice : '+totPrice);
@@ -155,7 +155,6 @@
 					cids.push($(this).val())
 				})
 				
-				console.log(cids)
 				let jsonData = {"cids":cids}
 				$.ajax({
 					url:'/product/cartDelete',
@@ -194,7 +193,6 @@
 				pids.push($(this).data('pid'))
 				counts.push($(this).data('count'))
 			})
-			console.log(cids)
 			
 			let uid = $('.total input[name=uid]').val()
 			let count = $('.total .count').text().replace(/(,|개)/g, '')
