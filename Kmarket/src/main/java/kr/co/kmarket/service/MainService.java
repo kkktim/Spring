@@ -39,25 +39,25 @@ public class MainService {
 	public int getLastPageNum(int total){
 		int lastPageNum = 0;
 		
-		if(total % 10 == 0) {
-			lastPageNum = total / 10;
+		if(total % 5 == 0) {
+			lastPageNum = total / 5;
 		}else {
-			lastPageNum = (total / 10) + 1;
+			lastPageNum = (total / 5) + 1;
 		}
 		
 		return lastPageNum;
 	}
 	public int getLimitStart(int currentPage) {
 		//xml start 구하기
-		return (currentPage - 1) * 10;
+		return (currentPage - 1) * 5;
 	}
 	public int getPageStartNum(int total, int start) {
 		return total - start;
 	}
 	public int[] getPageGroup(int currentPage, int lastPageNum) {
 		int groupCurrent = (int) Math.ceil(currentPage/10.0);
-		int groupStart = (groupCurrent - 1) * 10 + 1;
-		int groupEnd = groupCurrent * 10;
+		int groupStart = (groupCurrent - 1) * 5 + 1;
+		int groupEnd = groupCurrent * 5;
 		if(groupEnd > lastPageNum) {
 			groupEnd = lastPageNum;
 		}

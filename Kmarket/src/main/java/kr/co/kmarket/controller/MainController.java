@@ -55,12 +55,14 @@ public class MainController {
 	//SEARCH
 	@GetMapping("/product/search")
 	public String search(Model model, String keyword, int order, String pg) {
+		System.out.println("pg : "+pg);
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
 		
-		List<ProductVo> products = service.selectKeyword(keyword, 1, start);
+		List<ProductVo> products = service.selectKeyword(keyword, order, start);
 		model.addAttribute("products", products);
+		System.out.println("product pid : "+products.get(0).getPid());
 		
 		int total = products.get(0).getTotal();
 		int lastPageNum = service.getLastPageNum(total);
@@ -74,9 +76,12 @@ public class MainController {
 		model.addAttribute("groups", groups);
 				
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("product", products.get(0));
+		model.addAttribute("order", order);
 		
 		return "/product/search";
 	}
+	/*
 	@PostMapping("/product/search")
 	public String search(Model model, String keyword, String pg) {
 		//페이지 처리
@@ -98,7 +103,9 @@ public class MainController {
 		model.addAttribute("groups", groups);
 						
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("product", products.get(0));
 		
 		return "/product/search";
 	}
+	*/
 }
