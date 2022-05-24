@@ -18,8 +18,8 @@
                 <div>
                     <a th:href="@{/}"><img th:src="@{/img/header_logo.png}" alt="로고"/></a>
                     <form th:action="@{/product/search}" method="get">
-                        <input type="text" name="keyword"/>
-                        <input type="hidden" name="order" value="1"/>
+                    	<input type="text" name="keyword"/>
+						<input type="hidden" name="orderby" value="1"/>
                         <button><i class="fa fa-search"></i></button>
                     </form>                
                 </div>

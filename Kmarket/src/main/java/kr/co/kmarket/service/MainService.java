@@ -48,14 +48,14 @@ public class MainService {
 		return lastPageNum;
 	}
 	public int getLimitStart(int currentPage) {
-		//xml start 구하기
+		//xml - start 구하기
 		return (currentPage - 1) * 5;
 	}
 	public int getPageStartNum(int total, int start) {
 		return total - start;
 	}
 	public int[] getPageGroup(int currentPage, int lastPageNum) {
-		int groupCurrent = (int) Math.ceil(currentPage/10.0);
+		int groupCurrent = (int) Math.ceil(currentPage/5.0);
 		int groupStart = (groupCurrent - 1) * 5 + 1;
 		int groupEnd = groupCurrent * 5;
 		if(groupEnd > lastPageNum) {

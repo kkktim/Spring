@@ -15,6 +15,7 @@ import kr.co.kmarket.service.MainService;
 import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.MemberVo;
 import kr.co.kmarket.vo.ProductVo;
+import kr.co.kmarket.vo.SearchVo;
 
 @SessionAttributes("sessMember")
 @Controller
@@ -54,19 +55,17 @@ public class MainController {
 	
 	//SEARCH
 	@GetMapping("/product/search")
-	public String search(Model model, String keyword, int order, String pg) {
-		System.out.println("pg : "+pg);
+	public String search(Model model, String keyword, String orderby, String pg) {
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
 		
+		int order = Integer.parseInt(orderby);
 		List<ProductVo> products = service.selectKeyword(keyword, order, start);
 		model.addAttribute("products", products);
-		System.out.println("product pid : "+products.get(0).getPid());
 		
 		int total = products.get(0).getTotal();
 		int lastPageNum = service.getLastPageNum(total);
-		
 		int pageStartNum = service.getPageStartNum(total, start);
 		int groups[] = service.getPageGroup(currentPage, lastPageNum);
 						
@@ -74,26 +73,24 @@ public class MainController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
-				
+		
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("product", products.get(0));
 		model.addAttribute("order", order);
 		
 		return "/product/search";
 	}
-	/*
 	@PostMapping("/product/search")
-	public String search(Model model, String keyword, String pg) {
+	public String search(Model model, SearchVo sv, String pg) {
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
-				
-		List<ProductVo> products = service.selectKeyword(keyword, 1, start);
+		
+		List<ProductVo> products = service.selectKeyword(sv.getKeyword(), sv.getOrderby(), start);
 		model.addAttribute("products", products);
 				
 		int total = products.get(0).getTotal();
 		int lastPageNum = service.getLastPageNum(total);
-				
 		int pageStartNum = service.getPageStartNum(total, start);
 		int groups[] = service.getPageGroup(currentPage, lastPageNum);
 								
@@ -101,11 +98,11 @@ public class MainController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
-						
-		model.addAttribute("keyword", keyword);
+				
+		model.addAttribute("keyword", sv.getKeyword());
 		model.addAttribute("product", products.get(0));
+		model.addAttribute("order", sv.getOrderby());
 		
 		return "/product/search";
 	}
-	*/
 }
