@@ -97,7 +97,6 @@ public class BoardController {
 			//파일 글 등록
 			FileVo fv = service.fileUpload(av.getFname());
 			fv.setParent(no);
-			System.out.println("fv : "+fv.getNName());
 			service.insertFile(fv);
 			
 		}

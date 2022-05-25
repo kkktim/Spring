@@ -107,10 +107,8 @@ public class BoardService {
 			resp.getOutputStream().close();
 			
 			
-//			return 1;
 		}catch(Exception e) {
 			e.printStackTrace();
-//			return 0;
 		}
 	}
 	//다운로드 카운터 +1

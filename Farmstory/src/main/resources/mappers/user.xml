@@ -3,13 +3,13 @@
 <mapper namespace="kr.co.farmstory.dao.UserDao">
 	<insert id="insertUser">
 		INSERT INTO `Board_user` (`uid`, `pass`, `name`, `nick`, `email`, `hp`, `zip`, `addr1`, `addr2`, `regip`, `rdate`) 
-		VALUES (#{uid}, PASSWORD(#{pass}), #{name}, #{nick}, #{email}, #{hp}, #{zip}, #{addr1}, #{addr2}, #{regip}, NOW());
+		VALUES (#{uid}, SHA(#{pass}), #{name}, #{nick}, #{email}, #{hp}, #{zip}, #{addr1}, #{addr2}, #{regip}, NOW());
 	</insert>
 	<select id="selectTerms" resultType="kr.co.farmstory.vo.TermsVo">
 		SELECT * FROM `Board_terms`;
 	</select>
 	<select id="selectUser" resultType="kr.co.farmstory.vo.UserVo">
-		SELECT * FROM `Board_user` WHERE `uid`=#{uid} AND `pass`=PASSWORD(#{pass})
+		SELECT * FROM `Board_user` WHERE `uid`=#{uid} AND `pass`=SHA(#{pass})
 	</select>
 	<select id="selectUsers"></select>
 	<update id="updateUser"></update>
