@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.kmarket.dao.MainDao;
 import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.ProductVo;
+import kr.co.kmarket.vo.SearchVo;
 
 @Service
 public class MainService {
@@ -26,6 +27,11 @@ public class MainService {
 	public List<ProductVo> selectKeyword(String keyword, int order, int start){
 		return dao.selectKeyword(keyword, order, start);
 	}
+	public List<ProductVo> searchFulltext(SearchVo sv){
+		return dao.searchFulltext(sv);
+	}
+	
+	
 	
 	//페이지 처리
 	public int getCurrentPage(String pg) {

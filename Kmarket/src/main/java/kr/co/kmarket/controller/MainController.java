@@ -82,11 +82,12 @@ public class MainController {
 	}
 	@PostMapping("/product/search")
 	public String search(Model model, SearchVo sv, String pg) {
+		System.out.println("chk1 : "+sv.getChk1());
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
 		
-		List<ProductVo> products = service.selectKeyword(sv.getKeyword(), sv.getOrderby(), start);
+		List<ProductVo> products = service.searchFulltext(sv);
 		model.addAttribute("products", products);
 				
 		int total = products.get(0).getTotal();

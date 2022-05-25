@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket.vo.CategoriesVo;
 import kr.co.kmarket.vo.ProductVo;
+import kr.co.kmarket.vo.SearchVo;
 
 @Mapper
 @Repository
@@ -18,4 +19,6 @@ public interface MainDao {
 	
 	//제품 search
 	public List<ProductVo> selectKeyword(String keyword, int order, int start);
+	
+	public List<ProductVo> searchFulltext(SearchVo sv);
 }
