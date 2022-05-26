@@ -13,25 +13,34 @@
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
  	<link rel="stylesheet" th:href="@{/css/product/product.css}"/>
  	<script>
- 	/*
  		$(function () {
-			$('.group > form').submit(function(e){
+			$('.group > form').submit(function(){
+				//e.preventDefault()
 				
-				e.preventDefault()
-				alert('검색!')
+				let isChk1 = $('input[name=chk1]').is(":checked")
+				let isChk2 = $('input[name=chk2]').is(":checked")
+				let isChk3 = $('input[name=chk3]').is(":checked")
+				let isMin = $('input[name=min]').val()
+				let isMax = $('input[name=max]').val()
 				
-				let chk1 = $(this).find('chk1').val()
+				console.log(isChk1)
+				console.log(isChk2)
 				
-				console.log(chk1)
+				if(!isChk1 && !isChk2){
+					if(isChk3){
+						alert('chk3 checked')	
+					}	
+					alert('검색 설정을 선택해주세요.')
+					return false;
+				}
 				
 				
 				
+				/*
 				let keyword = $(this).find('keyword')
 				let orderby = $(this).find('orderby')
 				
-				let chk1 = $(this).find('chk1').attr(":checked").val()
-				let chk2 = $(this).find('chk2').attr(":checked").val()
-				let chk3 = $(this).find('chk2').attr(":checked").val()
+				
 				
 				let min = $(this).find('min').val()
 				let max = $(this).find('max').val()

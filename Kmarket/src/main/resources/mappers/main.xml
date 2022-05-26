@@ -57,7 +57,8 @@
 		LIMIT #{start}, 5;
 	</select>
 	<select id="searchFulltext" resultType="kr.co.kmarket.vo.ProductVo">
-		select *, FLOOR(`price`*(1 - `discount`/100)) AS `salePrice` 
+		select *, FLOOR(`price`*(1 - `discount`/100)) AS `salePrice`, 
+		(select count(pid) from km_product as a where match(a.name, a.desc) against(#{keyword})) as total 
 		from km_product as a 
 		where match(
 		<if test="chk1 != null">a.name</if>

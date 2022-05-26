@@ -82,7 +82,13 @@ public class MainController {
 	}
 	@PostMapping("/product/search")
 	public String search(Model model, SearchVo sv, String pg) {
-		System.out.println("chk1 : "+sv.getChk1());
+		String chk1 = sv.getChk1();
+		String chk2 = sv.getChk1();
+		String chk3 = sv.getChk1();
+		
+		if(chk1 != null) {
+			
+		}
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
