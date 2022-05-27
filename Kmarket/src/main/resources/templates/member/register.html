@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>케이마켓::회원가입</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" th:href="@{/css/member/member.css}"/>
+    <script th:src="@{/js/member/register.js}"></script>
+    <script th:src="@{/js/member/zipcode.js}"></script>
 </head>
 <body>
     <div id="member-wrapper">
@@ -13,25 +24,26 @@
         <main>
             <div id="member-register">
                 <h1>회원가입</h1>
-				<form action="#" method="POST">
+				<form th:action="@{/member/register}" method="POST">
+				<input type="hidden" name="type" value="1"/>
 					<section>
 						<table>
 							<caption>필수 정보입력</caption>
 							<tr>
 								<th><span class="essential">*</span>아이디</th>
-								<td><input type="text" name="km_uid" placeholder="아이디를 입력"
+								<td><input type="text" name="uid" placeholder="아이디를 입력"
 									required /> <span class="msgId">영문, 숫자로 4~12자까지 설정해 주세요.</span></td>
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>비밀번호</th>
-								<td><input type="password" name="km_pass" placeholder="비밀번호를 입력"
+								<td><input type="password" name="pass" placeholder="비밀번호를 입력"
 									required /> <span class="msgPass">영문, 숫자, 특수문자를 조합하여
 										8~12자까지 설정해 주세요.</span></td>
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>비밀번호확인</th>
-								<td><input type="password" name="km_pass" placeholder="비밀번호를 확인"
-									required /> <span class="msgPass">비밀번호 재입력</span></td>
+								<td><input type="password" name="pass2" placeholder="비밀번호를 확인"
+									required /> <span class="msgPass2">비밀번호 재입력</span></td>
 							</tr>
 						</table>
 					</section>
@@ -40,23 +52,23 @@
 							<caption>기본 정보입력</caption>
 							<tr>
 								<th><span class="essential">*</span>이름</th>
-								<td><input type="text" name="km_name" placeholder="이름을 입력"
-									required /></td>
+								<td><input type="text" name="name" placeholder="이름을 입력"
+									required /><span class="msgName">이름을 한글로 2자이상 입력하세요</span></td>
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>성별</th>
-								<td><label><input type="radio" name="km_gender"
+								<td><label><input type="radio" name="gender"
 										value="1" checked>&nbsp;남</label> <label><input
 										type="radio" name="gender" value="2">&nbsp;여</label></td>
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>EMAIL</th>
-								<td><input type="email" name="km_email" placeholder="이메일 입력"
-									required /></td>
+								<td><input type="email" name="email" placeholder="이메일 입력"
+									required /><span class="msgEmail"></span></td>
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>휴대폰</th>
-								<td><input type="text" name="km_hp" maxlength="13"
+								<td><input type="text" name="hp" maxlength="13"
 									placeholder="휴대폰번호 입력" required /> <span class="msgHp"> -
 										포함 13자리를 입력하세요.</span></td>
 							</tr>
@@ -64,18 +76,20 @@
 								<th>주소</th>
 								<td>
 									<div>
-										<input type="text" name="km_zip" id="zip" placeholder="우편번호 입력 클릭"
-											readonly />
+										<input type="text" name="zip" id="zip" placeholder="우편번호 입력 클릭"
+											onclick="zipcode()" readonly />
+										
 									</div>
 									<div>
-										<input type="text" name="km_addr1" id="addr1" size="50"
+										<input type="text" name="addr1" id="addr1" size="50"
 											placeholder="주소를 검색하세요." readonly />
 									</div>
 									<div>
-										<input type="text" name="km_addr2" id="addr2" size="50"
-											placeholder="상세주소를 입력하세요." />
+										<input type="text" name="addr2" id="addr2" size="50"
+											placeholder="상세주소를 입력하세요." required/>
 									</div>
 								</td>
+								
 							</tr>
 						</table>
 		
@@ -86,7 +100,7 @@
 				</form>
             </div>
         </main>        
-    	<th:block th:include="@{_footer.html}"/>
+        <th:block th:include="@{_footer.html}"/>
     </div>    
 </body>
 </html>

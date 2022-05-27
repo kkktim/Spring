@@ -38,12 +38,7 @@
 	<!-- 상품 검색 -->
 	<select id="selectKeyword" resultType="kr.co.kmarket.vo.ProductVo">
 		SELECT *, FLOOR(`price`*(1 - `discount`/100)) AS `salePrice`, 
-		(
-		SELECT COUNT(`pid`) FROM km_product AS a
-		WHERE a.name LIKE CONCAT('%', #{keyword}, '%') OR 
-		a.desc LIKE CONCAT('%', #{keyword}, '%') OR 
-		a.company LIKE CONCAT('%', #{keyword}, '%') 
-		) AS `total` 
+		COUNT(`pid`) OVER() AS `total`
 		FROM km_product AS a 
 		WHERE a.name LIKE CONCAT('%', #{keyword}, '%') OR 
 		a.desc LIKE CONCAT('%', #{keyword}, '%') OR 
@@ -57,8 +52,7 @@
 		LIMIT #{start}, 5;
 	</select>
 	<select id="searchFulltext" resultType="kr.co.kmarket.vo.ProductVo">
-		select *, FLOOR(`price`*(1 - `discount`/100)) AS `salePrice`, 
-		(select count(pid) from km_product as a where match(a.name, a.desc) against(#{keyword})) as total 
+		select *, FLOOR(`price`*(1 - `discount`/100)) AS `salePrice`, COUNT(`pid`) OVER() AS `total`		 
 		from km_product as a 
 		where match(
 		<if test="chk1 != null">a.name</if>
@@ -66,9 +60,4 @@
 		)
 		against(#{keyword})
 	</select>
-	<!-- 
-	<foreach collection="array" item="columns" open="(" separator="," close=")">
-			#{column}
-		</foreach>
-		 -->
 </mapper>

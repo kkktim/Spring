@@ -2,6 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.MemberDao">
 	<select id="selectMember" resultType="kr.co.kmarket.vo.MemberVo">
-		SELECT * FROM km_member WHERE uid=#{uid} AND pass=PASSWORD(#{pass});
+		SELECT * FROM km_member WHERE uid=#{uid} AND pass=SHA(#{pass});
+	</select>
+	
+	<select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVo">
+		SELECT * FROM `km_member_terms`;
+	</select>
+	
+	<insert id="insertMember">
+		INSERT `km_member` SET
+			`uid` = #{uid},
+			`pass` = SHA(#{pass}),
+			`name` = #{name},
+			`type` = 1,
+			`gender` = #{gender},
+			`email` = #{email},
+			`hp` = #{hp},
+			`zip` = #{zip},
+			`addr1` = #{addr1},
+			`addr2` = #{addr2},
+			`ip`=#{ip},
+			`rdate` = NOW();
+	</insert>
+	
+	<insert id="insertSeller">
+		INSERT `km_member` SET
+			`uid` = #{uid},
+			`pass` = SHA(#{pass}),
+			`type` = 2,
+			`company` = #{company},
+			`ceo` = #{ceo},
+			`bizRegNum` = #{bizRegNum},
+			`commRepNum` = #{commRepNum},
+			`tel` = #{tel},
+			`fax` = #{fax},
+			`email` = #{email},
+			`zip` = #{zip},
+			`addr1` = #{addr1},
+			`addr2` = #{addr2},
+			`manager` = #{manager},
+			`managerHp` = #{managerHp},
+			`ip` = #{ip},
+			`rdate` = NOW();
+	</insert>
+	
+	<select id="CountUid" resultType="int">
+		SELECT COUNT(`uid`) FROM `km_member` WHERE `uid`=#{uid};	
+	</select>
+	<select id="CountTel" resultType="int">
+		SELECT COUNT(`tel`) FROM `km_member` WHERE `tel`=#{tel};	
+	</select>
+	<select id="CountFax" resultType="int">
+		SELECT COUNT(`fax`) FROM `km_member` WHERE `fax`=#{fax};	
+	</select>
+	<select id="CountEmail" resultType="int">
+		SELECT COUNT(`email`) FROM `km_member` WHERE `email`=#{email};	
+	</select>
+	<select id="CountCompany" resultType="int">
+		SELECT COUNT(`company`) FROM `km_member` WHERE `company`=#{company};	
+	</select>
+	<select id="CountBizRegNum" resultType="int">
+		SELECT COUNT(`bizRegNum`) FROM `km_member` WHERE `bizRegNum`=#{bizRegNum};	
+	</select>
+	<select id="CountCommRepNum" resultType="int">
+		SELECT COUNT(`commRepNum`) FROM `km_member` WHERE `commRepNum`=#{commRepNum};	
+	</select>
+	<select id="CountManagerHp" resultType="int">
+		SELECT COUNT(`managerHp`) FROM `km_member` WHERE `managerHp`=#{managerHp};	
+	</select>
+	<select id="CountHp" resultType="int">
+		SELECT COUNT(`hp`) FROM `km_member` WHERE `hp`=#{hp};	
 	</select>
 </mapper>

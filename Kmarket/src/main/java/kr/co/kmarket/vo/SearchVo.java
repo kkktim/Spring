@@ -12,6 +12,9 @@ public class SearchVo {
 	private String chk1;
 	private String chk2;
 	private String chk3;
+	private int min;
+	private int max;
+	
 	
 	//fulltext 추가필드
 //	private String[] columns;

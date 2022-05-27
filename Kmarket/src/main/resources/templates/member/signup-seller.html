@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link rel="stylesheet" th:href="@{/css/member/member.css}"/>
-    <script th:src="@{/js/member/signup.js}"></script>
+    <script th:src="@{/js/member/signup-seller.js}"></script>
 </head>
 <body>
     <div id="member-wrapper">
@@ -34,6 +34,10 @@
 					<h3><span class="essential">(필수)</span>개인정보 수집동의</h3>
 					<textarea class="privacy" readonly>[[${terms.privacy}]]</textarea>
 					<label><input type="checkbox" name="agree3" />동의합니다.</label>
+					
+					<h3><span class="essential">(필수)</span>전자세금계산서 이용약관</h3>
+					<textarea class="tax" readonly>[[${terms.tax}]]</textarea>
+					<label><input type="checkbox" name="agree4" />동의합니다.</label>
 				</section>
 
 				<section>

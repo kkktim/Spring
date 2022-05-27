@@ -1,6 +1,9 @@
 package kr.co.kmarket.controller;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,7 @@ import kr.co.kmarket.vo.MemberVo;
 import kr.co.kmarket.vo.ProductVo;
 import kr.co.kmarket.vo.SearchVo;
 
-@SessionAttributes("sessMember")
+@SessionAttributes({"sessMember", "sessSearchedList"})
 @Controller
 public class MainController {
 	@Autowired
@@ -62,6 +65,7 @@ public class MainController {
 		
 		int order = Integer.parseInt(orderby);
 		List<ProductVo> products = service.selectKeyword(keyword, order, start);
+		
 		model.addAttribute("products", products);
 		
 		int total = products.get(0).getTotal();
@@ -69,6 +73,7 @@ public class MainController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int groups[] = service.getPageGroup(currentPage, lastPageNum);
 						
+		model.addAttribute("sessSearchedList", products);
 		model.addAttribute("lastPageNum", lastPageNum);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageStartNum", pageStartNum);
@@ -80,23 +85,65 @@ public class MainController {
 		
 		return "/product/search";
 	}
+	
 	@PostMapping("/product/search")
-	public String search(Model model, SearchVo sv, String pg) {
+	public String search(Model model, String pg, 
+						@ModelAttribute("sessSearchedList")List<ProductVo> sessSearchedList,
+						SearchVo sv) {
+		
 		String chk1 = sv.getChk1();
-		String chk2 = sv.getChk1();
-		String chk3 = sv.getChk1();
+		String chk2 = sv.getChk2();
+		String chk3 = sv.getChk3();
+		
+		int total = 0;
 		
 		if(chk1 != null) {
+			//결과 내 재검색 - 제품 이름만 keyword인 제품 재검색
+			List<ProductVo> searchedList = sessSearchedList.stream()
+					.filter(h -> h.getName().contains(sv.getKeyword()))
+					.collect(Collectors.toList());
 			
+			//total 필드를 재검색 된 제품 수량으로 바꿔주기
+			searchedList.stream().forEach(i -> i.setTotal(searchedList.size()));
+			
+			model.addAttribute("products", searchedList);
+			model.addAttribute("product", searchedList.get(0));
+			total = searchedList.size();
 		}
+		if(chk2 != null) {
+			//결과 내 재검색 - 제품 설명만 keyword인 제품 재검색
+			List<ProductVo> searchedList = sessSearchedList.stream()
+					.filter(h -> h.getDesc().contains(sv.getKeyword()))
+					.collect(Collectors.toList());
+			
+			//total 필드를 재검색 된 제품 수량으로 바꿔주기
+			searchedList.stream().forEach(i -> i.setTotal(searchedList.size()));
+			
+			model.addAttribute("products", searchedList);
+			model.addAttribute("product", searchedList.get(0));
+			total = searchedList.size();
+		}
+		if(chk3 != null) {
+			//결과 내 재검색 - 제품 가격이 min max 사이의 제품 재검색
+			int min = sv.getMin();
+			int max = sv.getMax();
+			
+			List<ProductVo> searchedList = sessSearchedList.stream()
+					.filter(h -> h.getSalePrice() > min && h.getSalePrice() < max)
+					.collect(Collectors.toList());
+			
+			//total 필드를 재검색 된 제품 수량으로 바꿔주기
+			searchedList.stream().forEach(i -> i.setTotal(searchedList.size()));
+			
+			model.addAttribute("products", searchedList);
+			model.addAttribute("product", searchedList.get(0));
+			total = searchedList.size();
+		}
+
 		//페이지 처리
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
 		
-		List<ProductVo> products = service.searchFulltext(sv);
-		model.addAttribute("products", products);
-				
-		int total = products.get(0).getTotal();
 		int lastPageNum = service.getLastPageNum(total);
 		int pageStartNum = service.getPageStartNum(total, start);
 		int groups[] = service.getPageGroup(currentPage, lastPageNum);
@@ -105,9 +152,8 @@ public class MainController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
-				
+
 		model.addAttribute("keyword", sv.getKeyword());
-		model.addAttribute("product", products.get(0));
 		model.addAttribute("order", sv.getOrderby());
 		
 		return "/product/search";

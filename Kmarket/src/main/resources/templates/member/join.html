@@ -8,7 +8,7 @@
 <body>
     <div id="member-wrapper">
         <header>
-            <a href="#"><img th:src="@{/img/header_logo.png}" alt=""></a>
+            <a th:href="@{/}"><img th:src="@{/img/header_logo.png}" alt=""></a>
         </header>
         <main>
             <div id="member-join">
@@ -18,14 +18,14 @@
                         <img th:src="@{/img/member/member_join_tit_normal.gif}" alt="구매회원 가입">
                         <div class="txt">
                             <img th:src="@{/img/member/member_join_txt_normal.gif}" alt="개인 구매회원">
-                            <a href="./member/signup.do?type=normal"><img src="./img/member_join_btn1.gif" alt="회원가입"></a>
+                            <a th:href="@{/member/signup?type=normal}"><img th:src="@{/img/member/member_join_btn1.gif}" alt="구매회원가입"></a>
                         </div>
                     </div>
                     <div class="seller">
                         <img th:src="@{/img/member/member_join_tit_seller.gif}" alt="판매회원 가입">
                         <div class="txt">
-                            <img th:src="@{/img/member/member_join_txt_seller.gif}" alt="개인 구매회원">
-                            <a href="./member/signup.do?type=seller"><img src="./img/member_join_btn2.gif" alt="회원가입"></a>
+                            <img th:src="@{/img/member/member_join_txt_seller.gif}" alt="판매회원">
+                            <a th:href="@{/member/signup-seller?type=seller}"><img th:src="@{/img/member/member_join_btn2.gif}" alt="판매회원가입"></a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <img th:src="@{/img/member/member_join_banner2.jpg}" class="banner" alt="사업자회원을 위한 기분 좋은 혜택">
             </div>
         </main>        
-		<th:block th:include="@{_footer.html}"/>     
+        <th:block th:include="@{_footer.html}"/>
     </div>    
 </body>
 </html>
