@@ -1,5 +1,6 @@
 package kr.co.kmarket.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -91,13 +92,11 @@ public class MainController {
 						@ModelAttribute("sessSearchedList")List<ProductVo> sessSearchedList,
 						SearchVo sv) {
 		
-		String chk1 = sv.getChk1();
-		String chk2 = sv.getChk2();
-		String chk3 = sv.getChk3();
+		String chk = sv.getChk();
 		
 		int total = 0;
 		
-		if(chk1 != null) {
+		if(chk.equals("1")) {
 			//결과 내 재검색 - 제품 이름만 keyword인 제품 재검색
 			List<ProductVo> searchedList = sessSearchedList.stream()
 					.filter(h -> h.getName().contains(sv.getKeyword()))
@@ -110,7 +109,7 @@ public class MainController {
 			model.addAttribute("product", searchedList.get(0));
 			total = searchedList.size();
 		}
-		if(chk2 != null) {
+		if(chk.equals("2")) {
 			//결과 내 재검색 - 제품 설명만 keyword인 제품 재검색
 			List<ProductVo> searchedList = sessSearchedList.stream()
 					.filter(h -> h.getDesc().contains(sv.getKeyword()))
@@ -123,10 +122,10 @@ public class MainController {
 			model.addAttribute("product", searchedList.get(0));
 			total = searchedList.size();
 		}
-		if(chk3 != null) {
+		if(chk.equals("3")) {
 			//결과 내 재검색 - 제품 가격이 min max 사이의 제품 재검색
-			int min = sv.getMin();
-			int max = sv.getMax();
+			int min = Integer.parseInt(sv.getMin());
+			int max = Integer.parseInt(sv.getMax());
 			
 			List<ProductVo> searchedList = sessSearchedList.stream()
 					.filter(h -> h.getSalePrice() > min && h.getSalePrice() < max)
@@ -134,6 +133,10 @@ public class MainController {
 			
 			//total 필드를 재검색 된 제품 수량으로 바꿔주기
 			searchedList.stream().forEach(i -> i.setTotal(searchedList.size()));
+			
+			//정렬
+//			searchedList.stream().sorted(Comparator.comparingInt(ProductVo::getPrice))
+//			.collect(Collectors.toList());
 			
 			model.addAttribute("products", searchedList);
 			model.addAttribute("product", searchedList.get(0));

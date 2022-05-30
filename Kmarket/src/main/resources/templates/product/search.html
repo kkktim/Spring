@@ -14,53 +14,43 @@
  	<link rel="stylesheet" th:href="@{/css/product/product.css}"/>
  	<script>
  		$(function () {
-			$('.group > form').submit(function(e){
-				e.preventDefault();
+			$('.group > form').submit(function(){
+				//e.preventDefault();
 				
-				let isChk1 = $('input[name=chk1]').is(":checked")
-				let isChk2 = $('input[name=chk2]').is(":checked")
-				let isChk3 = $('input[name=chk3]').is(":checked")
-				let isMin = $('input[name=min]').val()
-				let isMax = $('input[name=max]').val()
 				
-				console.log(isChk1)
-				console.log(isChk2)
-				
-				let keyword = $(this).find('keyword')
-				let orderby = $(this).find('orderby')
+				let keyword = $('input[name=keyword]').val()
+				console.log(keyword)
+				let chkVal  = $('input[name=chk]:checked').val();
 				
 				//chk 3개 중 1개는 체크가 되어 있어야 함.
-				if(!isChk1 || !isChk2 || isChk1){
-					alert('셋 중 하나에 체크 바랍니다.')
+				if($('input:radio').is(':checked') == false){
+					alert('검색 조건을 선택해주세요.')
+					return false;
 				}
-				/*
-				let min = $(this).find('min').val()
-				let max = $(this).find('max').val()
 				
-				let isChk3 = $(this).find('chk3')
-				if(isChk3.attr("checked", true)){
-					//console.log('chk3 checked!')
-					if(min == null && max == null){
-						alert('검색 가격을 입력하세요.')
-						return false;
-					}else{
-						let jsonData = {
-								
-						}
-						$.ajax({
-							url:'/product/search',
-							type:'post',
-							data:jsonData,
-							dataType:'json',
-							success: function () {
-								
-							}
-						})
+				//상품가격 검색일 경우 min, max 값 요구
+				if(chkVal == 3){
+					let min = $('input[name=min]').val()
+					let max = $('input[name=max]').val()
+					
+					if(min == "" || max == ""){
+						alert('최소값 최대값을 입력하세요.')
+						return false
 					}
-				}else{
-					return true;
+					
 				}
-				*/
+				
+				
+				
+				//$(this).find().hasClass('sorted').attr('data-mode', "p")
+				//$(this).find('sorted2').attr('data-mode', "p")
+				//$('.sort > li > a').hasClass("data-mode").attr("data-mode", "p")
+				//$('.sorted2').attr('data-mode', "p")
+				//$('.sort > .sorted').attr("data-mode", "p")
+				//const elements = document.querySelectorAll('.sorted')
+				//elements.attr("data-mode", "p")
+				return true;
+				
 			})
 		})
  	</script>
@@ -80,7 +70,7 @@
 
           <!-- 제목, 페이지 네비게이션 -->
           <nav>
-            <h1>상품 검색 결과</h1>
+            <h1>결과 내 상품 재검색</h1>
             <p>
               HOME > <span>상품검색</span> > <strong>검색키워드</strong>
             </p>
@@ -88,15 +78,15 @@
 
           <!-- 검색결과 그룹박스 -->
           <div class="group">
-            <h3><strong>셔츠</strong>검색결과 <em>(총&nbsp;:&nbsp;<span>[[${product.total}]]</span>&nbsp;건)</em></h3>
+            <h3><strong>[[${keyword}]]</strong>검색결과 <em>(총&nbsp;:&nbsp;<span>[[${product.total}]]</span>&nbsp;건)</em></h3>
             <form th:action="@{/product/search}" method="post">
-            	<input type="text" name="keyword"/>
+            	<input type="text" name="keyword" th:value="${keyword}"/>
               	<input type="hidden" name="orderby" value="1"/>
               	<input type="submit" value="검색"/>
            		<span>
-            		<label><input type="checkbox" name="chk1" value="1">상품명</label>
-                	<label><input type="checkbox" name="chk2" value="2">상품설명</label>
-                	<label><input type="checkbox" name="chk3" value="3">상품가격</label>
+            		<label><input type="radio" name="chk" value="1">상품명</label>
+                	<label><input type="radio" name="chk" value="2">상품설명</label>
+                	<label><input type="radio" name="chk" value="3">상품가격</label>
                 	<input type="text" name="min"/>원&nbsp;~&nbsp;<input type="text" name="max"/>원
             	</span>
             </form>
@@ -108,12 +98,12 @@
 
 		<!-- 정렬 메뉴 -->
 		<ul class="sort">
-        	<li><a th:href="@{/product/search(keyword=${keyword}, orderby=1)}" th:classappend="${order} == 1 ? on">판매많은순</a></li>
-        	<li><a th:href="@{/product/search(keyword=${keyword}, orderby=2)}" th:classappend="${order} == 2 ? on">낮은가격순</a></li>
-            <li><a th:href="@{/product/search(keyword=${keyword}, orderby=3)}" th:classappend="${order} == 3 ? on">높은가격순</a></li>
-            <li><a th:href="@{/product/search(keyword=${keyword}, orderby=4)}" th:classappend="${order} == 4 ? on">평점높은순</a></li>
-            <li><a th:href="@{/product/search(keyword=${keyword}, orderby=5)}" th:classappend="${order} == 5 ? on">후기많은순</a></li>
-			<li><a th:href="@{/product/search(keyword=${keyword}, orderby=6)}" th:classappend="${order} == 6 ? on">최근등록순</a></li>
+        	<li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=1)}" th:classappend="${order} == 1 ? on" th:data-mode="g">판매많은순</a></li>
+        	<li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=2)}" th:classappend="${order} == 2 ? on" th:data-mode="g">낮은가격순</a></li>
+            <li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=3)}" th:classappend="${order} == 3 ? on" th:data-mode="g">높은가격순</a></li>
+            <li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=4)}" th:classappend="${order} == 4 ? on" th:data-mode="g">평점높은순</a></li>
+            <li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=5)}" th:classappend="${order} == 5 ? on" th:data-mode="g">후기많은순</a></li>
+			<li><a class="sorted" th:href="@{/product/search(keyword=${keyword}, orderby=6)}" th:classappend="${order} == 6 ? on" th:data-mode="g">최근등록순</a></li>
 		</ul>
 
           <!-- 검색목록 -->
